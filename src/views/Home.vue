@@ -8,7 +8,7 @@
             </book-detail-block>
         </div>
         <div class="main-left">
-            
+            BInh luan
             
         </div>
     </main>

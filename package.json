@@ -17,7 +17,8 @@
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.8"
+    "vue-router": "^4.0.8",
+    "vuex": "^4.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -41,7 +42,8 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "no-mixed-spaces-and-tabs": 0
+      "no-mixed-spaces-and-tabs": 0,
+      "no-unused-vars": "off"
     }
   },
   "browserslist": [
