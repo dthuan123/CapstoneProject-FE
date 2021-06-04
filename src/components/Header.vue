@@ -27,7 +27,7 @@
                         <font-awesome-icon icon="search"></font-awesome-icon>
                     </button>
                 </form>
-                <ul v-show="!user.role_id" class="menu-item-container">
+                <ul v-show="!role" class="menu-item-container">
                     <li>
                         <router-link to="/login">Đăng nhập</router-link>
                     </li>
@@ -35,7 +35,7 @@
                         <router-link to="/register">Đăng kí</router-link>
                     </li>
                 </ul>
-                <div class="user-navigation">
+                <div class="user-navigation" v-show="role">
                     <div class="user-profile-image" v-on:click="toggleUserMenu">
                         <img src="https://i.stack.imgur.com/1cSi4.png" />
                     </div>
@@ -49,13 +49,12 @@
                         <li>
                             <router-link to="">Kệ sách</router-link>
                         </li>
-                        <li v-show="user.role_id != 1">
-                            <router-link v-show="user.role_id == 2" to="/creator">Hệ thống</router-link>
-                            <router-link v-show="user.role_id == 3" to="/admin">Hệ thống</router-link>
-                        </li>
                         <li>
-                            <router-link to="">Thoát</router-link>
+                            <router-link v-show="role == 'reader'" to="/reader">Hệ thống</router-link>
+                            <router-link v-show="role == 'creator'" to="/creator">Hệ thống</router-link>
+                            <router-link v-show="role == 'admin'" to="/admin">Hệ thống</router-link>
                         </li>
+                        <li @click="logout">Thoát</li>
                     </ul>
                 </div>
             </div>
@@ -64,20 +63,29 @@
 </template>
 
 <script>
+import { store } from "@/store"
+
 export default {
     name: "AppHeader",
     data() {
         return {
-            user: {
-                role_id: 2,
-            },
             showUserMenu: false,
         };
+    },
+    computed: {
+        role () {
+            let user = this.$store.state.user;
+            return user ? user.roleName : null;
+        }
     },
     methods: {
         toggleUserMenu: function () {
             this.showUserMenu = !this.showUserMenu;
         },
+        logout() {
+            store.commit("removeUser");
+            this.$router.push("/home");
+        }
     },
 };
 </script>
