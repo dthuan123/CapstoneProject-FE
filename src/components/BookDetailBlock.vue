@@ -11,8 +11,8 @@
 
 <script>
 export default {
-    name: 'BookDetailBlock',
-    props: ['book']
+    name: "BookDetailBlock",
+    props: ["book"]
 }
 </script>
 

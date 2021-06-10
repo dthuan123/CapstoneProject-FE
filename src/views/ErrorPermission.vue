@@ -1,5 +1,5 @@
 <template>
-  You have no permission to access this page.
+  <div>You have no permission to access this page.</div>
 </template>
 
 <script>
