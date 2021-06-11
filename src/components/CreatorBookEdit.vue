@@ -1,9 +1,10 @@
 <template>
   <div>
       {{bookId}}
-      <div v-for="(book, index) in data" :key="index">
-          {{ book.id }}   {{ book.name }}
+      <div v-for="(chapter, index) in data" :key="index">
+          {{ chapter.id }}   {{ chapter.name }}
       </div>
+
   </div>
 </template>
 
@@ -23,7 +24,11 @@ export default {
     methods: {
         get() {
             axios
-                .get("http://localhost:8000/books")
+                .get("http://localhost:8000/creator/book-edit", {
+                    headers: {
+                        bookId: this.bookId
+                    }
+                })
                 .then((response) => (this.data = response.data));
         }
         

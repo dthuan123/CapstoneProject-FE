@@ -6,17 +6,14 @@ import ErrorPermission from "@/views/ErrorPermission.vue";
 import CreatorBookList from "@/components/CreatorBookList.vue";
 import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
 import CreatorBookNew from "@/components/CreatorBookNew.vue";
-// import { store } from "@/store"
 
 const routes = [
     {
         path: "/",
-        name: "Home",
         component: HomePage,
     },
     {
         path: "/home",
-        name: "Home",
         component: HomePage,
     },
     {
@@ -27,6 +24,46 @@ const routes = [
         path: "/error-permission",
         component: ErrorPermission
     },
+    ///path cua guess
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {
         path: "/creator",
         component: CreatorHome,
@@ -49,6 +86,75 @@ const routes = [
                 component: CreatorBookEdit
             }
         ]
+    },
+    {
+        path: "/reader",
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    },
+    {
+        path: "/admin",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 ];
 
