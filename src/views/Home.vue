@@ -2,9 +2,9 @@
     <main class="app-main">
         <div class="main-right">
             <book-detail-block
-                v-for="book in newestChapterBooks"
-                :key="book.id"
-                v-bind:book="book">
+                v-for="bookHome in newestChapterBooks"
+                :key="bookHome.id"
+                v-bind:book="bookHome">
             </book-detail-block>
         </div>
         <div class="main-left">
