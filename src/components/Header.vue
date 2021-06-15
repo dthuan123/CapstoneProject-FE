@@ -6,7 +6,7 @@
                     <router-link to="/home">Logo</router-link>
                 </li>
                 <li>
-                    <router-link to="">Sáng tác</router-link>
+                    <router-link to="/list-category">Thể loại</router-link>
                 </li>
                 <li>
                     <router-link to="">Danh sách</router-link>

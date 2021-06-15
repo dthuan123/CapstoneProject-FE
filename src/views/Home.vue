@@ -8,8 +8,6 @@
             </book-detail-block>
         </div>
         <div class="main-left">
-            BInh luan Dao vanh day nay 
-            
         </div>
     </main>
 </template>

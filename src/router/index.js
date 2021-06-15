@@ -24,8 +24,15 @@ const routes = [
         path: "/error-permission",
         component: ErrorPermission
     },
+    {
+        path: "/list-category",
+        component: ListCategory
+    },
     ///path cua guess
 
+    {
+        path: "/guest",
+     
 
 
 
@@ -36,33 +43,8 @@ const routes = [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+    },
 
     {
         path: "/creator",
