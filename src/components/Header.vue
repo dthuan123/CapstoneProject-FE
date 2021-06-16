@@ -50,6 +50,9 @@
                             <router-link to="">Kệ sách</router-link>
                         </li>
                         <li>
+                            <router-link to="reader/messages">Kệ sách</router-link>
+                        </li>
+                        <li>
                             <router-link v-show="role == 'reader'" to="/reader">Hệ thống</router-link>
                             <router-link v-show="role == 'creator'" to="/creator">Hệ thống</router-link>
                             <router-link v-show="role == 'admin'" to="/admin">Hệ thống</router-link>
@@ -75,7 +78,7 @@ export default {
     computed: {
         role () {
             let user = this.$store.state.user;
-            return user ? user.roleName : null;
+            return user ? user.role.name : null;
         }
     },
     methods: {
