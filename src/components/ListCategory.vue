@@ -2,7 +2,7 @@
     <main class="app-main">
         <div main-right>
             <category-block
-                v-for="categoryHome in listCategories"
+                v-for="categoryHome in listCategoriess"
                 :key="categoryHome.id"
                 v-bind:category="categoryHome">
             </category-block>
@@ -19,17 +19,20 @@ export default{
     },
     data() {
         return {
-            listCategories: [],
+            listCategoriess: [],
         };
     },
-    create() {
+    created() {
         this.listCategories();
     },
     methods: {
         listCategories() {
             axios
                 .get("http://localhost:8000/category-list")
-                .then((response) => {this.listCategories = response.data});
+                .then((response) => {
+                    console.log(response.data);
+                    this.listCategoriess = response.data
+                });
         },
     },
 };

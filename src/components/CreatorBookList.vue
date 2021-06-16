@@ -36,6 +36,11 @@ export default {
                 field: "name",
             },
             {
+                header: "Ảnh bìa",
+                field: "imageLink",
+                isImage: true
+            },
+            {
                 header: "Ngày bắt đầu",
                 field: "startedDate"
             },

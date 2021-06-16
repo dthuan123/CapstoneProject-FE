@@ -2,7 +2,7 @@
 <main>
     <div class="category-block">
         <div class="category-name">
-            {{category.name}}
+            <router-link :to="'/category?id=' + category.id">{{category.name}}</router-link>
         </div>
     </div>
     </main>
