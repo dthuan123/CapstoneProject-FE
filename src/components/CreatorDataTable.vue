@@ -23,6 +23,7 @@
                     >
                         <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
+                        <img v-else-if="col.isImage" :src="row[col.field]">
                         <span v-else>{{ row[col.field] }}</span>
                     </td>
                 </tr>

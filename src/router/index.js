@@ -6,6 +6,8 @@ import ErrorPermission from "@/views/ErrorPermission.vue";
 import CreatorBookList from "@/components/CreatorBookList.vue";
 import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
 import CreatorBookNew from "@/components/CreatorBookNew.vue";
+import ListCategory from "@/components/ListCategory"
+import CategoryListBook from "@/components/CategoryListBook.vue"
 
 const routes = [
     {
@@ -26,7 +28,11 @@ const routes = [
     },
     {
         path: "/list-category",
-        component: ListCategory
+        component: ListCategory,
+    },
+    {
+        path: "/category",
+        component: CategoryListBook
     },
     ///path cua guess
 
@@ -103,7 +109,7 @@ const routes = [
 
     },
     {
-        path: "/admin",
+        path: "/admin", 
 
 
 

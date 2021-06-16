@@ -24,19 +24,15 @@ export default {
     },
     methods: {
         login() {
-            let data = {
+            let body = {
                 name: this.name,
                 password: this.password
             }
-            axios.post("http://localhost:8000/login", data)
+            axios.post("http://localhost:8000/login", body)
                 .then(res => {
                     console.log(res);
                     if(res.data) {
-                        let user = {
-                            roleName: res.data.role.name,
-                            userID: res.data.id               
-                        }
-                        store.commit("setUser", user);
+                        store.commit("setUser", res.data);
                         this.$router.push("/home");
                     } else {
                         this.isError = true;

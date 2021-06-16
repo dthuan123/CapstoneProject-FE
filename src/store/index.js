@@ -4,14 +4,10 @@ export const store =  createStore({
     state() {
         return {
             user: JSON.parse(localStorage.getItem('user')),
-            roleName: null,
             bookId: null
         }
     },
     mutations: {
-        setRole(state, roleName) {
-            state.roleName = roleName;
-        },
         setBookId(state, bookId) {
             state.bookId = bookId;
         },
@@ -24,11 +20,6 @@ export const store =  createStore({
             state.user = null;
         }
 
-    },
-    getters: {
-        getUser: state => {
-            return state.user;
-        }
     }
 })
 
