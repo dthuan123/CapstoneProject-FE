@@ -31,7 +31,7 @@ const routes = [
         component: ListCategory,
     },
     {
-        path: "/category",
+        path: "/category-list-book",
         component: CategoryListBook
     },
     ///path cua guess
