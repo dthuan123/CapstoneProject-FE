@@ -25,20 +25,18 @@ export default {
     created(){
         this.listbooks();
     },
-    
     methods: {
         listbooks(){
             axios
-                .get("http:localhost:8000/creator/book-list", {
+                .get("http://localhost:8000/book-list", {
                     headers: {
                         categoryId: this.categoryId
                     }
                 })
                 .then((response) => {
-                this.data = response.data
-                console.log(this.data);
-                }
-                    );
+                    this.data = response.data
+                    console.log(this.data);
+                });
         }
     }
 }

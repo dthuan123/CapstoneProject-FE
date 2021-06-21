@@ -24,12 +24,12 @@ export default {
                 {
                     id: 1,
                     name: "Danh sách tác phẩm",
-                    routeName: "/creator/book-list"
+                    routeName: "/creator/get/books"
                 },
                 {
                     id: 2,
                     name: "Viết mới",
-                    routeName: "/creator/book-new"
+                    routeName: "/creator/create/book"
                 }
             ]
         }
@@ -41,7 +41,7 @@ export default {
 .creator-home {
     display: flex;
     justify-content: space-between;
-    padding: 0 16rem 0 16rem;
+    padding: 4rem 16rem 0 16rem;
     min-height: 50rem;
     background-color: #f6f7f8;
 }

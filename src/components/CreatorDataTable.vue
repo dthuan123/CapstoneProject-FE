@@ -30,13 +30,14 @@
             </tbody>
         </table>
         <ul class="pagination-container">
-            <li v-show="currentPage > 1" @click="toPrevPage">Prev</li>
+            <li v-show="currentPage > 0" @click="toPrevPage">Prev</li>
             <li v-for="page in pages" :key="page.name">
                 <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
                     {{ page.name }}
                 </button>
             </li>
             <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
+            <li @click="setPage(totalPage)">Last</li>
         </ul>
     </div>
 </template>

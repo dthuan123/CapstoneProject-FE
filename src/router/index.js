@@ -8,6 +8,7 @@ import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
 import CreatorBookNew from "@/components/CreatorBookNew.vue";
 import ListCategory from "@/components/ListCategory"
 import CategoryListBook from "@/components/CategoryListBook.vue"
+import CreatorChapterEditor from '@/components/CreatorChapterEditor.vue'
 
 const routes = [
     {
@@ -31,7 +32,7 @@ const routes = [
         component: ListCategory,
     },
     {
-        path: "/category-list-book",
+        path: "/category",
         component: CategoryListBook
     },
     ///path cua guess
@@ -60,18 +61,23 @@ const routes = [
         // },
         children: [
             {
-                path: "book-list",
+                path: "get/books",
                 component: CreatorBookList
             },
             {
-                path: "book-new",
+                path: "create/book",
                 name: "BookNew",
                 component: CreatorBookNew
             },
             {
-                path: "book-edit",
-                name: "BookEdit",
+                path: "edit/book",
+                name: "EditBook",
                 component: CreatorBookEdit
+            },
+            {
+                path: "edit/chapter",
+                name: "EditChapter",
+                component: CreatorChapterEditor
             }
         ]
     },

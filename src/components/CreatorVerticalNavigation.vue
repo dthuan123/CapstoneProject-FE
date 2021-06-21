@@ -26,8 +26,13 @@ export default {
     font-family: OpenSans;
 }
 
-.vertical-navigation li {   
+.vertical-navigation li {  
+    background-color: #fefefe; 
     padding: 1rem;
+}
+
+.vertical-navigation li:hover {
+    background-color: #ecf2f9;
 }
 .vertical-navigation li a {
     color: #111;

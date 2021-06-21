@@ -1,11 +1,13 @@
 <template>
-    <creator-data-table
-        v-bind:columnDefs="columnDefs"
-        v-bind:data="data"
-        v-bind:paging="paging"
-        v-bind:url="url"
-    >
-    </creator-data-table>
+    <div class="creator-book-list">
+        <creator-data-table
+            v-bind:columnDefs="columnDefs"
+            v-bind:data="data"
+            v-bind:paging="paging"
+            v-bind:url="url"
+        >
+        </creator-data-table>
+    </div>
 </template>
 
 <script>
@@ -25,7 +27,7 @@ export default {
         CreatorDataTable
     },
     beforeMount() {
-        let that = this;
+        let self = this;
         this.columnDefs = [
             {
                 header: "STT",
@@ -78,8 +80,8 @@ export default {
             {
                 display: "<button>Chỉnh sửa</button>",
                 action: function edit(row) {
-                    that.$router.push({name: "BookEdit"});
-                    that.$store.commit("setBookId", row.id);
+                    self.$router.push({name: "EditBook"});
+                    self.$store.commit("setBookId", row.id);
                 }
             }
         ];
@@ -89,10 +91,13 @@ export default {
             sortField: "id",
             sortOrder: "des"
         };
-        this.url = "http://localhost:8000/creator/book-list";
+        this.url = "http://localhost:8000/creator/get/books";
     }
 };
 </script>
 
 <style>
+.creator-book-list {
+    background-color: #fefefe;
+}
 </style>
