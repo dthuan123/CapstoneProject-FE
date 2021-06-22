@@ -1,6 +1,6 @@
 <template>
     <main class="app-main">
-        <div main-right>
+        <div>
             <nav aria-label="breadcrumb" style="font-size: 15px;">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
