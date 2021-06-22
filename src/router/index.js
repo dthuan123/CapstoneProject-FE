@@ -9,6 +9,7 @@ import CreatorBookNew from "@/components/CreatorBookNew.vue";
 import ListCategory from "@/components/ListCategory"
 import CategoryListBook from "@/components/CategoryListBook.vue"
 import CreatorChapterEditor from '@/components/CreatorChapterEditor.vue'
+import Register from "@/views/Register.vue"
 
 const routes = [
     {
@@ -33,9 +34,13 @@ const routes = [
     },
     {
         path: "/category",
-        component: CategoryListBook
+        component: CategoryListBook,
     },
     ///path cua guess
+    {
+        path: "/register",
+        component: Register,
+    },
 
     {
         path: "/guest",

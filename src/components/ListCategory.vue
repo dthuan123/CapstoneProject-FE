@@ -1,11 +1,20 @@
 <template>
     <main class="app-main">
         <div main-right>
+            <nav aria-label="breadcrumb" style="font-size: 15px;">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
+                    <li class="breadcrumb-item active" aria-current="/category">Thể loại</li>
+                </ol>
+            </nav>
+            <h1 style="width: 100%, text-align: left; font-size:30px;">Truyện</h1><br/>
+            <ul class="list-group">
             <category-block
                 v-for="categoryHome in listCategoriess"
                 :key="categoryHome.id"
                 v-bind:category="categoryHome">
             </category-block>
+            </ul>
         </div>
     </main>
 </template>
