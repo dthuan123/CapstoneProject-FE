@@ -2,33 +2,29 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-3 col-sm-6 col-xs-12 row-container">
-                <form>
+                <form @submit.prevent="register">
                     <br/>
                     <h1 style="font-size:20px;">Đăng ký</h1><br/>
                     <div class="form-group">
                         <div>
                         <label for="username">Tên đăng nhập: </label>
-                        <input type="text" class="form-control" id="username" placeholder="Nhập tên đăng nhập">
+                        <input type="text" class="form-control" v-model="username" id="username" placeholder="Nhập tên đăng nhập">
                         </div>
                         <div>
                         <label for="email">Địa chỉ email: </label>
-                        <input type="email" class="form-control" id="email" placeholder="Nhập địa chỉ email">
+                        <input type="email" class="form-control" v-model="email" id="email" placeholder="Nhập địa chỉ email">
                         </div>
                         <div>
                         <label for="password">Mật khẩu: </label>
-                        <input type="password" class="form-control" id="password" placeholde="Nhập mật khẩu">
+                        <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
                         <div>
-                        <label for="re-password">Tên đăng nhập: </label>
+                        <label for="re-password">Xác nhận mật khẩu: </label>
                         <input type="password" class="form-control" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
                         <div>
-                        <label for="address">Địa chỉ: </label>
-                        <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ">
-                        </div>
-                        <div>
                         <label for="phone">Số điện thoại: </label>
-                        <input type="number" class="form-control" id="phone" placeholder="Nhập số điện thoại"><br/>
+                        <input type="number" class="form-control" v-model="phone" id="phone" placeholder="Nhập số điện thoại"><br/>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-success btn-block my-3">Đăng ký</button>
@@ -41,11 +37,34 @@
     </div>
 </template>
 <script>
+    import axios from "axios";
+    import { store} from '@/store';
     export default{
         name: "Register",
         data() {
             return {
-                text: "Register"
+                username: null,
+                password: null,
+                email: null,
+                phone: null,
+                role: null
+            }
+        },
+        methods: {
+            register() {
+                let body = {
+                    username: this.username,
+                    password: this.password,
+                    email: this.email,
+                    phone: this.phone,
+                    roleid: 1
+                }
+                axios.post("http://localhost:8000/register", body)
+            .then(res =>{
+                console.log(res);
+                    this.$router.push("/login");
+                
+            })
             }
         }
     }
