@@ -9,6 +9,8 @@ import CreatorBookNew from "@/components/CreatorBookNew.vue";
 import ListCategory from "@/components/ListCategory"
 import CategoryListBook from "@/components/CategoryListBook.vue"
 import CreatorChapterEditor from '@/components/CreatorChapterEditor.vue'
+import ReaderListMessage from "@/components/ReaderListMessage.vue"
+import Register from "@/views/Register.vue"
 
 const routes = [
     {
@@ -33,24 +35,17 @@ const routes = [
     },
     {
         path: "/category",
-        component: CategoryListBook
+        component: CategoryListBook,
+    },
+    {
+        path: "/register",
+        component: Register
     },
     ///path cua guess
-
     {
         path: "/guest",
      
-
-
-
-
-
-
-
-
-
-
-        
+      
     },
 
     {
@@ -78,42 +73,20 @@ const routes = [
                 path: "edit/chapter",
                 name: "EditChapter",
                 component: CreatorChapterEditor
+            },
+            {
+                path: "create/chapter",
+                name: "CreateChapter",
+                component: CreatorChapterEditor
             }
         ]
     },
+
     {
-        path: "/reader",
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        path: "/reader/messages",
+        component: ReaderListMessage
     },
+    
     {
         path: "/admin", 
 

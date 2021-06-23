@@ -1,12 +1,13 @@
 <template>
-    <div>
-        <table class="data-table">
-            <thead>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-header">
                 <tr>
                     <th 
                         v-for="(col, index) in columnDefs"
                         :key="index"
                         :style="{ width: col.width ? col.width : 'auto' }"
+                        
                     >
                         {{ col.header }}
                     </th>
@@ -16,28 +17,31 @@
                 <tr
                     v-for="row in tableData"
                     :key="row"
+                    class="table-row"
                 >
                     <td 
                         v-for="(col, index) in columnDefs"
                         :key="index"
+                        :style="{ width: col.width ? col.width : 'auto' }"
+                        :class="{'img-cell' : col.isImage}"
                     >
                         <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
-                        <img v-else-if="col.isImage" :src="row[col.field]">
+                        <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
+                        <span v-else-if="col.isDate">{{ row[col.field].split("T")[0] }}</span>
                         <span v-else>{{ row[col.field] }}</span>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <ul class="pagination-container">
-            <li v-show="currentPage > 0" @click="toPrevPage">Prev</li>
-            <li v-for="page in pages" :key="page.name">
-                <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
-                    {{ page.name }}
-                </button>
+        <ul class="pagination">
+            <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
+            <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+            <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
+                <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
             </li>
-            <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
-            <li @click="setPage(totalPage)">Last</li>
+            <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
+            <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
         </ul>
     </div>
 </template>
@@ -102,13 +106,13 @@ export default {
                 });
         },
         toPrevPage() {
-            if(this.currentPage !== 1) {
+            if(this.currentPage !== 0) {
                 this.pagingSetting.page--;
             }
             this.getData();
         },
         toNextPage() {
-            if(this.currentPage !== this.totalPage) {
+            if(this.currentPage < this.totalPage - 1) {
                 this.pagingSetting.page++;
             }
             this.getData();
@@ -122,25 +126,22 @@ export default {
 </script>
 
 <style scoped>
-.data-table {
+.table-header {
+    font-size: 1.5rem;
+    vertical-align: text-top;
+}
+.table-row {
+    font-size: 1.5rem;
+}
+.img-cell {
+    width: 15rem;
+    height: 20rem;
+}
+
+.table-img {
     width: 100%;
+    height: auto;
 }
-
-.data-table td, .data-table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.data-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  /* background-color; */
-  color: #111;
-  font: bold 2rem Calibri, sans-setif;
-}
-
-.data-table tr:hover {background-color: #ddd;}
 
 .pagination-container {
     display: flex;

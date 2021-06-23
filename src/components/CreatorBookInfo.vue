@@ -7,9 +7,8 @@
         <div class="form-row">
             <label class="label-attribute">Ảnh bìa</label>
             <div class="column">
-                <img class="cover-img" :src="book.imageLink" v-show="mode === 'EDIT'">
-                <input v-on:change="getCoverImage($event)" type="file" style="display: none;" ref="inputImage">
-                <input type="button" value="Chọn ảnh" @click="this.$refs['inputImage'].click()" />
+                <!-- <img class="cover-img" :src="book.imageLink" v-show="mode === 'EDIT'"> -->
+                <input v-on:change="getCoverImage($event)" type="file">
             </div>
         </div>
         <div class="form-row">
