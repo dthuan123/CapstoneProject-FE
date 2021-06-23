@@ -1,10 +1,6 @@
 <template>
     <main class="app-main">
-<<<<<<< HEAD
         <div class="main">
-=======
-        <div>
->>>>>>> a9c5fe1c073c2af1a081ca48b954262608bdc7bc
             <nav aria-label="breadcrumb" style="font-size: 15px;">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/home">Trang chủ</a></li>
