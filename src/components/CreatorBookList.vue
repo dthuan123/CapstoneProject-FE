@@ -6,7 +6,7 @@
             v-bind:paging="paging"
             v-bind:url="url"
         >
-        </creator-data-table>
+        </creator-data-table> 
     </div>
 </template>
 

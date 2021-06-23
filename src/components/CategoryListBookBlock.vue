@@ -1,8 +1,8 @@
 <template>
-    <title>{{category}}</title>
+    <span>{{category}}</span>
     <main> 
         <div class="category-list-book-block">
-            <img class="book-img" src="https://upload.wikimedia.org/wikipedia/commons/4/40/Panor%C3%A1mica_Oto%C3%B1o_Alc%C3%A1zar_de_Segovia.jpg">
+            <img class="book-img" :src="book.imageLink">
             <div class="column">
                 <h1>{{book.name}}</h1>
                 <p>{{book.description}}</p>

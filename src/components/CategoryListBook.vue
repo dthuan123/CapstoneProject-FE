@@ -32,7 +32,12 @@ export default {
             data: null,
             currentPage: 0,
             totalPage: null,
-            pagingSetting: this.paging,
+            pagingSetting: {
+                page: 0,
+                pageSize: 10,
+                sortField: "id",
+                sortOrder: "des"
+            },
             apiURL: this.url,
         }
     },
@@ -71,34 +76,38 @@ export default {
     methods: {
         listbooks(){
             axios
-                .get("http://localhost:8000/book-list", this.apiURL, {
+                .get("http://localhost:8000/book-list", {
                     headers: {
                         categoryId: this.categoryId,
-                        pagingSetting : this.pagingSetting
+                        page: this.pagingSetting.page,
+                        pageSize: 10,
+                        sortField: "id",
+                        sortOrder: "des"
                     }
                 })
                 .then((response) => {
-                    this.data = response.data
+                    this.data = response.data.content;
                     console.log(this.data);
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
+                    console.log(this.totalPage)
                 });
         },
         toPrevPage() {
             if(this.currentPage !== 1) {
                 this.pagingSetting.page--;
             }
-            this.getData();
+            this.listbooks();
         },
         toNextPage() {
             if(this.currentPage !== this.totalPage) {
                 this.pagingSetting.page++;
             }
-            this.getData();
+            this.listbooks();
         },
         setPage(pageIndex) {
             this.pagingSetting.page = pageIndex - 1;
-            this.getData();
+            this.listbooks();
         }
     }
 }

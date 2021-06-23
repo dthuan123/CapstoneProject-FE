@@ -53,16 +53,18 @@
         methods: {
             register() {
                 let body = {
-                    role: 1,
-                    approvve: null,
-                    username: this.username,
+                    role: {
+                        id: 1
+                    },
+                    approved: 0,
+                    name: this.username,
                     password: this.password,
                     email: this.email,
                     phone: this.phone,
-                    useridentity: null,
-                    useridentityfront: null,
-                    useridentityback: null,
-                    enable: true,
+                    identityCard: null,
+                    identityCardFront: null,
+                    identityCardBack: null,
+                    enabled: 1,
                     userimage: null
                 }
                 axios.post("http://localhost:8000/register", body)

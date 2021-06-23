@@ -37,6 +37,10 @@ const routes = [
         path: "/category",
         component: CategoryListBook,
     },
+    {
+        path: "/register",
+        component: Register
+    },
     ///path cua guess
     {
         path: "/guest",

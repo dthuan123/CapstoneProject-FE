@@ -10,8 +10,8 @@
 <script>
 import axios from "axios"
 export default {         
-        props: ["report"],   
-        name: "ReaderListMessage",
+    props: ["report"],   
+    name: "ReaderListMessage",
     data() {
         return {
             messageListByUser: [],
@@ -30,7 +30,7 @@ export default {
                         userId: this.userId
                     }
                 })
-                .then((response) => (this.chapters = response.data));
+                .then((response) => (this.messageListByUser = response.data));
         }
 
         
