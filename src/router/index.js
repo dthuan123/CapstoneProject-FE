@@ -6,11 +6,13 @@ import ErrorPermission from "@/views/ErrorPermission.vue";
 import CreatorBookList from "@/components/CreatorBookList.vue";
 import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
 import CreatorBookNew from "@/components/CreatorBookNew.vue";
-import ListCategory from "@/components/ListCategory"
-import CategoryListBook from "@/components/CategoryListBook.vue"
-import CreatorChapterEditor from '@/components/CreatorChapterEditor.vue'
-import ReaderListMessage from "@/components/ReaderListMessage.vue"
-import Register from "@/views/Register.vue"
+import ListCategory from "@/components/ListCategory";
+import CategoryListBook from "@/components/CategoryListBook.vue";
+import AdminHome from "@/views/AdminHome.vue";
+import AdminUserList from "@/components/AdminUserList.vue";
+import AdminUserEdit from "@/components/AdminUserEdit.vue";
+import AdminReportList from "@/components/AdminReportList.vue";
+
 
 const routes = [
     {
@@ -34,18 +36,63 @@ const routes = [
         component: ListCategory,
     },
     {
-        path: "/category",
-        component: CategoryListBook,
+        path: "/category-list-book",
+        component: CategoryListBook
     },
     {
-        path: "/register",
-        component: Register
+        path: "/admin",
+        component: AdminHome,
+        children: [
+            {
+                path: "report-list",
+                component: AdminReportList
+            },
+            {
+                path: "user-list",
+                component: AdminUserList
+            },
+            {
+                path: "user-edit",
+                name: "UserEdit",
+                component: AdminUserEdit
+            },
+            {
+                path: "book-list",
+                name: "BookEdit",
+                component: CreatorBookEdit
+            }
+        ]
+
+     
+
+
+
+
+
+
+
+
+
+
+        
     },
+
     ///path cua guess
     {
         path: "/guest",
+
      
-      
+
+
+
+
+
+
+
+
+
+
+        
     },
 
     {
@@ -56,73 +103,55 @@ const routes = [
         // },
         children: [
             {
-                path: "get/books",
+                path: "book-list",
                 component: CreatorBookList
             },
             {
-                path: "create/book",
+                path: "book-new",
                 name: "BookNew",
                 component: CreatorBookNew
             },
             {
-                path: "edit/book",
-                name: "EditBook",
+                path: "book-edit",
+                name: "BookEdit",
                 component: CreatorBookEdit
-            },
-            {
-                path: "edit/chapter",
-                name: "EditChapter",
-                component: CreatorChapterEditor
-            },
-            {
-                path: "create/chapter",
-                name: "CreateChapter",
-                component: CreatorChapterEditor
             }
         ]
     },
-
     {
-        path: "/reader/messages",
-        component: ReaderListMessage
+        path: "/reader",
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     },
-    
-    {
-        path: "/admin", 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
+  
 ];
 
 const router = createRouter({
