@@ -50,7 +50,7 @@
                             <router-link to="">Kệ sách</router-link>
                         </li>
                         <li>
-                            <router-link to="reader/messages">Kệ sách</router-link>
+                            <router-link to="reader/messages">Tin nhắn</router-link>
                         </li>
                         <li>
                             <router-link v-show="role == 'reader'" to="/reader">Hệ thống</router-link>
