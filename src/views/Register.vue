@@ -53,11 +53,17 @@
         methods: {
             register() {
                 let body = {
+                    role: 1,
+                    approvve: null,
                     username: this.username,
                     password: this.password,
                     email: this.email,
                     phone: this.phone,
-                    roleid: 1
+                    useridentity: null,
+                    useridentityfront: null,
+                    useridentityback: null,
+                    enable: true,
+                    userimage: null
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{

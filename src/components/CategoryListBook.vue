@@ -6,6 +6,16 @@
                 :key="book.id"
                 v-bind:book="book">
             </category-list-book-block>
+        <ul class="pagination-container">
+            <li v-show="currentPage > 0" @click="toPrevPage">Prev</li>
+            <li v-for="page in pages" :key="page.name">
+                <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
+                    {{ page.name }}
+                </button>
+            </li>
+            <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
+            <li @click="setPage(totalPage)">Last</li>
+        </ul>
         </div>
     </main>
 </template>
@@ -19,7 +29,40 @@ export default {
     data() {
         return {
             categoryId: this.$route.query.id,
-            data: null
+            data: null,
+            currentPage: 0,
+            totalPage: null,
+            pagingSetting: this.paging,
+            apiURL: this.url,
+        }
+    },
+    computed: { 
+        pages() {
+            const pages = [];
+
+            let current = this.currentPage + 1;
+            for (let i = current - 2; i < current; i++) {
+                if(i > 0) {
+                    pages.push({
+                        name: i,
+                        isDisabled: false
+                    })
+                }
+            }
+            pages.push({
+                name: current,
+                isDisabled: true
+            })
+            for (let i = current + 1; i <= current + 2; i++) {
+                if(i <= this.totalPage) {
+                    pages.push({
+                        name: i,
+                        isDisabled: false
+                    })
+                }
+            }
+
+            return pages;
         }
     },
     created(){
@@ -28,15 +71,34 @@ export default {
     methods: {
         listbooks(){
             axios
-                .get("http://localhost:8000/book-list", {
+                .get("http://localhost:8000/book-list", this.apiURL, {
                     headers: {
-                        categoryId: this.categoryId
+                        categoryId: this.categoryId,
+                        pagingSetting : this.pagingSetting
                     }
                 })
                 .then((response) => {
                     this.data = response.data
                     console.log(this.data);
+                    this.currentPage = response.data.pageable.pageNumber;
+                    this.totalPage = response.data.totalPages;
                 });
+        },
+        toPrevPage() {
+            if(this.currentPage !== 1) {
+                this.pagingSetting.page--;
+            }
+            this.getData();
+        },
+        toNextPage() {
+            if(this.currentPage !== this.totalPage) {
+                this.pagingSetting.page++;
+            }
+            this.getData();
+        },
+        setPage(pageIndex) {
+            this.pagingSetting.page = pageIndex - 1;
+            this.getData();
         }
     }
 }
