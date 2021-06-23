@@ -9,7 +9,7 @@ import CreatorBookNew from "@/components/CreatorBookNew.vue";
 import ListCategory from "@/components/ListCategory"
 import CategoryListBook from "@/components/CategoryListBook.vue"
 import CreatorChapterEditor from '@/components/CreatorChapterEditor.vue'
-import ReaderListMessage from "@/component/ReaderListMessage.vue"
+import ReaderListMessage from "@/components/ReaderListMessage.vue"
 import Register from "@/views/Register.vue"
 
 const routes = [
@@ -79,18 +79,8 @@ const routes = [
     },
 
     {
-        path: "/reader",
-        children: [
-            {
-                path: "messages",
-                component: ReaderListMessage
-            }
-        ]
-        
-
-
-
-
+        path: "/reader/messages",
+        component: ReaderListMessage
     },
     
     {

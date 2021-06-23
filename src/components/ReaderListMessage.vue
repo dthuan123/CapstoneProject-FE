@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+    <div class="container">
         {{userId}}
         <div v-for="report in messageListByUser" :key="report.id" v-bind:userId="userId">
             {{ report.reportId}} {{ report.reportContent}} {{ report.responseDate}}
@@ -15,7 +15,7 @@ export default {
     data() {
         return {
             messageListByUser: [],
-            userId: this.$store.state.userId,
+            userId: this.$store.state.user.id,
             data: null,           
         }
     },
