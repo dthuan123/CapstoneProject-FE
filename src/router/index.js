@@ -83,6 +83,11 @@ const routes = [
                 path: "edit/chapter",
                 name: "EditChapter",
                 component: CreatorChapterEditor
+            },
+            {
+                path: "create/chapter",
+                name: "CreateChapter",
+                component: CreatorChapterEditor
             }
         ]
     },

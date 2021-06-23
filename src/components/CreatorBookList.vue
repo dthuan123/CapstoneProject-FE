@@ -44,11 +44,15 @@ export default {
             },
             {
                 header: "Ngày bắt đầu",
-                field: "startedDate"
+                field: "startedDate",
+                isDate: true,
+                width: "8rem"
             },
             {
                 header: "Ngày cập nhật cuối",
-                field: "updatedDate"
+                field: "updatedDate",
+                isDate: true,
+                width: "8rem"
             },
             {
                 header: "Mô tả",
@@ -78,7 +82,7 @@ export default {
                 field: "bookStatusName"
             },
             {
-                display: "<button>Chỉnh sửa</button>",
+                display: "<button class='btn btn-primary'>Chỉnh sửa</button>",
                 action: function edit(row) {
                     self.$router.push({name: "EditBook"});
                     self.$store.commit("setBookId", row.id);

@@ -11,7 +11,8 @@
             v-bind:paging="paging"
             v-bind:url="url"
         >
-        </creator-data-table>        
+        </creator-data-table>  
+        <button @click="addChapter">Thêm chương mới</button>      
   </div>
 </template>
 
@@ -85,6 +86,9 @@ export default {
         this.url = "http://localhost:8000/creator/get/chapters";
     },
     methods: {
+        addChapter() {
+            this.$router.push({name: "CreateChapter"});
+        },
         deleteChapter(id) {
             axios
                 .delete("http://localhost:8000/creator/get/chapters", {

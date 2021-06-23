@@ -1,11 +1,13 @@
 <template>
     <div>
         <span>{{ book.name }}</span>
-        <span>{{ chapter.name }}</span>
+        <input type="text" class="form-control" v-model="chapter.name">
         <span>{{ chapter.startedDate }}</span>
         <span>{{ chapter.updatedDate }}</span>
-        <ckeditor :editor="editor" v-model="editorData" :config="editorConfig"></ckeditor>
-        <button @click="print">In</button>
+        <ckeditor :editor="editor" v-model="chapter.content" :config="editorConfig"></ckeditor>
+        <span class="alert alert-success" role="alert" v-show="saveStatus">Success!</span>
+        <button @click="saveChapter">Lưu</button>
+        <button @click="print">Xuất bản</button>
     </div>
 </template>
 
@@ -25,39 +27,42 @@ export default {
         return {
             mode: this.$route.name,
             book: {},
-            chapter: {},
+            chapter: {
+                name: "",
+                content: ""
+            },
             editor: ClassicEditor,
             editorData: "",
             editorConfig: {
-                    plugins: [
-                        EssentialsPlugin,
-                        BoldPlugin,
-                        ItalicPlugin,
-                        LinkPlugin,
-                        ParagraphPlugin,
-                        Font
-                    ],
+                plugins: [
+                    EssentialsPlugin,
+                    BoldPlugin,
+                    ItalicPlugin,
+                    LinkPlugin,
+                    ParagraphPlugin,
+                    Font
+                ],
 
-                    toolbar: {
-                        items: [
-                            'bold',
-                            'italic',
-                            'link',
-                            'undo',
-                            'redo',
-                            'fontSize', 
-                            'fontFamily', 
-                            'fontColor'
-                        ]
-                    }
+                toolbar: {
+                    items: [
+                        'bold',
+                        'italic',
+                        'link',
+                        'undo',
+                        'redo',
+                        'fontSize', 
+                        'fontFamily', 
+                        'fontColor'
+                    ]
                 }
+            },
+            saveStatus: false
            
         }
     },
     created() {
         this.getBook();
         if(this.mode === "EditChapter") {
-            this.getBook();
             this.getChapter();
         }
     },
@@ -82,8 +87,24 @@ export default {
                 })
                 .then((response) => this.chapter = response.data);
         },
+        saveChapter() {
+            this.chapter.book = this.book;
+            // let formData = new FormData();
+            // formData.append("chapter", new Blob([JSON.stringify(this.book)], {
+            //         type: "application/json"
+            //     }));
+            let url = "http://localhost:8000/creator/create/chapter";
+            if(this.mode === "EditChapter") {
+                url = "http://localhost:8000/creator/edit/chapter"
+            }
+            axios
+                .post(url, this.chapter)
+                .then((response) => {
+                    this.saveStatus = true;
+                });
+        },
         print() {
-            console.log(this.editorData)
+            console.log(this.chapter)
         }
     }
 }
