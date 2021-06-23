@@ -28,4 +28,7 @@
         white-space: inherit;
         font-size: 20px;
     }
+    .list-group-item{
+        display: flex
+    }
 </style>
