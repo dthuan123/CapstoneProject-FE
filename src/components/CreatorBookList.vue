@@ -74,12 +74,15 @@ export default {
                 header: "Trạng thái",
                 field: "enabled",
                 isConditionalRendering: true,
-                fieldTrue: "Ok",
-                fieldFalse: "No"
+                fieldTrue: "Đang hoạt động",
+                fieldFalse: "Đã bị cấm"
             },
             {
                 header: "Tình trạng",
-                field: "bookStatusName"
+                isObject: true,
+                object: "bookStatus",
+                field: "name"
+                
             },
             {
                 display: "<button class='btn btn-primary'>Chỉnh sửa</button>",

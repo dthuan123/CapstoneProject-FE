@@ -27,22 +27,25 @@
                     >
                         <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
+                        <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                         <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
-                        <span v-else-if="col.isDate">{{ row[col.field].split("T")[0] }}</span>
+                        <span v-else-if="col.isDate">{{ row[col.field] ? row[col.field].split("T")[0] : ""}}</span>
                         <span v-else>{{ row[col.field] }}</span>
                     </td>
                 </tr>
             </tbody>
         </table>
-        <ul class="pagination">
-            <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-            <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
-            <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
-                <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
-            </li>
-            <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-            <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
-        </ul>
+        <div class="row-end">
+            <ul class="pagination">
+                <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
+                <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
+                    <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
+                </li>
+                <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
+                <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -51,7 +54,7 @@ import axios from "axios"
 
 export default {    
     name: "DataTable",
-    props: ["columnDefs", "data", "paging", "url"],
+    props: ["columnDefs", "data", "paging", "url"], 
     data() {
         return {
             tableData: this.data,
@@ -145,5 +148,10 @@ export default {
 
 .pagination-container {
     display: flex;
+}
+
+.row-end {
+    display: flex;
+    justify-content: flex-end;
 }
 </style>

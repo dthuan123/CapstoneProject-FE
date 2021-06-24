@@ -1,5 +1,5 @@
 <template>
-    <main class="app-main">
+    <div class="app-main">
         <div>
             <h3>Truyện đề cử</h3>
         </div>
@@ -12,7 +12,7 @@
         </div>
         <div class="main-left">
         </div>
-    </main>
+    </div>
 </template>
 
 <script>

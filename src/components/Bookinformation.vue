@@ -1,13 +1,11 @@
 <template>
-    <main>
-        <div>
-            <book-information-block
-                v-for="books in data"
-                :key="books.id"
-                v-bind:book="books">
-            </book-information-block>
-        </div>
-    </main>
+    <div>
+        <book-information-block
+            v-bind:book="data">
+        </book-information-block>
+
+    </div>
+    
 </template>
 
 <script>
@@ -19,8 +17,7 @@ import axios from "axios";
         data(){
             return {
                 bookId: this.$route.query.id,
-                data: null,
-
+                data: {}
             }
         },
         created() {
@@ -29,15 +26,15 @@ import axios from "axios";
         methods: {
             books() {
                 axios
-                .get("http://localhost:8000/book-by-id",{
-                    headers: {
-                        bookId: this.bookId,
-                    }
-                })
-                .then((response) => {
-                    this.data = response.data.content;
-                    console.log(this.data);
-                });
+                    .get("http://localhost:8000/book-by-id",{
+                        headers: {
+                            bookId: this.bookId,
+                        }
+                    })
+                    .then((response) => {
+                        this.data = response.data;
+                        console.log(this.data);
+                    });
             }
         }
     }

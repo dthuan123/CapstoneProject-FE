@@ -12,7 +12,10 @@
             v-bind:url="url"
         >
         </creator-data-table>  
-        <button @click="addChapter">Thêm chương mới</button>      
+        <div class="row-end">
+            <button class="btn-primary" @click="addChapter">Thêm chương mới</button>  
+        </div>
+
   </div>
 </template>
 
@@ -49,30 +52,37 @@ export default {
                 header: "Tên chương",
                 field: "name",
             },
-            // {
-            //     header: "Ngày bắt đầu",
-            //     field: "startedDate"
-            // },
-            // {
-            //     header: "Ngày cập nhật cuối",
-            //     field: "updatedDate"
-            // },
-            // {
-            //     header: "Tình trạng",
-            //     field: ""
-            // },
             {
-                display: "<button>Chỉnh sửa</button>",
+                header: "Ngày bắt đầu",
+                isDate: true,
+                field: "startedDate"
+            },
+            {
+                header: "Ngày cập nhật cuối",
+                isDate: true,
+                field: "updatedDate"
+            },
+            {
+                header: "Tình trạng",
+                field: ""
+            },
+            {
+                display: "<button class='btn btn-primary'>Chỉnh sửa</button>",
                 action: function edit(row) {
                     self.$router.push({name: "EditChapter"});
                     self.$store.commit("setChapterId", row.id);
                 }
             },
             {
-                display: "<button>Xóa</button>",
+                display: "<button class='btn btn-danger'>Xóa</button>",
                 action: function edit(row) {
-                    self.$router.push({name: "BookEdit"});
-                    self.$store.commit("setBookId", row.id);
+                    axios
+                        .delete("http://localhost:8000/creator/delete/chapter", {   
+                            headers: {
+                                chapterId: row.id
+                            }
+                        })
+                        .then((response) => {});
                 }
             }
         ];
@@ -105,5 +115,17 @@ export default {
 </script>
 
 <style>
+.container {
+    background-color: #fefefe;
+}
 
+.row-end {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
+}
+
+.row-end button {
+    padding: 1.5rem;
+}
 </style>

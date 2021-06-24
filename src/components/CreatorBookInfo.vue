@@ -26,10 +26,18 @@
                                 {{ alias.name }}
                             </option>
                         </select>
-                        <button @click="showModal = true">Thêm mới</button>
+                        <button class="btn btn-outline-secondary" @click="showModal = true">Thêm mới</button>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="form-row" v-if="mode === 'EDIT'">
+            <label class="label-attribute">Tình trạng</label>
+            <select v-model="book.bookStatus.id">
+                <option v-for="status in bookStatuses" :key="status" v-bind:value="status.id">
+                    {{ status.name }}
+                </option>
+            </select>
         </div>
         <div class="form-row">
             <label class="label-attribute">Thể loại</label><br>
@@ -44,7 +52,13 @@
             <label class="label-attribute">Tóm tắt</label><br>
             <textarea v-model="book.description"></textarea>
         </div>
-        <button v-on:click="createBook">Tao moi</button>
+        <div class="alert alert-success" role="alert" v-show="saveSuccess">
+            Success!
+        </div>
+        <div class="row-center">
+            <button class="btn btn-outline-secondary" v-if="mode !== 'EDIT'" v-on:click="createBook">Tạo mới</button>
+            <button class="btn btn-outline-secondary" v-if="mode === 'EDIT'" v-on:click="updateBook">Chỉnh sửa</button>
+        </div>
 
         <div class="alias-modal-wrapper" v-if="showModal">
             <div class="alias-modal-container">
@@ -82,6 +96,8 @@ export default {
             aliases: [],
             selectedAliasId: null,
             categories: [],
+            bookStatuses: [],
+            selectedBookStatusId: null,
             checkedCategories: [],
             coverImageFile: null,
             creator: {
@@ -93,12 +109,14 @@ export default {
                 creator: null,
                 alias: null,
                 categories: [],
-                description: ""
+                description: "",
+                bookStatus: {}
             },
             showModal: false,
             newAlias: null,
             aliasError: false,
-            aliasSuccess: false
+            aliasSuccess: false,
+            saveSuccess: false
         }
     },
     created () {
@@ -106,6 +124,7 @@ export default {
         this.getAliases();
         this.getCategories();
         if (this.mode === "EDIT") {
+            this.getBookStatuses();
             this.getBook();  
             
         }
@@ -120,10 +139,16 @@ export default {
                 };
             }
         },
+        setBookStatus() {
+            this.book.bookStatus = {
+                id: this.selectedBookStatusId
+            }
+        },
+
         filterCategory() {
-            
             this.book.categories = this.categories.filter(category => this.checkedCategories.includes(category.id))
         },
+
         createBook() {
             this.setBookCreator();
             this.filterCategory();
@@ -136,7 +161,23 @@ export default {
 
             axios
                 .post("http://localhost:8000/creator/create/book", formData)
-                .then((response) => console.log(response));
+                .then((response) => this.saveSuccess = true);
+        },
+
+        updateBook() {
+            this.setBookCreator();
+           
+            this.filterCategory();
+            
+            let formData = new FormData();
+            formData.append("book", new Blob([JSON.stringify(this.book)], {
+                    type: "application/json"
+                }));
+            formData.append("coverImage", this.coverImageFile);
+
+            axios
+                .post("http://localhost:8000/creator/update/book", formData)
+                .then((response) => this.saveSuccess = true);
         },
 
         getBook() {
@@ -149,6 +190,7 @@ export default {
                 .then((response) => {
                     this.book = response.data
                     this.settingBookInfo();
+                    console.log(this.book)
                     
                 });
         },
@@ -164,12 +206,6 @@ export default {
                 this.useCreatorName = false;
                 this.selectedAliasId = this.book.alias.id;
             }
-
-            //display cover image and image file name
-            // if(this.book.imageLink) {
-
-            // }
-            
         },
 
         getAliases() {
@@ -214,6 +250,15 @@ export default {
                     this.categories = response.data
                 });
         },
+
+        getBookStatuses() {
+             axios
+                .get("http://localhost:8000/creator/get/bookStatuses")
+                .then((response) => {
+                    this.bookStatuses = response.data
+                });
+        },
+
         getCoverImage(event) {
             this.coverImageFile = event.target.files[0];
         },
@@ -245,8 +290,26 @@ export default {
 }
 .form-row {
     display: flex;
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
     justify-content: flex-start;
+}
+
+.form-row input[type=text] {
+    width: 50%;
+}
+
+.form-row textarea {
+    width: 50%;
+    height: 10rem;
+}
+
+.row-center {
+    display: flex;
+    justify-content: center;
+}
+
+.row-center button {
+    padding: 1rem;
 }
 
 .column {
