@@ -1,5 +1,8 @@
 <template>
     <main class="app-main">
+        <div>
+            <h3>Truyện đề cử</h3>
+        </div>
         <div class="main-right">
             <book-detail-block
                 v-for="bookHome in newestChapterBooks"

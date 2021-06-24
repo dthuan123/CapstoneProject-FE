@@ -33,7 +33,12 @@ export default {
                     console.log(res);
                     if(res.data) {
                         store.commit("setUser", res.data);
-                        this.$router.push("/home");
+                        console.log(res.data.role.id);
+                        if (res.data.role.id == 3) {
+                             this.$router.push("/admin");
+                        } else {
+                             this.$router.push("/home");
+                        }
                     } else {
                         this.isError = true;
                     }

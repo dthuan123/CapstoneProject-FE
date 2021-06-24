@@ -114,5 +114,7 @@ export default {
 </script>
 
 <style>
-
+    .pagination-container {
+        display: flex;
+    }
 </style>
