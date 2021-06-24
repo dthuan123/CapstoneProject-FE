@@ -14,6 +14,7 @@ import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
 import Register from "@/views/Register.vue";
 import Bookinformation from "@/components/Bookinformation.vue";
+import ReaderListMessage from "@/components/ReaderListMessage.vue"
 
 const routes = [
     {
@@ -107,58 +108,26 @@ const routes = [
     {
         path: "/creator",
         component: CreatorHome,
-        // meta: {
-        //     roles: ['creator']
-        // },
         children: [
             {
-                path: "book-list",
+                path: "get/books",
                 component: CreatorBookList
             },
             {
-                path: "book-new",
+                path: "create/book",
                 name: "BookNew",
                 component: CreatorBookNew
             },
             {
-                path: "book-edit",
+                path: "update/book",
                 name: "BookEdit",
                 component: CreatorBookEdit
             }
         ]
     },
     {
-        path: "/reader",
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        path: "/reader/messages",
+        component: ReaderListMessage
     },
   
 ];
