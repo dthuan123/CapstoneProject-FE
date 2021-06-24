@@ -12,7 +12,7 @@ import AdminHome from "@/views/AdminHome.vue";
 import AdminUserList from "@/components/AdminUserList.vue";
 import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
-
+import Register from "@/views/Register.vue";
 
 const routes = [
     {
@@ -36,8 +36,12 @@ const routes = [
         component: ListCategory,
     },
     {
-        path: "/category-list-book",
+        path: "/category",
         component: CategoryListBook
+    },
+    {
+        path: "/register",
+        component: Register
     },
     {
         path: "/admin",
