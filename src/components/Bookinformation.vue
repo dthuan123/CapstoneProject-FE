@@ -2,9 +2,7 @@
     <main>
         <div>
             <book-information-block
-                v-for="books in data"
-                :key="books.id"
-                v-bind:book="books">
+                v-bind:book="data">
             </book-information-block>
         </div>
     </main>
@@ -35,7 +33,7 @@ import axios from "axios";
                     }
                 })
                 .then((response) => {
-                    this.data = response.data.content;
+                    this.data = response.data;
                     console.log(this.data);
                 });
             }

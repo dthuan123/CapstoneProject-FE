@@ -1,10 +1,10 @@
 <template>
     <main>
         <div>
-            <img class="book-img" src="books.imageLink">
+            <img class="book-img" :src="books.imageLink">
             <div class="column">
-                <h1>{{books.name}}</h1>
-                <p>{{books.description}}</p>
+                <h1>{{book.name}}</h1>
+                <p>{{book.description}}</p>
             </div>
         </div>
     </main>
@@ -13,7 +13,7 @@
 <script>
     export default{
         name: "BookInformationBlock",
-        props: ["books"]
+        props: ["book"]
     }
 </script>
 <style>
