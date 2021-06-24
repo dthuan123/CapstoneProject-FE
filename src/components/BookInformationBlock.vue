@@ -1,13 +1,13 @@
 <template>
-    <main>
+    
         <div>
-            <img class="book-img" :src="books.imageLink">
+            <img class="book-img" :src="book.imageLink">
             <div class="column">
                 <h1>{{book.name}}</h1>
                 <p>{{book.description}}</p>
             </div>
         </div>
-    </main>
+    
 </template>
 
 <script>
