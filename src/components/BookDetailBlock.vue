@@ -4,7 +4,7 @@
       <div class="novel-chapter">
       </div>
       <div class="novel-title">
-         {{ book.name }}
+         <router-link :to="'/books?id=' + book.id">{{book.name}}</router-link>
       </div>
   </div>
 </template>

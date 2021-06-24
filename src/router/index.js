@@ -13,6 +13,7 @@ import AdminUserList from "@/components/AdminUserList.vue";
 import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
 import Register from "@/views/Register.vue";
+import Bookinformation from "@/components/Bookinformation.vue";
 
 const routes = [
     {
@@ -42,6 +43,10 @@ const routes = [
     {
         path: "/register",
         component: Register
+    },
+    {
+        path: "/books",
+        component: Bookinformation
     },
     {
         path: "/admin",
