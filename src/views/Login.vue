@@ -30,10 +30,8 @@ export default {
             }
             axios.post("http://localhost:8000/login", body)
                 .then(res => {
-                    console.log(res);
                     if(res.data) {
                         store.commit("setUser", res.data);
-                        console.log(res.data.role.id);
                         if (res.data.role.id == 3) {
                              this.$router.push("/admin");
                         } else {

@@ -2,9 +2,9 @@
     <div class="creator-book-list">
         <creator-data-table
             v-bind:columnDefs="columnDefs"
-            v-bind:data="data"
-            v-bind:paging="paging"
+            v-bind:pageSize="pageSize"
             v-bind:url="url"
+            v-bind:headerOption="headerOption"
         >
         </creator-data-table> 
     </div>
@@ -18,9 +18,14 @@ export default {
     data() {
         return {
             columnDefs: null,
-            data: null,
-            paging: null,
-            url: null
+            url: null,
+            pageSize: 10,
+            headerOption: [
+                {
+                    name: "creatorId",
+                    value:  this.$store.state.user.id,
+                }
+            ]
         }
     },
     components: {
@@ -46,13 +51,13 @@ export default {
                 header: "Ngày bắt đầu",
                 field: "startedDate",
                 isDate: true,
-                width: "8rem"
+                width: "9rem"
             },
             {
                 header: "Ngày cập nhật cuối",
                 field: "updatedDate",
                 isDate: true,
-                width: "8rem"
+                width: "9rem"
             },
             {
                 header: "Mô tả",
@@ -92,12 +97,6 @@ export default {
                 }
             }
         ];
-        this.paging = {
-            page: 0,
-            pageSize: 10,
-            sortField: "id",
-            sortOrder: "des"
-        };
         this.url = "http://localhost:8000/creator/get/books";
     }
 };

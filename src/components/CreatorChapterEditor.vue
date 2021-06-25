@@ -1,13 +1,29 @@
 <template>
-    <div>
-        <span>{{ book.name }}</span>
-        <input type="text" class="form-control" v-model="chapter.name">
-        <span>{{ chapter.startedDate }}</span>
-        <span>{{ chapter.updatedDate }}</span>
+    <div class="container">
+        <div class="custom-row">
+            <label>Tên truyện</label>
+            <span>{{ book.name }}</span>
+        </div>
+        <div class="custom-row">
+            <label>Tên chương</label>
+            <input type="text" v-model="chapter.name">
+        </div>
+        <div class="custom-row">
+            <label>Ngày bắt đầu</label>
+            <span>{{ formatDate(chapter.startedDate) }}</span>
+        </div>
+        <div class="custom-row">
+            <label>Ngày cập nhật</label>
+            <span>{{ formatDate(chapter.updatedDate) }}</span>
+        </div>
         <ckeditor :editor="editor" v-model="chapter.content" :config="editorConfig"></ckeditor>
-        <span class="alert alert-success" role="alert" v-show="saveStatus">Success!</span>
-        <button @click="saveChapter">Lưu</button>
-        <button @click="print">Xuất bản</button>
+        <div>
+            <span class="alert alert-success" role="alert" v-show="saveStatus">Success!</span>
+        </div>
+        <div class="row-buttons">
+            <button class="btn btn-primary" @click="saveChapter">Lưu</button>
+            <button class="btn btn-primary" @click="print">Xuất bản</button>
+        </div>
     </div>
 </template>
 
@@ -89,10 +105,6 @@ export default {
         },
         saveChapter() {
             this.chapter.book = this.book;
-            // let formData = new FormData();
-            // formData.append("chapter", new Blob([JSON.stringify(this.book)], {
-            //         type: "application/json"
-            //     }));
             let url = "http://localhost:8000/creator/create/chapter";
             if(this.mode === "EditChapter") {
                 url = "http://localhost:8000/creator/edit/chapter"
@@ -103,15 +115,50 @@ export default {
                     this.saveStatus = true;
                 });
         },
-        print() {
-            console.log(this.chapter)
+        formatDate(date) {
+            if(date) {
+                date =  date.split("T")[0];
+                return date.split("-").reverse().join("-");
+            }
+            return "";
         }
     }
 }
 </script>
 
-<style>
-.ck-editor__editable {
-    min-height: 500px;
+<style scoped>
+.container {
+    padding: 1rem;
+    margin-bottom: 2rem;
+    font-size: 1.4rem;
+    background-color: #fefefe;
+    border-radius: 1rem;
 }
+
+.custom-row {
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.custom-row input[type=text] {
+    width: 70rem;
+}
+
+.row-buttons {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.row-buttons button {
+    width: 10rem;
+    padding: 1rem;
+    margin-left: 1rem;
+}
+
+.custom-row label {
+    width: 10rem;
+    margin-right: 2rem;
+}
+
 </style>

@@ -1,21 +1,27 @@
 <template>
     <div class="creator-book-form">
-        <div class="form-row">
+        <div class="form-row form-group">
             <label class="label-attribute">Tiêu đề</label>
-            <input type="text" v-model="book.name">
+            <input type="text" class="form-control" v-model="book.name">
         </div>
         <div class="form-row">
             <label class="label-attribute">Ảnh bìa</label>
             <div class="column">
                 <!-- <img class="cover-img" :src="book.imageLink" v-show="mode === 'EDIT'"> -->
-                <input v-on:change="getCoverImage($event)" type="file">
+                <input class="form-control-file" v-on:change="getCoverImage($event)" type="file">
             </div>
         </div>
         <div class="form-row">
             <label class="label-attribute">Tên tác giả</label>
             <div class="book-creator-name">
-                <input type="radio" name="creator-name-mode" v-bind:value="true"  v-model="useCreatorName" checked>Dùng tên tác giả
-                <input type="radio" name="creator-name-mode" v-bind:value="false" v-model="useCreatorName" >Dùng nghệ danh
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="creator-name-mode" v-bind:value="true"  v-model="useCreatorName" checked>
+                    <label class="form-check-label">Dùng tên tác giả</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="creator-name-mode" v-bind:value="false" v-model="useCreatorName" >
+                    <label class="form-check-label">Dùng nghệ danh</label>
+                </div>
                 <div class="creator-container">
                     <div class="creator-name" v-show="useCreatorName">
                         <span>{{ creator.name }}</span>
@@ -42,22 +48,22 @@
         <div class="form-row">
             <label class="label-attribute">Thể loại</label><br>
             <div class="categories">
-                <div v-for="category in categories" :key="category">
-                    <input type="checkbox" :id="category.id" :value="category.id" v-model="checkedCategories" :checked="checkedCategories.includes(category.id)">
-                    <label :for="category.id">{{ category.name }}</label>
+                <div class="form-check form-check-inline" v-for="category in categories" :key="category">
+                    <input class="form-check-input" type="checkbox" :id="category.id" :value="category.id" v-model="checkedCategories" :checked="checkedCategories.includes(category.id)">
+                    <label class="form-check-label" :for="category.id">{{ category.name }}</label>
                 </div>
             </div>
         </div>
         <div class="form-row">
             <label class="label-attribute">Tóm tắt</label><br>
-            <textarea v-model="book.description"></textarea>
+            <textarea class="form-control" v-model="book.description"></textarea>
         </div>
         <div class="alert alert-success" role="alert" v-show="saveSuccess">
             Success!
         </div>
         <div class="row-center">
-            <button class="btn btn-outline-secondary" v-if="mode !== 'EDIT'" v-on:click="createBook">Tạo mới</button>
-            <button class="btn btn-outline-secondary" v-if="mode === 'EDIT'" v-on:click="updateBook">Chỉnh sửa</button>
+            <button class="btn btn-primary" v-if="mode !== 'EDIT'" v-on:click="createBook">Tạo mới</button>
+            <button class="btn btn-primary" v-if="mode === 'EDIT'" v-on:click="updateBook">Chỉnh sửa</button>
         </div>
 
         <div class="alias-modal-wrapper" v-if="showModal">
@@ -189,9 +195,7 @@ export default {
                 })
                 .then((response) => {
                     this.book = response.data
-                    this.settingBookInfo();
-                    console.log(this.book)
-                    
+                    this.settingBookInfo();  
                 });
         },
 
@@ -275,7 +279,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @font-face {
     font-family: "OpenSans";
     src: url("../assets/fonts/OpenSans-Regular.ttf");
@@ -288,6 +292,7 @@ export default {
     font-size: 1.4rem;
     font-family: OpenSans;
 }
+
 .form-row {
     display: flex;
     margin-bottom: 3rem;
