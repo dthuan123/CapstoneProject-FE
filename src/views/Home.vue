@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @font-face {
     font-family: "OpenSans";
     src: url("../assets/fonts/OpenSans-Regular.ttf");

@@ -97,12 +97,15 @@ export default {
         getData() {
             axios
                 .get(this.apiURL, {
-                    headers: this.pagingSetting
+                    headers: {
+                        userId: this.$store.state.user.id
+                    }
                 })
                 .then((response) => {
-                    this.tableData = response.data.content;
-                    this.currentPage = response.data.pageable.pageNumber;
-                    this.totalPage = response.data.totalPages;
+                    console.log(this.columnDefs);
+                    this.tableData = response.data;
+                    // this.currentPage = response.data.pageable.pageNumber;
+                    // this.totalPage = response.data.totalPages;
                 });
         },
         toPrevPage() {

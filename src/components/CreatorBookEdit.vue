@@ -7,13 +7,13 @@
         </creator-book-info>
         <creator-data-table
             v-bind:columnDefs="columnDefs"
-            v-bind:data="data"
-            v-bind:paging="paging"
+            v-bind:pageSize="pageSize"
             v-bind:url="url"
+            v-bind:headerOption="headerOption"
         >
         </creator-data-table>  
         <div class="row-end">
-            <button class="btn-primary" @click="addChapter">Thêm chương mới</button>  
+            <button class="btn btn-primary" @click="addChapter">Thêm chương mới</button>  
         </div>
 
   </div>
@@ -36,9 +36,14 @@ export default {
             bookId: this.$store.state.bookId,
             chapters: [],
             columnDefs: null,
-            data: null,
-            paging: null,
-            url: null
+            url: null,
+            pageSize: 10,
+            headerOption: [
+                {
+                    name: "bookId",
+                    value:  this.$store.state.bookId,
+                }
+            ]
         }
     },
     beforeMount() {
@@ -86,13 +91,6 @@ export default {
                 }
             }
         ];
-        this.paging = {
-            page: 0,
-            pageSize: 10,
-            sortField: "id",
-            sortOrder: "des",
-            bookId: this.bookId
-        };
         this.url = "http://localhost:8000/creator/get/chapters";
     },
     methods: {
@@ -114,7 +112,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .container {
     background-color: #fefefe;
 }

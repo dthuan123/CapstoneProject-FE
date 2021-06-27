@@ -14,6 +14,9 @@ import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
 import Register from "@/views/Register.vue";
 import Bookinformation from "@/components/Bookinformation.vue";
+import ReaderListMessage from "@/components/ReaderListMessage.vue";
+import CreatorChapterEditor from "@/components/CreatorChapterEditor.vue"
+import ChapterDetail from "@/components/ChapterDetail.vue"
 
 const routes = [
     {
@@ -103,62 +106,43 @@ const routes = [
 
         
     },
-
+    {
+        path: "/chapter",
+        component: ChapterDetail
+    },
     {
         path: "/creator",
         component: CreatorHome,
-        // meta: {
-        //     roles: ['creator']
-        // },
         children: [
             {
-                path: "book-list",
+                path: "get/books",
                 component: CreatorBookList
             },
             {
-                path: "book-new",
-                name: "BookNew",
+                path: "create/book",
+                name: "NewBook",
                 component: CreatorBookNew
             },
             {
-                path: "book-edit",
-                name: "BookEdit",
+                path: "update/book",
+                name: "EditBook",
                 component: CreatorBookEdit
+            },
+            {
+                path: "update/chapter",
+                name: "EditChapter",
+                component: CreatorChapterEditor
+            },
+            {
+                path: "create/chapter",
+                name: "CreateChapter",
+                component: CreatorChapterEditor
             }
         ]
     },
     {
-        path: "/reader",
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        path: "/reader/messages",
+        component: ReaderListMessage
     },
   
 ];

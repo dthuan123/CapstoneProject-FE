@@ -44,36 +44,36 @@ export default {
                 header: "STT",
                 field: "reportId"
             },
-            {
-                header: "Ngày gửi",
-                field: "reportedDate",
-                isDate: true,
-                width: "8rem"
-            },
-            {
-                header: "Tên truyện",
-                field: "book",                
-            },
-            {
-                header: "Người gửi",
-                field: "userSender",
-            },
+            // {
+            //     header: "Ngày gửi",
+            //     field: "reportedDate",
+            //     isDate: true,
+            //     width: "8rem"
+            // },
+            // {
+            //     header: "Tên truyện",
+            //     field: "book",                
+            // },
+            // {
+            //     header: "Người gửi",
+            //     field: "userSender",
+            // },
             {
                 header: "Nội dung",
                 field: "reportContent",
             },
-            {
-                header: "Tình trạng",
-                field: "statusId"
-            },
-            {
-                header: "Xem chi tiết",
-                field: ""
-            },
-            {
-                header: "Phản hồi",
-                field: ""
-            },           
+            // {
+            //     header: "Tình trạng",
+            //     field: "statusId"
+            // },
+            // {
+            //     header: "Xem chi tiết",
+            //     field: ""
+            // },
+            // {
+            //     header: "Phản hồi",
+            //     field: ""
+            // },           
         ];
         this.paging = {
             page: 0,
