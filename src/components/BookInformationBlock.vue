@@ -1,5 +1,4 @@
 <template>
-    
         <div class="message-content">
             <div class="message-userContent">
                 <div class="message-fields message-fields--before">
@@ -18,7 +17,7 @@
                 <br/>
                 </div>
                 <div class="cate">
-                     Tình trạng: <dl>{{book.bookStatus.name}}</dl>
+                     <!-- Tình trạng: <dl>{{book.bookStatus.name}}</dl> -->
                 </div>
             <div>
                 <dl>{{book.description}}</dl>
@@ -27,10 +26,10 @@
         </div>
     <div>
         <chapter-in-book-block 
-        v-for="chapter in data"
-        :key="chapter.id"
-        v-bind:chapter="chapter">
-            {{chapter.name}}
+            v-for="chapter in data"
+            :key="chapter.id"
+            v-bind:chapter="chapter"
+            v-bind:bookId="bookId">
         </chapter-in-book-block>
     </div>
 </template>
@@ -49,6 +48,7 @@ import ChapterInBookBlock from '@/components/ChapterInBookBlock.vue';
             }
         },
         created(){
+            console.log("book", this.book)
             this.listChapters();
         },
         methods: {
@@ -57,11 +57,13 @@ import ChapterInBookBlock from '@/components/ChapterInBookBlock.vue';
                     .get("http://localhost:8000/chapter", {
                         headers: {
                             bookId: this.bookId,
+                            page: 0,
+                            pageSize: 10
                         }
                     })
                     .then((response) =>{
-                        this.data = response.data;
-                        console.log(this.data);
+                        this.data = response.data.content;
+                        // console.log(this.data);
                     });
             }
         }

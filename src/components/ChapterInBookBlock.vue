@@ -1,14 +1,16 @@
 <template>
     <div>
         <div>
-            <p>{{chapter.name}}</p>
+            <p>{{ chapter.name }}</p>
         </div>
     </div>
 </template>
 
 <script>
-    export default{
-        name: "ChapterInBookBlock",
-        props: ["Chapter"]
-    }
+import axios from "axios"
+export default {
+    name: "ChapterInBookBlock",
+    props: ["chapter"],
+
+};
 </script>

@@ -1,9 +1,28 @@
 <template>
     <div class="custom-container">
+        <div class="chapter-container">
+            <div class="chapter-title">
+                <span>{{ chapter.name }}</span>
+            </div>
+            <div class="audio">
+                <text-to-speech-audio></text-to-speech-audio>
+            </div>
+            <div class="chapter-content">
+                {{ chapter.content }}
+            </div>
+        </div>
+        
         <div class="comment-block">
+            <div v-if="$store.state.user">
+                <ckeditor :editor="editor" v-model="chapterComment.content" :config="editorConfig" ></ckeditor>
+                <div class="reply-button">
+                    <button class="btn btn-success" @click="reply">Đăng bình luận</button>
+                </div>
+            </div>
             <comment-block
                 v-bind:comments="comments"
-            ></comment-block>\
+                @comment="getComments"
+            ></comment-block>
             <div class="row-end">
                 <ul class="pagination">
                     <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
@@ -15,6 +34,8 @@
                     <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
                 </ul>
             </div>
+            
+
         </div>
         
     </div>
@@ -23,14 +44,58 @@
 <script>
 import axios from "axios"
 import CommentBlock from './CommentBlock.vue'
+import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
+import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
+import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
+import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
+import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
+import Font from '@ckeditor/ckeditor5-font/src/font';
+import TextToSpeechAudio from './TextToSpeechAudio.vue';
+
 export default {
     name: "ChapterDetail",
-    components: { CommentBlock },
+    components: { CommentBlock, TextToSpeechAudio },
     data() {
         return {
             comments: [],
+            chapter: {},
             currentPage: 0,
             totalPage: null,
+            pageSize: 5,
+            chapterComment: {
+                chapter: {
+                    id: null
+                },
+                user: {
+                    id: this.$store.state.user ? this.$store.state.user.id : null
+                },
+                content: null
+            },
+            editor: ClassicEditor,
+            editorConfig: {
+                plugins: [
+                    EssentialsPlugin,
+                    BoldPlugin,
+                    ItalicPlugin,
+                    LinkPlugin,
+                    ParagraphPlugin,
+                    Font
+                ],
+
+                toolbar: {
+                    items: [
+                        'bold',
+                        'italic',
+                        'link',
+                        'undo',
+                        'redo',
+                        'fontSize', 
+                        'fontFamily', 
+                        'fontColor'
+                    ]
+                }
+            },
         }
     },
     computed: {
@@ -62,14 +127,22 @@ export default {
             return pages;
         }
     },
+    mounted() {
+        this.emitter.on("comment", () => {
+            this.getComments();
+        });
+    },
     created() {
         this.getComments();
+        this.getChapter();
     },
     methods: {
         getComments() {
             axios
                 .get("http://localhost:8000/comments", {
                     headers: {
+                        page: this.currentPage,
+                        pageSize: this.pageSize,
                         chapterId: 2
                     }
                 })
@@ -77,6 +150,25 @@ export default {
                     this.comments = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
+                });
+        },
+        getChapter() {
+            axios
+                .get("http://localhost:8000/creator/get/chapter", {
+                    headers: {
+                        chapterId: 2
+                    }
+                })
+                .then((response) => {
+                    this.chapter = response.data;
+                    this.chapterComment.chapter.id = this.chapter.id;
+                });
+        },
+        reply() {
+            axios
+                .post("http://localhost:8000/creator/create/comment", this.chapterComment)
+                .then((response) => {
+                    this.getComments();
                 });
         },
         toPrevPage() {
@@ -103,17 +195,37 @@ export default {
     
 <style scoped>
 .custom-container {
-    background-color: #fefefe;
-    margin: 0 16rem 0 16rem;
+    background-color: #f6f4ec;
+    padding: 0 16rem 0 16rem;
     border: 1px solid black;
 }
 
+.chapter-container {
+    margin: 3rem 0;
+}
+.chapter-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 5rem;
+}
+
+.chapter-content {
+    font-size: 1.5rem;
+    line-height: 2rem;;
+}
 .comment-block {
-    border: 1px solid black;
-    margin: 0 25rem;
+    margin: 0 20rem;
+    padding: 1rem;
+    background-color: #fefefe;
 }
 
 .row-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reply-button {
     display: flex;
     justify-content: flex-end;
 }

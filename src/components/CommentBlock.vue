@@ -12,12 +12,16 @@
                 <div class="comment-user">
                     {{ comment.user.name }}
                 </div>
-                <div class="comment-content">
-                    {{ comment.content }}
+                <div class="comment-content" v-html="comment.content">
                 </div>
                 <button class="btn btn-success" @click="displayReplyEditor(comment.id)">Trả lời</button>
             </div>
-            <ckeditor :editor="editor" v-model="replyContent" :config="editorConfig" v-if="showEditor && parentCommentId === comment.id"></ckeditor>
+            <div v-show="showEditor && chapterComment.parent.id === comment.id">
+                <ckeditor :editor="editor" v-model="chapterComment.content" :config="editorConfig"></ckeditor>
+                <div class="reply-button">
+                    <button class="btn btn-success" @click="reply">Đăng bình luận</button>
+                </div>
+            </div>
             <div class="reply">
                 <comment-block 
                     v-bind:comments="comment.replies"
@@ -28,6 +32,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
 import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
 import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
@@ -39,13 +44,24 @@ import Font from '@ckeditor/ckeditor5-font/src/font';
 export default {
     name: "CommentBlock",
     props: ["comments"],
+    emits: ["comment"],
     data() {
         return {
             parentCommentId: null,
-            replyContent: null,
             showEditor: false,
+            chapterComment: {
+                chapter: {
+                    id: 2
+                },
+                user: {
+                    id:  this.$store.state.user ? this.$store.state.user.id : null
+                },
+                content: null,
+                parent: {
+                    id: this.parentCommentId
+                }
+            },
             editor: ClassicEditor,
-            editorData: "",
             editorConfig: {
                 plugins: [
                     EssentialsPlugin,
@@ -73,9 +89,16 @@ export default {
     },
     methods: {
         displayReplyEditor(parentId) {
-            this.parentCommentId = parentId;
             this.showEditor = true;
-
+            this.chapterComment.parent.id = parentId;
+        },
+        reply() {
+            axios
+                .post("http://localhost:8000/creator/create/comment", this.chapterComment)
+                .then(() => {
+                    this.showEditor = false;
+                    this.emitter.emit("comment");
+                });
         }
     }
 }
@@ -121,6 +144,11 @@ export default {
 .ck-editor__editable {
     min-height: 100px;
     margin-bottom: 20px;
+}
+
+.reply-button {
+    display: flex;
+    justify-content: flex-end;
 }
 
 </style>

@@ -1,6 +1,8 @@
 import { createStore } from 'vuex'
+import createPersistedState from "vuex-persistedstate";
 
 export const store =  createStore({
+    plugins: [createPersistedState()],
     state() {
         return {
             user: JSON.parse(localStorage.getItem('user')),
@@ -23,7 +25,9 @@ export const store =  createStore({
             localStorage.clear();
             state.user = null;
         }
-
+    },
+    actions: {
+        
     }
 })
 
