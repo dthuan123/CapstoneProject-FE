@@ -8,23 +8,14 @@
     <div class="reader-message-list">
         <reader-data-table
             v-bind:columnDefs="columnDefs"
-            v-bind:data="data"
-            v-bind:paging="paging"
+            v-bind:pageSize="pageSize"
             v-bind:url="url"
+            v-bind:headerOption="headerOption"
         >
         </reader-data-table> 
     </div>
 
-    <div class="message-detail-wrapper" v-if="showModal">
-        <div class="message-detail-container">
-            <div class="message-field">
-                <textarea type="text" class="form-control" v-model="showMessage"/>{{report.reportContent}}
-            </div>
-            <div class="modal-button">
-                <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
-            </div>
-        </div>
-    </div>
+    
     
 </template>
 
@@ -36,15 +27,16 @@ export default {
     props: ["report"],   
     name: "ReaderListMessage",
     data() {
-        return {
-            messageList: [],
-            userId: this.$store.state.user.id,    
+        return {   
             columnDefs: null,
-            data: null,
-            paging: null,
-            url: null,     
-            showModal: false,
-            
+            url: "http://localhost:8000/reader/message-list", 
+            headerOption: [
+                {
+                    name: "userId",
+                    value:  this.$store.state.user.id,    
+                }
+            ],
+            pageSize: 10
         }
         
     },
@@ -52,7 +44,7 @@ export default {
         ReaderDataTable
     },
     beforeMount() {
-        this.getMessageByUser();
+        //this.getMessageByUser();
         let self = this;
         this.columnDefs = [
             {
@@ -83,15 +75,17 @@ export default {
             },
             {
                 header: "Xem chi tiết",
-                display: "<button class='btn btn-primary' @click='showModal = true'>Xem chi tiết</button>",    
-                                                              
+                name: "detail",
+                display: "<button class='btn btn-primary'>Xem chi tiết</button>", 
             },
             {
                 header: "Phản hồi",
+                name: "response",
                 display: "<button class='btn btn-primary'>Phản hồi</button>",
             },     
             {
                 header: "Thao tác",
+                name: "delete",
                 display: "<button class='btn btn-primary'>Xóa</button>",
             },      
         ];
@@ -101,30 +95,25 @@ export default {
             sortField: "id",
             sortOrder: "des"
         };
-        this.url = "http://localhost:8000/reader/message-list";
+       
     },
     methods: {
-        getMessageByUser() {
-            axios
-                .get("http://localhost:8000/reader/message-list", {
-                    headers: {
-                        userId: this.userId
-                    }
-                })
-                .then((response) => (this.messageList = response.data));
-        },
-        closeModal() {
-            this.showModal = false;
-        },
-        showMessage() {
-            this.report.reportContent
-        }
+        // getMessageByUser() {
+        //     axios
+        //         .get("http://localhost:8000/reader/message-list", {
+        //             headers: {
+        //                 userId: this.userId
+        //             }
+        //         })
+        //         .then((response) => (this.messageList = response.data));
+        // },
+        // showMessage() {
+        //     this.report.reportContent
+        // }
         
     }
 }
-
-
-
-
-
 </script>
+<style scoped>
+
+</style>
