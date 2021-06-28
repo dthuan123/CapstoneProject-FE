@@ -1,6 +1,6 @@
 <template>
   <div class="novel-detail-block">
-      <img class="book-img" :src="book.imageLink">
+      <img class="book-img1" :src="book.imageLink">
       <div class="novel-chapter">
       </div>
       <div class="novel-title">
@@ -22,9 +22,9 @@ export default {
     height: 200px;
 }
 
-img {
-    width: 100%;
-    height: 100%;
+.book-img1 {
+    width: 120px;
+    height: 150px;
 }
 
 .novel-chapter {
