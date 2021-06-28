@@ -3,7 +3,7 @@
         <book-information-block
             v-bind:book="data">
         </book-information-block>
-
+        
     </div>
     
 </template>
