@@ -22,9 +22,15 @@
             <div>
                 <dl>{{book.description}}</dl>
             </div>
+            <div>
+                <button type="button" class="btn btn-outline-primary" v-on:click="like">
+                    <i class="far fa-thumbs-up"></i> Thích <span class="badge badge-pill badge-primary" id="likecount">{{ book.likes }}</span>
+                </button>
+            </div>
             </div>
         </div>
     <div>
+        <h3>Tất cả các chương của truyện</h3>
         <chapter-in-book-block 
             v-for="chapter in data"
             :key="chapter.id"
@@ -69,6 +75,7 @@ export default {
             currentPage: 0,
             totalPage: null,
             pageSize: 5,
+            likecount: this.likecount
         }
     },
     computed: {
@@ -117,13 +124,25 @@ export default {
                     console.log("1", this.book);
                 });
         },
+        like(){
+            let body ={
+                like_count: this.likecount++,
+                book_id: this.bookId,
+            }
+            axios.post("http://localhost:8000/updateLike", body)
+            .then(res =>{
+                console.log(res);
+                    this.$router.push("/books");
+                
+            })
+        },
         listChapters(){
             axios
                 .get("http://localhost:8000/chapter", {
                     headers: {
                         bookId: this.bookId,
                         page: 0,
-                        pageSize: 10
+                        pageSize: 5
                     }
                 })
                 .then((response) =>{
