@@ -130,6 +130,7 @@ export default {
             let body = {
                 like_count: this.likecount++,
                 book_id: this.bookId,
+                user: this.user
             }
             if(!this.user) {
                 alert("asdasd");
@@ -140,12 +141,12 @@ export default {
                     headers: {
                         likeCount: this.likecount++,
                         bookId: this.bookId,
+                        user: this.user,
                     }
                 })
                 .then((res) => {
-                    console.log(res);
+                    console.log("user", this.user);
                     this.books();
-                    
                 })
         },
         listChapters(){
@@ -154,7 +155,7 @@ export default {
                     headers: {
                         bookId: this.bookId,
                         page: this.currentPage,
-                        pageSize: 1
+                        pageSize: 5
                     }
                 })
                 .then((response) =>{
