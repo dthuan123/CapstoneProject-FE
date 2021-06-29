@@ -24,7 +24,7 @@
             </div>
             <div>
                 <button type="button" class="btn btn-outline-primary" v-on:click="like">
-                    <i class="far fa-thumbs-up"></i> Thích <span class="badge badge-pill badge-primary" id="likecount">{{ book.likes }}</span>
+                    <i class="far fa-thumbs-up"></i> Thích <span class="badge badge-pill badge-primary">{{ book.likes }}</span>
                 </button>
             </div>
             </div>
@@ -74,8 +74,9 @@ export default {
             data: [],
             currentPage: 0,
             totalPage: null,
-            pageSize: 5,
-            likecount: this.likecount
+            pageSize: 1,
+            likecount: 0,
+            user: this.$store.state.user
         }
     },
     computed: {
@@ -121,28 +122,39 @@ export default {
                 })
                 .then((response) => {
                     this.book = response.data;
+                    this.likecount = this.book.likes;
                     console.log("1", this.book);
                 });
         },
         like(){
-            let body ={
+            let body = {
                 like_count: this.likecount++,
                 book_id: this.bookId,
             }
-            axios.post("http://localhost:8000/updateLike", body)
-            .then(res =>{
-                console.log(res);
-                    this.$router.push("/books");
-                
-            })
+            if(!this.user) {
+                alert("asdasd");
+                return;
+            }
+            axios
+                .get("http://localhost:8000/updateLike", {
+                    headers: {
+                        likeCount: this.likecount++,
+                        bookId: this.bookId,
+                    }
+                })
+                .then((res) => {
+                    console.log(res);
+                    this.books();
+                    
+                })
         },
         listChapters(){
             axios
                 .get("http://localhost:8000/chapter", {
                     headers: {
                         bookId: this.bookId,
-                        page: 0,
-                        pageSize: 5
+                        page: this.currentPage,
+                        pageSize: 1
                     }
                 })
                 .then((response) =>{
