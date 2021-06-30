@@ -9,7 +9,7 @@
                     <router-link to="/list-category">Thể loại</router-link>
                 </li>
                 <li>
-                    <router-link to="">Danh sách</router-link>
+                    <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
                 <li>
                     <router-link to="">Hướng dẫn</router-link>

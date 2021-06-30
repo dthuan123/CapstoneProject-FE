@@ -108,6 +108,9 @@
                     console.log(res);
                     this.$router.push("/login");
                 }else{
+                    this.usernameValidate = false;
+                    this.passwordValidate = false;
+                    this.emailValidate = false;
                     this.isExist = true;
                 }
             })

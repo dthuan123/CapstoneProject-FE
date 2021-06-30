@@ -129,13 +129,13 @@ export default {
         like(){
             console.log(this.user);
             if(!this.user) {
-                alert("asdasd");
+                alert("Bạn cần phải đăng nhập trước!");
                 return;
             }
             axios
                 .get("http://localhost:8000/updateLike", {
                     headers: {
-                        likeCount: this.likecount++,
+                        likeCount: this.likecount,
                         bookId: this.bookId,
                         userId: this.user.id
                     }

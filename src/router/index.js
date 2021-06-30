@@ -19,6 +19,7 @@ import Bookinformation from "@/components/Bookinformation.vue";
 import ReaderListMessage from "@/components/ReaderListMessage.vue";
 import CreatorChapterEditor from "@/components/CreatorChapterEditor.vue"
 import ChapterDetail from "@/components/ChapterDetail.vue"
+import ListAllBook from "@/views/ListAllBook.vue"
 
 const routes = [
     {
@@ -28,6 +29,10 @@ const routes = [
     {
         path: "/home",
         component: HomePage,
+    },
+    {
+        path: "/list-all-book",
+        component: ListAllBook,
     },
     {
         path: "/login",
