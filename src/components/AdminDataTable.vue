@@ -25,7 +25,6 @@
                         <div v-else-if="col.isTT == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <div v-else-if="col.isapproved == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
-                        <img v-else-if="col.isImage" :src="row[col.field]">
                         <span v-else-if="col.TT">{{ row[col.field][nameTT] }}</span>
                         <span v-else>{{ row[col.field] }}</span>
                         
