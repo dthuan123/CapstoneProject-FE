@@ -93,11 +93,20 @@ export default {
                 header: "Thao tác",
                 name: "delete",
                 display: "<button class='btn btn-primary'>Xóa</button>",
+                // action: function edit(row) {
+                //     axios
+                //         .delete("http://localhost:8000/reader/delete-message", {   
+                //             headers: {
+                //                 reportId: row.id
+                //             }
+                //         })
+                //         .then((response) => {});
+                // }
             },      
         ];
         this.paging = {
             page: 0,
-            pageSize: 3,
+            pageSize: 10,
             sortField: "id",
             sortOrder: "des"
         };
