@@ -59,11 +59,15 @@ export default {
             },
             {
                 header: "Tên truyện",
-                //field: "book",                
+                isObject: true,
+                object: "book",
+                field: "name"               
             },
             {
                 header: "Người gửi",
-                //field: "userSender",
+                isObject: true,
+                object: "userSender",
+                field: "name"
             },
             {
                 header: "Nội dung",
@@ -71,7 +75,9 @@ export default {
             },
             {
                 header: "Tình trạng",
-                //field: "statusId"
+                isObject: true,
+                object: "statusId",
+                field: "statusName"
             },
             {
                 header: "Xem chi tiết",
