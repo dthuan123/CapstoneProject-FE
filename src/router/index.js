@@ -12,8 +12,11 @@ import AdminHome from "@/views/AdminHome.vue";
 import AdminUserList from "@/components/AdminUserList.vue";
 import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
-import AdminBookList from "@/components/AdminBookList.vue";
-import AdminBookView from "@/components/AdminBookView.vue";
+import Register from "@/views/Register.vue";
+import Bookinformation from "@/components/Bookinformation.vue";
+import ReaderListMessage from "@/components/ReaderListMessage.vue";
+import CreatorChapterEditor from "@/components/CreatorChapterEditor.vue"
+import ChapterDetail from "@/components/ChapterDetail.vue"
 
 const routes = [
     {
@@ -37,8 +40,16 @@ const routes = [
         component: ListCategory,
     },
     {
-        path: "/category-list-book",
+        path: "/category",
         component: CategoryListBook
+    },
+    {
+        path: "/register",
+        component: Register
+    },
+    {
+        path: "/books",
+        component: Bookinformation
     },
     {
         path: "/admin",
@@ -59,14 +70,9 @@ const routes = [
             },
             {
                 path: "book-list",
-                name: "AdminBookList",
-                component: AdminBookList
-            },
-            {
-                path: "book-view",
-                name: "AdminBookView",
-                component: AdminBookView
-            },
+                name: "BookEdit",
+                component: CreatorBookEdit
+            }
         ]
 
      
@@ -100,62 +106,43 @@ const routes = [
 
         
     },
-
+    {
+        path: "/chapter",
+        component: ChapterDetail
+    },
     {
         path: "/creator",
         component: CreatorHome,
-        // meta: {
-        //     roles: ['creator']
-        // },
         children: [
             {
-                path: "book-list",
+                path: "get/books",
                 component: CreatorBookList
             },
             {
-                path: "book-new",
-                name: "BookNew",
+                path: "create/book",
+                name: "NewBook",
                 component: CreatorBookNew
             },
             {
-                path: "book-edit",
-                name: "BookEdit",
+                path: "update/book",
+                name: "EditBook",
                 component: CreatorBookEdit
+            },
+            {
+                path: "update/chapter",
+                name: "EditChapter",
+                component: CreatorChapterEditor
+            },
+            {
+                path: "create/chapter",
+                name: "CreateChapter",
+                component: CreatorChapterEditor
             }
         ]
     },
     {
-        path: "/reader",
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        path: "/reader/messages",
+        component: ReaderListMessage
     },
   
 ];
