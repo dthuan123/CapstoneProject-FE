@@ -127,11 +127,7 @@ export default {
                 });
         },
         like(){
-            let body = {
-                like_count: this.likecount++,
-                book_id: this.bookId,
-                user: this.user
-            }
+            console.log(this.user);
             if(!this.user) {
                 alert("asdasd");
                 return;
@@ -141,7 +137,7 @@ export default {
                     headers: {
                         likeCount: this.likecount++,
                         bookId: this.bookId,
-                        user: this.user,
+                        userId: this.user.id
                     }
                 })
                 .then((res) => {

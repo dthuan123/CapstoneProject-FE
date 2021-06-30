@@ -92,7 +92,7 @@
                 if(this.password!= this.repassword){
                     this.isError = true;
                     return;
-                }else if(this.username==null){
+                }else if(this.username==null || this.username.trim() === ""){
                     this.usernameValidate = true;
                     return;
                 }else if(this.email==null){
