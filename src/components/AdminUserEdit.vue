@@ -17,7 +17,7 @@ export default {
   name: "AdminUserEdit",
   data() {
     return {
-      bookId: this.$store.state.userId,
+      bookId: this.$store.state.bookId,
       data: [],
     };
   },
@@ -27,7 +27,7 @@ export default {
   methods: {
     get() {
       axios
-        .get("http://localhost:8000/admin/user-edit", {
+        .get("admin/user-edit", {
           headers: {
             userid: this.bookId,
           },

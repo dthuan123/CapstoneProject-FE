@@ -12,6 +12,8 @@ import AdminHome from "@/views/AdminHome.vue";
 import AdminUserList from "@/components/AdminUserList.vue";
 import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
+import AdminBookList from "@/components/AdminBookList.vue";
+import AdminBookView from "@/components/AdminBookView.vue";
 import Register from "@/views/Register.vue";
 import Bookinformation from "@/components/Bookinformation.vue";
 import ReaderListMessage from "@/components/ReaderListMessage.vue";
@@ -71,7 +73,13 @@ const routes = [
             {
                 path: "book-list",
                 name: "BookEdit",
-                component: CreatorBookEdit
+                component: AdminBookList
+            }
+            ,
+            {
+                path: "book-view",
+                name: "AdminBookView",
+                component: AdminBookView
             }
         ]
 

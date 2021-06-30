@@ -38,7 +38,7 @@ export default {
             },
             {
                 header: "Tác giả",
-                field: "imageLink",
+                field: "alias",
             },
             {
                 header: "Mô tả",
@@ -58,10 +58,10 @@ export default {
             {
                 header: "Chi tiết",
                 display: true,
-                displayTT: "<button>Chi tiết</button>",
+                displayTT: "  <button>Chi tiết</button>",
                 action: function edit(row) {
                 that.$router.push({ name: "AdminBookView" });
-                that.$store.commit("setUserId", row.id);
+                 that.$store.commit("setBookId", row.id);
                 },
             },
             {
@@ -73,7 +73,7 @@ export default {
                 action: function edit(row) {
                 if (confirm("Bạn có đồng ý thao tác không?")) {
                     axios
-                    .get("http://localhost:8000/admin/book-enabledadmin", {
+                    .get("admin/book-enabledadmin", {
                         headers: {
                         userid: row.id,
                         },
@@ -89,7 +89,7 @@ export default {
             sortField: "id",
             sortOrder: "des"
         };
-        this.url = "http://localhost:8000/admin/book-listadmin";
+        this.url = "admin/book-listadmin";
     }
 };
 </script>
