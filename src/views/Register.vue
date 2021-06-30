@@ -104,8 +104,8 @@
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{
-                if(res.data){
-                console.log(res);
+                if(res){
+                    console.log(res);
                     this.$router.push("/login");
                 }else{
                     this.isExist = true;
