@@ -16,7 +16,7 @@ export default {
   name: "AdminBookView",
   data() {
     return {
-      bookId: this.$store.state.userId,
+      bookId: this.$store.state.bookId,
       data: [],
     };
   },
@@ -26,12 +26,12 @@ export default {
   methods: {
     get() {
       axios
-        .get("http://localhost:8000/admin/book-viewadmin", {
+        .get("admin/book-viewadmin", {
           headers: {
             userid: this.bookId,
           },
         })
-        .then((response) => (this.data = response.data[0]));
+        .then((response) => (this.data = response.data));
     },
   },
 };

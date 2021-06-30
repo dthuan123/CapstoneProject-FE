@@ -10,6 +10,7 @@ import router from './router/index'
 import { store } from './store'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import mitt from 'mitt';
+import './axios'
 const emitter = mitt();
 
 //add font-awesome

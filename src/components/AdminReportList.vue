@@ -68,7 +68,7 @@ export default {
         action: function approved(row) {
           if (confirm("Bạn có đồng ý duyệt không?")) {
             axios
-              .get("http://localhost:8000/admin/user-approved", {
+              .get("admin/user-approved", {
                 headers: {
                   userid: row.id,
                 },
@@ -86,7 +86,7 @@ export default {
         action: function edit(row) {
           if (confirm("Bạn có đồng ý thao tác không?")) {
             axios
-              .get("http://localhost:8000/admin/user-enabled", {
+              .get("admin/user-enabled", {
                 headers: {
                   userid: row.id,
                 },
@@ -102,7 +102,7 @@ export default {
       sortField: "id",
       sortOrder: "des",
     };
-    this.url = "http://localhost:8000/report/report-listadmin";
+    this.url = "report/report-listadmin";
   },
 };
 </script>
