@@ -40,6 +40,7 @@
                         >
                             <div v-if="col.display && col.name === 'detail'" v-html="col.display" @click="detail(row)"></div>
                             <div v-if="col.display && col.name === 'response'" v-html="col.display" v-on:click="showResponse(row)"></div>
+                            <div v-if="col.display && col.name === 'delete'" v-html="col.display" @click="deleteMess(row)"></div>
                             <span v-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
@@ -67,7 +68,7 @@
                     <textarea type="text" class="form-control" v-model="report.reportContent" readonly/>
                 </div>
                 <div class="message-field" v-show="showResponseContent">
-                    <!-- <textarea type="text" class="form-control" v-model/> -->
+                    <textarea type="text" class="form-control" v-model="report.responseContent" readonly/>
                 </div>
                 <div class="modal-button">
                     <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
@@ -183,23 +184,24 @@ export default {
         },
         detail(row) {
             this.tableData.forEach((r) => {
-                if(r.reportId === row.reportId) {
-                    
+                if(r.reportId === row.reportId) {                   
                     this.report = r;
                 }
-            })
-
-            console.log(this.report)
-            
+            })           
             this.showModal = true;
             this.showDetail = true;
-
+            this.showResponseContent = false; 
         }, 
         showResponse(row) {
-            // axios.get(row.id)
-            // .then(this.report = respose.data)
-            // this.showModal = true;
-        }
+            axios.get(row.id)
+            .then((response) => (this.report = response.data))
+            this.showModal = true;
+            this.showResponseContent = true;   
+            this.showDetail = false;       
+        },
+        deleteMess(row){
+            
+        }        
     }
 }
 </script>
