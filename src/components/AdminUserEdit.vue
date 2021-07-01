@@ -2,7 +2,7 @@
   <div class="user_detail">
     <img v-if="data.profileImageLink" class="user_detail_image"  :src="data.profileImageLink" />
     <p><b>Tên người dùng:</b> {{ data.name }}</p>
-    <p><b>Kiểu:</b> {{ data.role }}</p>
+    <p><b>Kiểu:</b> <span v-if="data.role">{{ data.role['name'] }}</span></p>
     <p><b>Email:</b> {{ data.email }}</p>
     <p><b>CMND:</b> {{ data.cmnd }}</p>
     <p><b>Ảnh CMND:</b></p>

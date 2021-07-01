@@ -3,7 +3,7 @@
     <p><b>Ngày gửi:</b> {{ data.startedDate }}</p>
     <p><b>Tên truyện:</b> {{ data.name }}</p>
     <p><b>Người gửi:</b> 
-    <!-- {{ data.creator }} -->
+    <span v-if="data.creator">{{data.creator['name']}}</span>
     </p>
     <p><b>Nội dung:</b> </p>
     <p>{{ data.description }}</p>
@@ -28,7 +28,7 @@ export default {
       axios
         .get("admin/book-viewadmin", {
           headers: {
-            userid: this.bookId,
+            bookid: this.bookId,
           },
         })
         .then((response) => (this.data = response.data));

@@ -102,7 +102,7 @@ export default {
       sortField: "id",
       sortOrder: "des",
     };
-    this.url = "report/report-listadmin";
+    this.url = "admin/reportListAdmin";
   },
 };
 </script>

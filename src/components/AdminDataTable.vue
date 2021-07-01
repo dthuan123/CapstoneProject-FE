@@ -25,7 +25,10 @@
                         <div v-else-if="col.isTT == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <div v-else-if="col.isapproved == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
-                        <span v-else-if="col.TT">{{ row[col.field][nameTT] }}</span>
+                        <span v-else-if="col.TT"><span v-if="row['role']">{{ row['role']['name'] }}</span></span>
+                        <span v-else-if="col.bookStatus"><span v-if="row['bookStatus']">{{ row['bookStatus']['name'] }}</span></span>
+                        <span v-else-if="col.alias"><span v-if="row['alias']">{{ row['alias']['name'] }}</span></span>
+                        
                         <span v-else>{{ row[col.field] }}</span>
                         
                     </td>
