@@ -39,7 +39,7 @@ export default {
         header: "Kiểu",
         TT: true,
         field: "role",
-        nameTT: "nameTT",
+        nameTT: "name",
       },
       {
         header: "Email",

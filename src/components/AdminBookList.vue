@@ -39,6 +39,7 @@ export default {
             {
                 header: "Tác giả",
                 field: "alias",
+                alias:true
             },
             {
                 header: "Mô tả",
@@ -53,7 +54,8 @@ export default {
             },
             {
                 header: "Tình trạng hoạt động",
-                field: "bookStatus"
+                field: "bookStatus",
+                bookStatus:true
             },
             {
                 header: "Chi tiết",
@@ -75,7 +77,7 @@ export default {
                     axios
                     .get("admin/book-enabledadmin", {
                         headers: {
-                        userid: row.id,
+                        bookid: row.id,
                         },
                     })
                     .then((response) => window.location.reload());
