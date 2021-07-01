@@ -39,7 +39,10 @@ export default {
             {
                 header: "Tác giả",
                 field: "alias",
+<<<<<<< HEAD
                 alias:true
+=======
+>>>>>>> 80a65710e6697a8ed2c766fd1d54fba6b3960e25
             },
             {
                 header: "Mô tả",
