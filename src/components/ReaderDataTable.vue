@@ -200,7 +200,13 @@ export default {
             this.showDetail = false;       
         },
         deleteMess(row){
-            
+             axios
+                        .delete("http://localhost:8000/reader/delete-message", {   
+                            headers: {
+                                reportId: row.reportId
+                            }
+                        })
+                        .then((response) => console.log(response));
         }        
     }
 }
