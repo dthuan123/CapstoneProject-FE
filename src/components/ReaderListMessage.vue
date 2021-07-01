@@ -94,13 +94,13 @@ export default {
                 name: "delete",
                 display: "<button class='btn btn-primary'>Xóa</button>",
                 // action: function edit(row) {
-                //     axios
-                //         .delete("http://localhost:8000/reader/delete-message", {   
-                //             headers: {
-                //                 reportId: row.id
-                //             }
-                //         })
-                //         .then((response) => {});
+                    // axios
+                    //     .delete("http://localhost:8000/reader/delete-message", {   
+                    //         headers: {
+                    //             reportId: row.id
+                    //         }
+                    //     })
+                    //     .then((response) => {});
                 // }
             },      
         ];
