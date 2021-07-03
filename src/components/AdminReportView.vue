@@ -1,19 +1,21 @@
 <template>
    <div class="user_detail">
-    <p><b>Ngày gửi:</b> {{ data.startedDate ? formatDate(data.startedDate) : "" }}</p>
-    <p><b>Tên truyện:</b> {{ data.name }}</p>
+    <p><b>Ngày gửi:</b> {{ data.reportedDate ? formatDate(data.reportedDate) : "" }}</p>
+    <p ><b>Tên truyện:</b>
+     <span v-if="data.book">{{ data.book['name'] }}</span>
+    </p>
     <p><b>Người gửi:</b> 
-    <span v-if="data.creator"> {{data.creator['name']}}</span>
+     <span v-if="data.userSender">{{data.userSender['name']}}</span>
     </p>
     <p><b>Nội dung:</b> </p>
-    <p>{{ data.description }}</p>
+    <p>{{ data.reportContent }}</p>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 export default {
-  name: "AdminBookView",
+  name: "AdminReportView",
   data() {
     return {
       bookId: this.$store.state.bookId,
@@ -26,9 +28,9 @@ export default {
   methods: {
     get() {
       axios
-        .get("admin/book-viewadmin", {
+        .get("admin/report-viewadmin", {
           headers: {
-            bookid: this.bookId,
+            reportid: this.bookId,
           },
         })
         .then((response) => (this.data = response.data));

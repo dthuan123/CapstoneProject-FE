@@ -25,9 +25,13 @@
                         <div v-else-if="col.isTT == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <div v-else-if="col.isapproved == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
+                        <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
                         <span v-else-if="col.TT"><span v-if="row['role']">{{ row['role']['name'] }}</span></span>
                         <span v-else-if="col.bookStatus"><span v-if="row['bookStatus']">{{ row['bookStatus']['name'] }}</span></span>
                         <span v-else-if="col.alias"><span v-if="row['alias']">{{ row['alias']['name'] }}</span></span>
+                        <span v-else-if="col.book"><span v-if="row['book']">{{ row['book']['name'] }}</span></span>
+                        <span v-else-if="col.userSender"><span v-if="row['userSender']">{{ row['userSender']['name'] }}</span></span>
+                        <span v-else-if="col.statusId"><span v-if="row['statusId']">{{ row['statusId']['statusName'] }}</span></span>
                         
                         <span v-else>{{ row[col.field] }}</span>
                         
@@ -121,6 +125,10 @@ export default {
         setPage(pageIndex) {
             this.pagingSetting.page = pageIndex - 1;
             this.getData();
+        },
+         formatDate(date) {
+            date =  date.split("T")[0];
+            return date.split("-").reverse().join("-");
         }
     }
 }

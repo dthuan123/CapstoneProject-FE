@@ -70,7 +70,7 @@ export default {
       {
         header: "Chi tiết",
         display: true,
-        displayTT: "<button>Chi tiết</button>",
+        displayTT: "<button class='btn btn-primary'>Chi tiết</button>",
         action: function edit(row) {
           that.$router.push({ name: "UserEdit" });
           that.$store.commit("setBookId", row.id);
@@ -81,7 +81,7 @@ export default {
         isapproved: true,
         field: "approved",
         fieldTrue: "",
-        fieldFalse: "<button>Duyệt</button>",
+        fieldFalse: "<button class='btn btn-primary'>Duyệt</button>",
         action: function approved(row) {
           if (confirm("Bạn có đồng ý duyệt không?")) {
             axios
@@ -98,8 +98,8 @@ export default {
         header: "Ban",
         isTT: true,
         field: "enabled",
-        fieldTrue: "<button>Hủy cấm</button>",
-        fieldFalse: "<button>Cấm</button>",
+        fieldFalse: "<button class='btn btn-primary'>Hủy cấm</button>",
+        fieldTrue: "<button class='btn btn-primary'>Cấm</button>",
         action: function edit(row) {
           if (confirm("Bạn có đồng ý thao tác không?")) {
             axios

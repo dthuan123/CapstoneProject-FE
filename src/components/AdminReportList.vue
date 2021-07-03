@@ -33,66 +33,46 @@ export default {
       },
       {
         header: "Ngày gửi",
-        field: "reported_date",
+        field: "reportedDate",
+        isDate:true
       },
       {
         header: "Tên truyện",
-        field: "book_id",
+        field: "book",
+        book:true
       },
       {
         header: "Người gửi",
-        field: "sender_id",
+        field: "userSender",
+        userSender:true
+      },
+       {
+        header: "Nội dung",
+        field: "reportContent",
       },
       {
         header: "Tình trạng",
-        isConditionalRendering: true,
-        field: "status_id",
-        fieldTrue: "Đã phản hồi",
-        fieldFalse: "Chưa phản hồi",
+        field: "statusId",
+        statusId:true
       },
       {
         header: "Chi tiết",
         display: true,
-        displayTT: "<button>Chi tiết</button>",
+        displayTT: "<button class='btn btn-primary'>Chi tiết</button>",
         action: function edit(row) {
-          that.$router.push({ name: "UserEdit" });
-          that.$store.commit("setUserId", row.id);
+          that.$router.push({ name: "AdminReportView" });
+          that.$store.commit("setBookId", row.id);
         },
       },
       {
-        header: "Duyệt",
+        header: "Phản hồi",
         isapproved: true,
         field: "status_id",
         fieldTrue: "",
-        fieldFalse: "<button>Duyệt</button>",
+        fieldFalse: "<button class='btn btn-primary'>Phản hồi</button>",
         action: function approved(row) {
-          if (confirm("Bạn có đồng ý duyệt không?")) {
-            axios
-              .get("admin/user-approved", {
-                headers: {
-                  userid: row.id,
-                },
-              })
-              .then((response) => window.location.reload());
-          }
-        },
-      },
-      {
-        header: "Ban",
-        isTT: true,
-        field: "enabled",
-        fieldTrue: "<button>Hủy cấm</button>",
-        fieldFalse: "<button>Cấm</button>",
-        action: function edit(row) {
-          if (confirm("Bạn có đồng ý thao tác không?")) {
-            axios
-              .get("admin/user-enabled", {
-                headers: {
-                  userid: row.id,
-                },
-              })
-              .then((response) => window.location.reload());
-          }
+          that.$router.push({ name: "AdminReportView" });
+          that.$store.commit("setBookId", row.id);
         },
       },
     ];

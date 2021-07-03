@@ -12,6 +12,7 @@ import AdminHome from "@/views/AdminHome.vue";
 import AdminUserList from "@/components/AdminUserList.vue";
 import AdminUserEdit from "@/components/AdminUserEdit.vue";
 import AdminReportList from "@/components/AdminReportList.vue";
+import AdminReportView from "@/components/AdminReportView.vue";
 import AdminBookList from "@/components/AdminBookList.vue";
 import AdminBookView from "@/components/AdminBookView.vue";
 import Register from "@/views/Register.vue";
@@ -65,6 +66,11 @@ const routes = [
             {
                 path: "report-list",
                 component: AdminReportList
+            },
+            {
+                path: "report-view",
+                name: "AdminReportView",
+                component: AdminReportView
             },
             {
                 path: "user-list",

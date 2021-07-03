@@ -60,7 +60,7 @@ export default {
             {
                 header: "Chi tiết",
                 display: true,
-                displayTT: "  <button>Chi tiết</button>",
+                displayTT: "  <button class='btn btn-primary'>Chi tiết</button>",
                 action: function edit(row) {
                 that.$router.push({ name: "AdminBookView" });
                  that.$store.commit("setBookId", row.id);
@@ -70,8 +70,8 @@ export default {
                 header: "Ban",
                 isTT: true,
                 field: "enabled",
-                fieldTrue: "<button>Hủy cấm</button>",
-                fieldFalse: "<button>Cấm</button>",
+                fieldFalse: "<button class='btn btn-primary'>Hủy cấm</button>",
+                fieldTrue: "<button class='btn btn-primary'>Cấm</button>",
                 action: function edit(row) {
                 if (confirm("Bạn có đồng ý thao tác không?")) {
                     axios
