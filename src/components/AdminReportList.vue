@@ -81,7 +81,8 @@ export default {
       pageSize: 10,
       sortField: "id",
       sortOrder: "des",
-      searchKeyword:""
+      searchKeyword:"",
+      issearchKeyword:true
     };
     this.url = "admin/reportListAdmin";
   },
@@ -89,4 +90,32 @@ export default {
 </script>
 
 <style>
+.search-form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.form-search-field {
+    width: 20%;
+    height: 3rem;
+    border-radius: 3rem;
+    border: none;
+    padding-right: 5rem;
+    padding-left: 2rem;
+    background-color: #e0e0e0;
+    vertical-align: baseline;
+}
+
+.form-search-button {
+    position: absolute;
+    right: 2rem;
+    border: none;
+    background-color: transparent;
+    height: 3rem;
+    width: 4rem;
+}
 </style>

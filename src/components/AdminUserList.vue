@@ -118,6 +118,8 @@ export default {
       pageSize: 10,
       sortField: "id",
       sortOrder: "des",
+      searchKeyword:"",
+      issearchKeyword:true
     };
     this.url = "admin/user-list";
   },

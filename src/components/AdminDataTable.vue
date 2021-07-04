@@ -1,5 +1,17 @@
 <template>
     <div>
+        <div v-if="pagingSetting.issearchKeyword" class="search-form">
+            <input
+                class="form-search-field"
+                type="search"
+                placeholder="Tìm kiếm"
+                aria-label="Search"
+                v-model="searchKeyword"
+            />
+            <button class="form-search-button" @click="search">
+                <font-awesome-icon icon="search"></font-awesome-icon>
+            </button>
+        </div>
         <table class="data-table">
             <thead>
                 <tr>
@@ -64,7 +76,8 @@ export default {
             pagingSetting: this.paging,
             apiURL: this.url,
             currentPage: 0,
-            totalPage: null
+            totalPage: null,
+            searchKeyword: this.searchKeyword
         }
     },
     computed: {
@@ -130,7 +143,12 @@ export default {
          formatDate(date) {
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
-        }
+        },
+        search() {
+            this.pagingSetting.searchKeyword = this.searchKeyword;
+            this.currentPage = 0;
+            this.getData();
+        },
     }
 }
 </script>
