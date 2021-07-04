@@ -66,12 +66,12 @@ export default {
       },
       {
         header: "Phản hồi",
-        isapproved: true,
-        field: "status_id",
+        isstatusIdRP: true,
+        field: "statusId",
         fieldTrue: "",
         fieldFalse: "<button class='btn btn-primary'>Phản hồi</button>",
         action: function approved(row) {
-          that.$router.push({ name: "AdminReportView" });
+          that.$router.push({ name: "AdminReportResponse" });
           that.$store.commit("setBookId", row.id);
         },
       },
@@ -81,6 +81,7 @@ export default {
       pageSize: 10,
       sortField: "id",
       sortOrder: "des",
+      searchKeyword:""
     };
     this.url = "admin/reportListAdmin";
   },

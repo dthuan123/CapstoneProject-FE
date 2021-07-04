@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-home">
+    <div class="admin-home" style="padding-top: 30px;">
         <div class="admin-home-left">
             <admin-vertical-navigation v-bind:menuList="menuList"></admin-vertical-navigation>
         </div>
