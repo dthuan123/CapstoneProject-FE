@@ -22,6 +22,7 @@ import ReaderListMessage from "@/components/ReaderListMessage.vue";
 import CreatorChapterEditor from "@/components/CreatorChapterEditor.vue"
 import ChapterDetail from "@/components/ChapterDetail.vue"
 import ListAllBook from "@/views/ListAllBook.vue"
+import BookListByCreator from "@/components/BookListByCreator.vue"
 
 const routes = [
     {
@@ -55,6 +56,10 @@ const routes = [
     {
         path: "/register",
         component: Register
+    },
+    {
+        path: "/bookbycreator",
+        component: BookListByCreator
     },
     {
         path: "/books",
