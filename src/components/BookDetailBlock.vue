@@ -1,6 +1,7 @@
 <template>
   <div class="novel-detail-block">
       <img class="book-img1" :src="book.imageLink">
+      <!-- <router-link :to="'/books?id=' + book.id" tag="img" :src="book.imageLink"></router-link> -->
       <div class="novel-chapter">
       </div>
       <div class="novel-title">

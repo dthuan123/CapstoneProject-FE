@@ -201,9 +201,6 @@ export default {
     flex: 1 1 auto;
     min-height: 1px;
 }
-.message-userContent{
-
-}
 * {
     box-sizing: border-box;
 }

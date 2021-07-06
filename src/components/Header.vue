@@ -22,10 +22,15 @@
                         type="search"
                         placeholder="Tìm kiếm"
                         aria-label="Search"
+                        id="searchword"
+                        v-model="searchword"
                     />
-                    <button class="form-search-button" type="submit">
+                    <!-- <button class="form-search-button" type="submit">
                         <font-awesome-icon icon="search"></font-awesome-icon>
-                    </button>
+                    </button> -->
+                    <router-link :to="'/search-result?searchword =' + this.searchword" +  tag="button" class="form-search-button">
+                        <font-awesome-icon icon="search"></font-awesome-icon>
+                    </router-link>
                 </form>
                 <ul v-show="!role" class="menu-item-container">
                     <li>
@@ -41,7 +46,7 @@
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
                         <li>
-                            <router-link to="">Tài khoản</router-link>
+                            <router-link to="/accountInfor">Tài khoản</router-link>
                         </li>
                         <li>
                             <router-link to="">Lịch sử</router-link>

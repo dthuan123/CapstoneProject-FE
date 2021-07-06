@@ -23,6 +23,9 @@ import CreatorChapterEditor from "@/components/CreatorChapterEditor.vue"
 import ChapterDetail from "@/components/ChapterDetail.vue"
 import ListAllBook from "@/views/ListAllBook.vue"
 import BookListByCreator from "@/components/BookListByCreator.vue"
+import SeeAccountInformation from "@/components/SeeAccountInformation.vue"
+import ChangePassword from "@/components/ChangePassword.vue"
+import SearchResult from "@/views/SearchResult.vue"
 
 const routes = [
     {
@@ -60,6 +63,18 @@ const routes = [
     {
         path: "/bookbycreator",
         component: BookListByCreator
+    },
+    {
+        path: "/search-result",
+        component: SearchResult
+    },
+    {
+        path: "/accountInfor",
+        component: SeeAccountInformation
+    },
+    {
+        path: "/changePassword",
+        component: ChangePassword
     },
     {
         path: "/books",
