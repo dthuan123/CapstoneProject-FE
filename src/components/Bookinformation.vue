@@ -6,7 +6,10 @@
                     <img class="book-img" :src="book.imageLink">
                 </dl>
                 <h1 class="message-fields--before .pairs.pairs--columns.pairs--fixedSmall">{{book.name}}</h1>
-                <dl class="message-fields--before .pairs.pairs--columns.pairs--fixedSmall">Tác giả: {{book.alias.name}}</dl>
+                <div><p>Tac gia: </p><router-link :to="'/bookbycreator?creatorId=?' + book.creatorId" 
+                class="message-fields--before .pairs.pairs--columns.pairs--fixedSmall"
+                tag="dl">{{book.alias.name}}</router-link>
+                </div>                
                 </div>
                 <div class="cate">
                 <p>Thể loại: </p>
