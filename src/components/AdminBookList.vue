@@ -90,7 +90,8 @@ export default {
             pageSize: 10,
             sortField: "id",
             sortOrder: "des",
-            issearchKeyword:false
+            searchKeyword:"",
+            issearchKeyword:true
         };
         this.url = "admin/book-listadmin";
     }
