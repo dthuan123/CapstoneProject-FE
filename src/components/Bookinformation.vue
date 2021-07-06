@@ -6,7 +6,7 @@
                     <img class="book-img" :src="book.imageLink">
                 </dl>
                 <h1 class="message-fields--before .pairs.pairs--columns.pairs--fixedSmall">{{book.name}}</h1>
-                <div><p>Tac gia: </p><router-link :to="'/bookbycreator?creatorId=?' + book.creatorId" 
+                <div><p>Tac gia: </p><router-link :to="'/bookbycreator?creatorId=' + book.creator.id" 
                 class="message-fields--before .pairs.pairs--columns.pairs--fixedSmall"
                 tag="dl">{{book.alias.name}}</router-link>
                 </div>                
@@ -64,7 +64,8 @@ export default {
     name: "Bookinformation",
     components: { ChapterInBookBlock },
     data() {
-        return {bookId: this.$route.query.id,
+        return {
+            bookId: this.$route.query.id,
             book: {
                 name: "",
                 alias: {
@@ -72,6 +73,9 @@ export default {
                 },
                 bookStatus: {
                     name: ""
+                }, 
+                creator: {
+                  id: null
                 }
             },
             data: [],
@@ -111,7 +115,7 @@ export default {
             return pages;
         },
     },
-    created() {
+    beforeMount() {
         this.books();
         this.listChapters();
     },
