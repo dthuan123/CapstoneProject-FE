@@ -1,5 +1,4 @@
 <template>
-    <span>{{category}}</span>
     <main> 
         <div class="creator-list-book-block">
             <img class="book-img" :src="book.imageLink">
