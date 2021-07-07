@@ -25,12 +25,12 @@
                         id="searchword"
                         v-model="searchword"
                     />
-                    <!-- <button class="form-search-button" type="submit">
+                    <button class="form-search-button" type="submit">
                         <font-awesome-icon icon="search"></font-awesome-icon>
-                    </button> -->
-                    <router-link :to="'/search-result?searchword =' + this.searchword" +  tag="button" class="form-search-button">
+                    </button>
+                    <!-- <router-link :to="'/search-result?searchword =' + this.searchword" +  tag="button" class="form-search-button">
                         <font-awesome-icon icon="search"></font-awesome-icon>
-                    </router-link>
+                    </router-link> -->
                 </form>
                 <ul v-show="!role" class="menu-item-container">
                     <li>

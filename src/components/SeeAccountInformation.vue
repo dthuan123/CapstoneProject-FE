@@ -43,6 +43,13 @@
         <div>
             <div>
                 <img :src="user.avatarLink" class="avatar_image">
+                <div class="form-row">
+                    <label class="label-attribute">Thay Avatar</label>
+                <div class="column">
+                <!-- <img class="cover-img" :src="book.imageLink" v-show="mode === 'EDIT'"> -->
+                <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">
+                </div>
+                </div>
                 <p>{{user.id}}</p>
                 <h3>{{user.name}}</h3>
                 <p>Chức vụ: {{user.role.name}}</p>
@@ -58,8 +65,17 @@ import axios from "axios";
         data(){
             return {
                 user: this.$store.state.user,
+                avatarImageFile: null,
             }
         },
+        created(){
+            this.getAvatarImage();
+        },
+        methods: {
+            getAvatarImage(event){
+                this.getAvatarImage = event.target.files[0];
+            }
+        }
         // created() {
         //     this.userInfor();
         // },
