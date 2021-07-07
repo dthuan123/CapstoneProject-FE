@@ -69,10 +69,22 @@ import axios from "axios";
                 avatarImageFile: null,
             }
         },
+        created(){
+            this.getUser();
+        },
         methods: {
             getAvatarImage(event){
                 this.avatarImageFile = event.target.files[0];
                 console.log(this.user);
+            },
+            getUser() {
+                axios
+                    .get("http://localhost:8000/creator/account/seeInfo", {
+                        headers: {
+                            userId: this.user.id
+                        }
+                    })
+                    .then((response) => this.data = response.data)
             },
             updateAvatar() {
               let formData = new FormData();
@@ -86,9 +98,11 @@ import axios from "axios";
                   .then((response) => {
                     console.log(response)
                     this.saveSuccess = true
+                    alert("upload anh thanh cong")
                     //goi req voi user id de lay lai user
                     //set user vao store.
-                    // this.$store.commit("setUser", res.data);
+                    // this.getUser();
+                    // this.$store.commit("setUser", response.data);
                   });
               }
         }
