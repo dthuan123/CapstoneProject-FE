@@ -19,8 +19,8 @@ export default {
 
 <style>
 .novel-detail-block {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
 }
 
 .book-img1 {
@@ -40,8 +40,14 @@ export default {
     color: #111;
     font-family: OpenSans;
     font-weight: 700;
+    font-size: 15px;
     overflow: hidden;
     word-wrap: normal;
+}
+
+.novel-title a {
+  font-size: 10px;
+  color: black;
 }
 
 </style>

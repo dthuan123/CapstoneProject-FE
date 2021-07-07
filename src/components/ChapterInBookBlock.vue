@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <div>
-            <p>{{ chapter.name }}</p>
-        </div>
+    <div class="chapter-name">
+      <router-link to="/chapter">{{'Chuong' + (index + 1)  + chapter.name }}</router-link>
     </div>
 </template>
 
@@ -10,7 +8,13 @@
 import axios from "axios"
 export default {
     name: "ChapterInBookBlock",
-    props: ["chapter"],
+    props: ["chapter", "index"],
 
 };
 </script>
+<style scoped>
+.chapter-name {
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+</style>

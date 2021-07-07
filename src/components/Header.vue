@@ -25,12 +25,9 @@
                         id="searchword"
                         v-model="searchword"
                     />
-                    <button class="form-search-button" type="submit">
+                    <router-link :to="'/search-result?searchword=' + searchword"   tag="button" class="form-search-button">
                         <font-awesome-icon icon="search"></font-awesome-icon>
-                    </button>
-                    <!-- <router-link :to="'/search-result?searchword =' + this.searchword" +  tag="button" class="form-search-button">
-                        <font-awesome-icon icon="search"></font-awesome-icon>
-                    </router-link> -->
+                    </router-link>
                 </form>
                 <ul v-show="!role" class="menu-item-container">
                     <li>
@@ -42,7 +39,7 @@
                 </ul>
                 <div class="user-navigation" v-show="role">
                     <div class="user-profile-image" v-on:click="toggleUserMenu">
-                        <img src="https://i.stack.imgur.com/1cSi4.png" />
+                        <img :src="user.avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
                         <li>
@@ -78,6 +75,8 @@ export default {
     data() {
         return {
             showUserMenu: false,
+            searchword: "",
+            user: this.$store.state.user
         };
     },
     computed: {
@@ -155,7 +154,7 @@ export default {
 .form-search-button {
     position: absolute;
     right: 1rem;
-    top: 8px;
+    top: 15px;
     border: none;
     background-color: transparent;
     height: 3rem;

@@ -22,7 +22,7 @@ export default {
     data(){
         return {
             searchword: this.$route.query.searchword,
-            resultSearchBook: [],
+            resultSearchBooks: [],
         };
     },
     created(){
@@ -36,7 +36,7 @@ export default {
                         searchword: this.searchword,
                     }
                 })
-                .then((response) => (this.resultSearchBook = response.data));
+                .then((response) => (this.resultSearchBooks = response.data));
         }
     }
 }

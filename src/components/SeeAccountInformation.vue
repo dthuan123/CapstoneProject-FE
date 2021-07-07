@@ -46,7 +46,7 @@
                 <div class="form-row">
                     <label class="label-attribute">Thay Avatar</label>
                 <div class="column">
-                <!-- <img class="cover-img" :src="book.imageLink" v-show="mode === 'EDIT'"> -->
+                <img class="cover-img" :src="user.avatarLink" v-show="mode === 'EDIT'">
                 <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">
                 </div>
                 </div>
@@ -54,6 +54,7 @@
                 <h3>{{user.name}}</h3>
                 <p>Chức vụ: {{user.role.name}}</p>
                 <router-link to="/changePassword">Đổi mật khẩu</router-link>
+                <button @click="updateAvatar">Save</button>
             </div>
         </div>
     </body>
@@ -68,31 +69,33 @@ import axios from "axios";
                 avatarImageFile: null,
             }
         },
-        created(){
-            this.getAvatarImage();
-        },
         methods: {
             getAvatarImage(event){
-                this.getAvatarImage = event.target.files[0];
-            }
+                this.avatarImageFile = event.target.files[0];
+                console.log(this.user);
+            },
+            updateAvatar() {
+              let formData = new FormData();
+              formData.append("user", new Blob([JSON.stringify(this.user)], {
+                      type: "application/json"
+                  }));
+              formData.append("avatar", this.avatarImageFile);
+
+              axios
+                  .post("http://localhost:8000/creator/update/avatar", formData)
+                  .then((response) => {
+                    console.log(response)
+                    this.saveSuccess = true
+                    //goi req voi user id de lay lai user
+                    //set user vao store.
+                    // this.$store.commit("setUser", res.data);
+                  });
+              }
         }
-        // created() {
-        //     this.userInfor();
-        // },
-        // methods: {
-        //     userInfor(){
-        //         axios
-        //             .get("http://localhost:8000/creator/account/seeInfo", {
-        //                 headers: {
-        //                     userId: this.user.id,
-        //                 }
-        //             })
-        //             .then((response) => {
-        //             this.userInfor = response.data;
-        //             console.log("1", this.userInfor);
-        //         });
-        //     }
-        // }
+        
+       
+            
+        
     }
     
 </script>
