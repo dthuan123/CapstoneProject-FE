@@ -35,7 +35,10 @@
                     >
                         <div v-if="col.display == true" v-html="col.displayTT" v-on:click="col.action(row)"></div>
                         <div v-else-if="col.isTT == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
-                        <div v-else-if="col.isapproved == true" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
+                        <div v-else-if="col.isTTUser == true &&  row['role']['id'] != 3" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
+                        <div v-else-if="col.isTTUser == true &&  row['role']['id'] == 3"></div>
+                        <div v-else-if="col.isapproved == true  &&  row['role']['id'] != 3" v-html="row[col.field] ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
+                        <div v-else-if="col.isapproved == true &&  row['role']['id'] == 3"></div>
                         <div v-else-if="col.isstatusIdRP == true" v-html="row['statusId']['statusId'] == 2 ? col.fieldTrue : col.fieldFalse" v-on:click="col.action(row)"></div>
                         <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
                         <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>

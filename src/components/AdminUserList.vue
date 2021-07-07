@@ -96,7 +96,7 @@ export default {
       },
       {
         header: "Ban",
-        isTT: true,
+        isTTUser: true,
         field: "enabled",
         fieldFalse: "<button class='btn btn-primary'>Hủy cấm</button>",
         fieldTrue: "<button class='btn btn-primary'>Cấm</button>",
