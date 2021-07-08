@@ -152,7 +152,7 @@ export default {
 }
 
 .form-search-button {
-    position: absolute;
+    position: absolute; ;
     right: 1rem;
     top: 15px;
     border: none;
