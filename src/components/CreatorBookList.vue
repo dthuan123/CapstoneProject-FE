@@ -1,11 +1,13 @@
 <template>
-    <creator-data-table
-        v-bind:columnDefs="columnDefs"
-        v-bind:data="data"
-        v-bind:paging="paging"
-        v-bind:url="url"
-    >
-    </creator-data-table>
+    <div class="creator-book-list">
+        <creator-data-table
+            v-bind:columnDefs="columnDefs"
+            v-bind:pageSize="pageSize"
+            v-bind:url="url"
+            v-bind:headerOption="headerOption"
+        >
+        </creator-data-table> 
+    </div>
 </template>
 
 <script>
@@ -16,16 +18,21 @@ export default {
     data() {
         return {
             columnDefs: null,
-            data: null,
-            paging: null,
-            url: null
+            url: null,
+            pageSize: 10,
+            headerOption: [
+                {
+                    name: "creatorId",
+                    value:  this.$store.state.user.id,
+                }
+            ]
         }
     },
     components: {
         CreatorDataTable
     },
     beforeMount() {
-        let that = this;
+        let self = this;
         this.columnDefs = [
             {
                 header: "STT",
@@ -36,12 +43,21 @@ export default {
                 field: "name",
             },
             {
+                header: "Ảnh bìa",
+                field: "imageLink",
+                isImage: true
+            },
+            {
                 header: "Ngày bắt đầu",
-                field: "startedDate"
+                field: "startedDate",
+                isDate: true,
+                width: "9rem"
             },
             {
                 header: "Ngày cập nhật cuối",
-                field: "updatedDate"
+                field: "updatedDate",
+                isDate: true,
+                width: "9rem"
             },
             {
                 header: "Mô tả",
@@ -63,31 +79,31 @@ export default {
                 header: "Trạng thái",
                 field: "enabled",
                 isConditionalRendering: true,
-                fieldTrue: "Ok",
-                fieldFalse: "No"
+                fieldTrue: "Đang hoạt động",
+                fieldFalse: "Đã bị cấm"
             },
             {
                 header: "Tình trạng",
-                field: "bookStatusName"
+                isObject: true,
+                object: "bookStatus",
+                field: "name"
+                
             },
             {
-                display: "<button>Chỉnh sửa</button>",
+                display: "<button class='btn btn-primary'>Chỉnh sửa</button>",
                 action: function edit(row) {
-                    that.$router.push({name: "BookEdit"});
-                    that.$store.commit("setBookId", row.id);
+                    self.$router.push({name: "EditBook"});
+                    self.$store.commit("setBookId", row.id);
                 }
             }
         ];
-        this.paging = {
-            page: 0,
-            pageSize: 10,
-            sortField: "id",
-            sortOrder: "des"
-        };
-        this.url = "http://localhost:8000/creator/book-list";
+        this.url = "http://localhost:8000/creator/get/books";
     }
 };
 </script>
 
 <style>
+.creator-book-list {
+    background-color: #fefefe;
+}
 </style>

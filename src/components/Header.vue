@@ -6,10 +6,10 @@
                     <router-link to="/home">Logo</router-link>
                 </li>
                 <li>
-                    <router-link to="">Sáng tác</router-link>
+                    <router-link to="/list-category">Thể loại</router-link>
                 </li>
                 <li>
-                    <router-link to="">Danh sách</router-link>
+                    <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
                 <li>
                     <router-link to="">Hướng dẫn</router-link>
@@ -22,10 +22,12 @@
                         type="search"
                         placeholder="Tìm kiếm"
                         aria-label="Search"
+                        id="searchword"
+                        v-model="searchword"
                     />
-                    <button class="form-search-button" type="submit">
+                    <router-link :to="'/search-result?searchword=' + searchword"   tag="button" class="form-search-button">
                         <font-awesome-icon icon="search"></font-awesome-icon>
-                    </button>
+                    </router-link>
                 </form>
                 <ul v-show="!role" class="menu-item-container">
                     <li>
@@ -37,17 +39,20 @@
                 </ul>
                 <div class="user-navigation" v-show="role">
                     <div class="user-profile-image" v-on:click="toggleUserMenu">
-                        <img src="https://i.stack.imgur.com/1cSi4.png" />
+                        <img :src="user.avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
                         <li>
-                            <router-link to="">Tài khoản</router-link>
+                            <router-link to="/accountInfor">Tài khoản</router-link>
                         </li>
                         <li>
                             <router-link to="">Lịch sử</router-link>
                         </li>
                         <li>
                             <router-link to="">Kệ sách</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/reader/messages">Tin nhắn</router-link>
                         </li>
                         <li>
                             <router-link v-show="role == 'reader'" to="/reader">Hệ thống</router-link>
@@ -70,12 +75,14 @@ export default {
     data() {
         return {
             showUserMenu: false,
+            searchword: "",
+            user: this.$store.state.user
         };
     },
     computed: {
         role () {
             let user = this.$store.state.user;
-            return user ? user.roleName : null;
+            return user ? user.role.name : null;
         }
     },
     methods: {
@@ -147,7 +154,7 @@ export default {
 .form-search-button {
     position: absolute;
     right: 1rem;
-    top: 8px;
+    top: 15px;
     border: none;
     background-color: transparent;
     height: 3rem;

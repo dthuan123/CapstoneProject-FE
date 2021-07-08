@@ -38,8 +38,10 @@
                             :style="{ width: col.width ? col.width : 'auto' }"
                             :class="{'img-cell' : col.isImage, 'cell' : true}"
                         >
-                            <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
-                            <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
+                            <div v-if="col.display && col.name === 'detail'" v-html="col.display" @click="detail(row)"></div>
+                            <div v-if="col.display && col.name === 'response'" v-html="col.display" v-on:click="showResponse(row)"></div>
+                            <div v-if="col.display && col.name === 'delete'" v-html="col.display" @click="deleteMess(row)"></div>
+                            <span v-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
                             <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
@@ -60,6 +62,19 @@
                 </ul>
             </div>
         </div>
+        <div class="message-detail-wrapper" v-if="showModal">
+            <div class="message-detail-container">
+                <div class="message-field" v-show="showDetail">
+                    <textarea type="text" class="form-control" v-model="report.reportContent" readonly/>
+                </div>
+                <div class="message-field" v-show="showResponseContent">
+                    <textarea type="text" class="form-control" v-model="report.responseContent" readonly/>
+                </div>
+                <div class="modal-button">
+                    <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -69,13 +84,18 @@ import axios from "axios"
 export default {    
     name: "DataTable",
     props: ["columnDefs", "page", "pageSize", "url", "headerOption"], 
+    emits: ["showModal"],
     data() {
         return {
             tableData: [],        
             creatorId: this.$store.state.user.id,
             currentPage: 0,
             totalPage: null,
-            searchKeyword: ""
+            searchKeyword: "",
+            showModal: false,
+            report: {},
+            showDetail: false,
+            showResponseContent: false
         }
     },
     computed: {
@@ -158,7 +178,36 @@ export default {
         formatDate(date) {
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
-        }
+        },
+        closeModal() {
+            this.showModal = false;
+        },
+        detail(row) {
+            this.tableData.forEach((r) => {
+                if(r.reportId === row.reportId) {                   
+                    this.report = r;
+                }
+            })           
+            this.showModal = true;
+            this.showDetail = true;
+            this.showResponseContent = false; 
+        }, 
+        showResponse(row) {
+            axios.get(row.id)
+            .then((response) => (this.report = response.data))
+            this.showModal = true;
+            this.showResponseContent = true;   
+            this.showDetail = false;       
+        },
+        deleteMess(row){
+             axios
+                        .delete("http://localhost:8000/reader/delete-message", {   
+                            headers: {
+                                reportId: row.reportId
+                            }
+                        })
+                        .then((response) => console.log(response));
+        }        
     }
 }
 </script>
@@ -228,5 +277,32 @@ export default {
     background-color: transparent;
     height: 3rem;
     width: 4rem;
+}
+
+.message-detail-wrapper {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+}
+
+
+.message-detail-container {
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    height: 30rem;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
 }
 </style>

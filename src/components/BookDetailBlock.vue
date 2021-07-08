@@ -1,10 +1,11 @@
 <template>
   <div class="novel-detail-block">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Panor%C3%A1mica_Oto%C3%B1o_Alc%C3%A1zar_de_Segovia.jpg">
+      <img class="book-img1" :src="book.imageLink">
+      <!-- <router-link :to="'/books?id=' + book.id" tag="img" :src="book.imageLink"></router-link> -->
       <div class="novel-chapter">
       </div>
       <div class="novel-title">
-         {{ book.name }}
+         <router-link :to="'/books?id=' + book.id">{{book.name}}</router-link>
       </div>
   </div>
 </template>
@@ -18,13 +19,13 @@ export default {
 
 <style>
 .novel-detail-block {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
 }
 
-img {
-    width: 100%;
-    height: 100%;
+.book-img1 {
+    width: 120px;
+    height: 150px;
 }
 
 .novel-chapter {
@@ -39,9 +40,14 @@ img {
     color: #111;
     font-family: OpenSans;
     font-weight: 700;
-    white-space: nowrap; 
+    font-size: 15px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: normal;
+}
+
+.novel-title a {
+  font-size: 10px;
+  color: black;
 }
 
 </style>

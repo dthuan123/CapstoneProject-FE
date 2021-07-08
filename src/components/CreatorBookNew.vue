@@ -1,45 +1,22 @@
 <template>
-    <div class="creator-book-new">
-        <form>
-            
-            <select>
-                <option v-for="author in authors" :key="author" v-bind:value="author.id">
-                    {{ author.name }}
-                </option>
-            </select>
-        </form>
-        <button v-on:click="createBook">Tao moi</button>
-
-    </div>
+    <creator-book-info v-bind:mode="mode">
+    </creator-book-info>
+    <audio controls>
+        <source src="http://localhost:8000/audio" type="audio/mpeg">
+    </audio>
 </template>
 
 <script>
-import axios from "axios"
+import CreatorBookInfo from '@/components/CreatorBookInfo.vue'
 
 export default {
     name: "CreatorNewBook",
+    components: {
+        CreatorBookInfo
+    },
     data() {
         return {
-            book: {
-                name: "Book test",
-                user: {
-                    id: 2,
-                },
-                comment: [],
-            },
-            authors: [
-                {
-                    id: 2,
-                    name: "creator"
-                }
-            ]
-        }
-    },
-    methods: {
-        createBook() {
-            axios
-                .post("http://localhost:8000/creator/create-book", this.book)
-                .then((response) => console.log(response));
+            mode: "CREATE",
         }
     }
 
@@ -47,5 +24,4 @@ export default {
 </script>
 
 <style>
-
 </style>
