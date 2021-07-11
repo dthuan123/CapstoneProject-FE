@@ -51,5 +51,8 @@ export default {
   font-size: 10px;
   color: black;
 }
+.novel-tittle a:hover {
+    color: red;
+  }
 
 </style>
