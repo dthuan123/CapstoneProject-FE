@@ -38,7 +38,8 @@
                             :style="{ width: col.width ? col.width : 'auto' }"
                             :class="{'img-cell' : col.isImage, 'cell' : true}"
                         >
-                            <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
+                            <div v-if="col.deleteDisplay" v-html="col.deleteDisplay" v-on:click="deleteChapter(row)"></div>
+                            <div v-else-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
                             <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
@@ -158,6 +159,17 @@ export default {
         formatDate(date) {
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
+        },
+        deleteChapter(row) {
+          axios
+            .delete("http://localhost:8000/creator/delete/chapter", {   
+              headers: {
+                  chapterId: row.id
+              }
+            })
+            .then((response) => {
+              this.getData();
+            });
         }
     }
 }

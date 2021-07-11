@@ -44,18 +44,13 @@
 <script>
 import axios from "axios"
 import CommentBlock from './CommentBlock.vue'
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
-import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
-import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import Font from '@ckeditor/ckeditor5-font/src/font';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import TextToSpeechAudio from './TextToSpeechAudio.vue';
 
 export default {
     name: "ChapterDetail",
-    components: { CommentBlock, TextToSpeechAudio },
+    components: { CommentBlock, TextToSpeechAudio,ckeditor: CKEditor.component},
     data() {
         return {
             comments: [],
@@ -74,26 +69,17 @@ export default {
             },
             editor: ClassicEditor,
             editorConfig: {
-                plugins: [
-                    EssentialsPlugin,
-                    BoldPlugin,
-                    ItalicPlugin,
-                    LinkPlugin,
-                    ParagraphPlugin,
-                    Font
-                ],
-
                 toolbar: {
-                    items: [
-                        'bold',
-                        'italic',
-                        'link',
-                        'undo',
-                        'redo',
-                        'fontSize', 
-                        'fontFamily', 
-                        'fontColor'
-                    ]
+                  items: [
+                      'heading', 
+                      'bold',
+                      'italic',
+                      'link',
+                      'bulletedList', 
+                      'numberedList',
+                      'undo', 
+                      'redo'
+                  ]
                 }
             },
         }
@@ -143,20 +129,21 @@ export default {
                     headers: {
                         page: this.currentPage,
                         pageSize: this.pageSize,
-                        chapterId: 2
+                        chapterId: 8
                     }
                 })
                 .then((response) => {
                     this.comments = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
+                    console.log(this.comments);
                 });
         },
         getChapter() {
             axios
                 .get("http://localhost:8000/creator/get/chapter", {
                     headers: {
-                        chapterId: 2
+                        chapterId: 8
                     }
                 })
                 .then((response) => {
@@ -165,6 +152,7 @@ export default {
                 });
         },
         reply() {
+          console.log(this.chapterComment);
             axios
                 .post("http://localhost:8000/creator/create/comment", this.chapterComment)
                 .then((response) => {

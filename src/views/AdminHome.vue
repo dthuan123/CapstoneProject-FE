@@ -47,7 +47,7 @@ export default {
     display: flex;
     justify-content: space-between;
     padding: 0 16rem 0 16rem;
-    min-height: 50rem;
+    min-height: 100vh;
     background-color: #f6f7f8;
 }
 

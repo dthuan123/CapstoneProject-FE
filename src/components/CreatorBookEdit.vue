@@ -30,6 +30,7 @@ export default {
         CreatorDataTable
     },
     name: "CreatorBooKEdit",
+    
     data() {
         return {
             mode: "EDIT",
@@ -79,16 +80,7 @@ export default {
                 }
             },
             {
-                display: "<button class='btn btn-danger'>Xóa</button>",
-                action: function edit(row) {
-                    axios
-                        .delete("http://localhost:8000/creator/delete/chapter", {   
-                            headers: {
-                                chapterId: row.id
-                            }
-                        })
-                        .then((response) => {});
-                }
+              deleteDisplay: "<button class='btn btn-danger'>Xóa</button>", 
             }
         ];
         this.url = "http://localhost:8000/creator/get/chapters";

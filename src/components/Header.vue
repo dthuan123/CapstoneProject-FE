@@ -5,9 +5,12 @@
                 <li>
                     <router-link to="/home">Logo</router-link>
                 </li>
-                <li>
+                <li @click="show">
                     <router-link to="/list-category">Thể loại</router-link>
                 </li>
+                <div v-show="showDropDown">
+                  dasdl;asd;
+                </div>
                 <li>
                     <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
@@ -39,7 +42,7 @@
                 </ul>
                 <div class="user-navigation" v-show="role">
                     <div class="user-profile-image" v-on:click="toggleUserMenu">
-                        <img :src="user.avatarLink" />
+                        <img :src="avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
                         <li>
@@ -76,14 +79,20 @@ export default {
         return {
             showUserMenu: false,
             searchword: "",
-            user: this.$store.state.user
+            user: this.$store.state.user,
+            profileImg: null,
+            showDropDown: false
+            
         };
     },
     computed: {
         role () {
             let user = this.$store.state.user;
             return user ? user.role.name : null;
-        }
+        },
+        avatarLink() {
+          return this.$store.state.user.avatarLink;
+        },
     },
     methods: {
         toggleUserMenu: function () {
@@ -92,6 +101,9 @@ export default {
         logout() {
             store.commit("removeUser");
             this.$router.push("/home");
+        },
+        show() {
+          this.showDropDown = !this.showDropDown;
         }
     },
 };
@@ -196,4 +208,5 @@ export default {
     padding: 1rem;
     cursor: pointer;
 }
+
 </style>

@@ -96,6 +96,7 @@ import axios from "axios"
 export default {
     name: "CreatorNewBook",
     props: ["mode", "editId"],
+    emits: ["deleted"],
     data() {
         return {
             useCreatorName: true,

@@ -24,7 +24,7 @@ export default {
     name: "TextToSpeechAudio",
     data() {
         return {
-            chapterId: this.$store.state.chapterId,
+            chapterId: 1,//this.$store.state.chapterId,
             src: "",
             isFemaleVoice: true,
             audioSpeed: 1

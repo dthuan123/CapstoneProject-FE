@@ -48,7 +48,8 @@ export default{
 </script>
 <style scoped>
 .main {
-    width: 100%;
+  width: 100%;
+  height: 100vh;
 }
 *{
     box-sizing: border-box;

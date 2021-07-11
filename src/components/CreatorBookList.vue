@@ -41,11 +41,13 @@ export default {
             {
                 header: "Tên",
                 field: "name",
+                width: "100px"
             },
             {
                 header: "Ảnh bìa",
                 field: "imageLink",
-                isImage: true
+                isImage: true,
+                width: "150px"
             },
             {
                 header: "Ngày bắt đầu",

@@ -33,25 +33,23 @@
 
 <script>
 import axios from "axios"
-import ClassicEditor from '@ckeditor/ckeditor5-editor-classic/src/classiceditor';
-import EssentialsPlugin from '@ckeditor/ckeditor5-essentials/src/essentials';
-import BoldPlugin from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import ItalicPlugin from '@ckeditor/ckeditor5-basic-styles/src/italic';
-import LinkPlugin from '@ckeditor/ckeditor5-link/src/link';
-import ParagraphPlugin from '@ckeditor/ckeditor5-paragraph/src/paragraph';
-import Font from '@ckeditor/ckeditor5-font/src/font';
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
     name: "CommentBlock",
     props: ["comments"],
     emits: ["comment"],
+    components: {  
+      ckeditor: CKEditor.component
+    },
     data() {
         return {
             parentCommentId: null,
             showEditor: false,
             chapterComment: {
                 chapter: {
-                    id: 2
+                    id: 8
                 },
                 user: {
                     id:  this.$store.state.user ? this.$store.state.user.id : null
@@ -63,27 +61,18 @@ export default {
             },
             editor: ClassicEditor,
             editorConfig: {
-                plugins: [
-                    EssentialsPlugin,
-                    BoldPlugin,
-                    ItalicPlugin,
-                    LinkPlugin,
-                    ParagraphPlugin,
-                    Font
-                ],
-
-                toolbar: {
-                    items: [
-                        'bold',
-                        'italic',
-                        'link',
-                        'undo',
-                        'redo',
-                        'fontSize', 
-                        'fontFamily', 
-                        'fontColor'
-                    ]
-                }
+              toolbar: {
+                items: [
+                    'heading', 
+                    'bold',
+                    'italic',
+                    'link',
+                    'bulletedList', 
+                    'numberedList',
+                    'undo', 
+                    'redo'
+                ]
+              }
             },
         }
     },

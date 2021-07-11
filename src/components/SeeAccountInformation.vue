@@ -42,11 +42,11 @@
         </div> -->
         <div>
             <div>
-                <img :src="user.avatarLink" class="avatar_image">
+                <img :src="avatarLink" class="avatar_image">
                 <div class="form-row">
                     <label class="label-attribute">Thay Avatar</label>
                 <div class="column">
-                <img class="cover-img" :src="user.avatarLink" v-show="mode === 'EDIT'">
+                <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'">
                 <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">
                 </div>
                 </div>
@@ -69,6 +69,11 @@ import axios from "axios";
                 avatarImageFile: null,
             }
         },
+        computed: {
+          avatarLink(){
+            return  this.$store.state.user.avatarLink;
+          },
+        },
         created(){
             this.getUser();
         },
@@ -84,7 +89,10 @@ import axios from "axios";
                             userId: this.user.id
                         }
                     })
-                    .then((response) => this.data = response.data)
+                    .then((response) => {
+                      // this.user = response.data;
+                      this.$store.commit("setUser", response.data);
+                    })
             },
             updateAvatar() {
               let formData = new FormData();
@@ -99,10 +107,10 @@ import axios from "axios";
                     console.log(response)
                     this.saveSuccess = true
                     alert("upload anh thanh cong")
-                    //goi req voi user id de lay lai user
-                    //set user vao store.
-                    // this.getUser();
-                    // this.$store.commit("setUser", response.data);
+                    // goi req voi user id de lay lai user
+                    // set user vao store.
+                    this.getUser();
+                    
                   });
               }
         }
