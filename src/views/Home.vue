@@ -2,22 +2,25 @@
 <body>
     <div class="c-container">
       <div class="left">
-        <h3 class="label">Truyện đề cử</h3>
-            <div class="book-container">
-              
+        <div class="book-block">
+          <h3 class="label">Truyện đề cử</h3>
+            <div class="book-container">              
               <book-detail-block
                   v-for="bookHome in top10Books"
                   :key="bookHome.id"
                   v-bind:book="bookHome">
               </book-detail-block>
             </div>
-        <h3 class="label">Truyện đề cử</h3>
-        <div class="book-container">
-          <book-detail-block
-            v-for="bookHome1 in top10NewestBooks"
-            :key="bookHome1.id"
-            v-bind:book="bookHome1">
-          </book-detail-block>
+        </div>
+        <div class="book-block">
+          <h3 class="label">Truyện Mới nhất</h3>
+          <div class="book-container">
+            <book-detail-block
+              v-for="bookHome1 in top10NewestBooks"
+              :key="bookHome1.id"
+              v-bind:book="bookHome1">
+            </book-detail-block>
+          </div>
         </div>
       </div>
       <div class="right">
@@ -71,6 +74,7 @@ export default {
 .left {
   flex: 0.7;
   margin-right: 50px;
+  border-radius: 10px;
 }
 
 .right {
@@ -81,13 +85,20 @@ export default {
     src: url("../assets/fonts/OpenSans-Regular.ttf");
 }
 
+.book-block{
+  margin-bottom: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 4px 10px #888888;
 
+}
 
 .book-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, 13rem);
   justify-content: space-between;
   width: 100%;
+  padding: 10px;
 }
 
 .book-container > * {
@@ -97,6 +108,10 @@ export default {
 
 .label {
   margin-bottom: 25px;
+  background-color:#cde2f3;
+  padding: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 </style>
 
