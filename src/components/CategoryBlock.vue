@@ -1,9 +1,10 @@
 <template>
 <main>
-    <div class="list-group-item" style="background-color: #CCFFFF;">
-        <div class="category-name">
+    <div class="list-group-item">     
+        <font-awesome-icon icon="thumbs-up" size="20px"></font-awesome-icon> 
+        <div class="category-name"> 
             <router-link :to="'/category?id=' + category.id">{{category.name}}</router-link>
-            <div>So luong</div>
+            <div class="title-count">So luong: 100</div>
         </div>
     </div>
     </main>
@@ -15,7 +16,7 @@
         props: ["category"]
     }
 </script>
-<style>
+<style scoped>
     .category-name {
         display: flex;
         justify-content: space-between;
@@ -27,8 +28,16 @@
         font-weight: 700;
         white-space: inherit;
         font-size: 20px;
+        padding-left: 10px;
     }
     .list-group-item{
-        display: flex
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        width: 50%;
+    }
+    .title-count{
+        font-size: 13px;
     }
 </style>

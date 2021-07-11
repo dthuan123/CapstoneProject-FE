@@ -1,6 +1,6 @@
 <template>
     <main class="app-main">
-        <div main-right>
+        <div>
             <category-list-book-block
                 v-for="book in data"
                 :key="book.id"
@@ -113,8 +113,24 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     .pagination-container {
         display: flex;
+        margin-bottom: 10px;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+    }
+    .pagination-container button {
+        padding: 5px;
+        margin: 5px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }
+    .app-main{
+        margin-top: 10px;
+        border: 1px solid #000;
+        border-radius: 10px;
     }
 </style>
