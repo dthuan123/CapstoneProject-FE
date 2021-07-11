@@ -91,7 +91,7 @@ export default {
             return user ? user.role.name : null;
         },
         avatarLink() {
-          return this.$store.state.user.avatarLink;
+          return this.$store.state.user? this.$store.state.user.avatarLink: "";
         },
     },
     methods: {
