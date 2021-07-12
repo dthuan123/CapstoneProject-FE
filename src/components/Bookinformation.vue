@@ -18,19 +18,42 @@
           <span>{{ book.bookStatus.name }}</span>
         </div>
         <div>
-          <button
+        <button
             type="button"
             class="btn btn-outline-primary c-btn"
             v-on:click="like"
-          >
-          <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
-          <span class="badge badge-pill badge-primary">{{book.likes}}</span>
-          </button>
+        >
+            <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
+            <span class="badge badge-pill badge-primary">{{book.likes}}</span>
+        </button>
+        <button type="button" class="btn btn-outline-primary" v-on:click="openReport">
+            <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Báo cáo
+            <span class="badge badge-pill badge-primary"></span>
+        </button>
         </div>
         <div class="book-description">
             <p>{{ book.description }}</p>
         </div>
-      </div>
+        </div>
+        <div class="report-detail-wrapper" v-if="showModal">
+                <div class="report-detail-container">
+                    <div class="model-field" v-show="showDetail">
+                        <label class="title">Báo cáo</label><br>
+                        <textarea class="form-control" v-model="reportContent"></textarea>
+                    </div>     
+                    <div class="alert alert-danger" role="alert" v-show="reportError">
+                        Gửi báo cáo thất bại!
+                    </div>
+                    <div class="alert alert-success" role="alert" v-show="reportSuccess">
+                        Gửi báo cáo thành công!
+                    </div>     
+
+                    <div class="modal-button">
+                        <button type="submit" class="btn btn-outline-secondary" @click="sendReport">Báo cáo</button>
+                        <button class="btn btn-outline-secondary" @click="closeReport">Đóng</button>
+                    </div>
+                </div>
+            </div>
     </div> 
     <div>
       <h2 class="chapter">Tất cả các chương của truyện</h2>
@@ -105,6 +128,16 @@ export default {
             pageSize: 1,
             likecount: 0,
             user: this.$store.state.user,
+
+            reportSender: {
+                id: this.$store.state.user.id,
+            },
+            reports: [],
+            showModal: false,
+            showDetail: false,
+            reportContent: null,
+            reportError: false,
+            reportSuccess: false,
         };
     },
     computed: {
@@ -188,6 +221,50 @@ export default {
                     this.totalPage = response.data.totalPages;
                 });
         },
+        currentDate() {
+            const current = new Date();
+            const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+            return date;
+        },
+        sendReport() {
+            // console.log(this.user);
+            // if(!this.user) {
+            //     alert("Bạn cần phải đăng nhập trước!");
+            //     return;
+            // }
+            let body = {
+                reportContent: this.reportContent,
+                responseContent: null,
+                reportDate: this.currentDate(),
+                responseDate: null,
+                userSender: this.reportSender.id,
+                userReceiver: 3,
+                book: this.bookId,
+                statusId: 1,
+            }
+            axios
+                .post("http://localhost:8000/reader/create-report", body)
+                .then((response) => {    
+                    this.reportSuccess = true;
+                    this.reportError = false;
+                    console.log(response);
+                })
+                .catch((error) => {
+                    this.reportError = true;
+                    console.log(error);
+                })
+        },
+        openReport() {
+            this.showModal = true;
+            this.showDetail = true;
+        },
+        closeReport() {
+            this.showModal = false;
+            this.showDetail = false;
+            this.reportContent = null;
+            this.reportSuccess = false;
+            this.reportError = false;
+        },
         toPrevPage() {
             if (this.currentPage !== 0) {
                 this.currentPage--;
@@ -256,5 +333,31 @@ export default {
 
 .chapter {
   margin-bottom: 10px;
+}
+
+.report-detail-wrapper {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+}
+
+.report-detail-container {
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    height: 30rem;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
 }
 </style>

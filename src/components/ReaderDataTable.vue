@@ -200,13 +200,18 @@ export default {
             this.showDetail = false;       
         },
         deleteMess(row){
-             axios
-                        .delete("http://localhost:8000/reader/delete-message", {   
-                            headers: {
-                                reportId: row.reportId
-                            }
-                        })
-                        .then((response) => console.log(response));
+            axios
+                .delete("http://localhost:8000/reader/delete-message", {   
+                    headers: {
+                            reportId: row.reportId
+                        }
+                })
+                .then((response) => console.log(response));
+                // .then(response => {
+                //    const index = this.tableData.findIndex(report => report.reportId === row.reportId) // find the post index 
+                //    if (~index) // if the post exists in array
+                //      this.tableData.splice(index, 1) //delete the post
+                // });
         }        
     }
 }
