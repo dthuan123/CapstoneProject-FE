@@ -89,7 +89,7 @@ import axios from "axios";
             },
             getUser() {
                 axios
-                    .get("http://localhost:8000/creator/account/seeInfo", {
+                    .get("http://localhost:8000/reader/account/seeInfo", {
                         headers: {
                             userId: this.user.id
                         }
@@ -107,7 +107,7 @@ import axios from "axios";
               formData.append("avatar", this.avatarImageFile);
 
               axios
-                  .post("http://localhost:8000/creator/update/avatar", formData)
+                  .post("http://localhost:8000/reader/update/avatar", formData)
                   .then((response) => {
                     console.log(response)
                     this.saveSuccess = true
