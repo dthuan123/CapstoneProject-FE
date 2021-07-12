@@ -232,27 +232,32 @@ export default {
             //     alert("Bạn cần phải đăng nhập trước!");
             //     return;
             // }
-            let body = {
+            let report = {
                 reportContent: this.reportContent,
-                responseContent: null,
-                reportDate: this.currentDate(),
-                responseDate: null,
-                userSender: this.reportSender.id,
-                userReceiver: 3,
-                book: this.bookId,
-                statusId: 1,
+                // reportedDate: this.currentDate(),
+                userSender: {
+                  id: this.reportSender.id
+                },
+                userReceiver: {
+                  id:3
+                },
+                book: this.book,
+                statusId: {
+                  statusId: 1
+                }
             }
+            console.log('body', report);
             axios
-                .post("http://localhost:8000/reader/create-report", body)
+                .post("http://localhost:8000/reader/create-report", report)
                 .then((response) => {    
                     this.reportSuccess = true;
                     this.reportError = false;
-                    console.log(response);
+                    console.log('1123', response);
                 })
-                .catch((error) => {
-                    this.reportError = true;
-                    console.log(error);
-                })
+                // .catch((error) => {
+                //     this.reportError = true;
+                //     console.log(error);
+                // })
         },
         openReport() {
             this.showModal = true;

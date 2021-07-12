@@ -57,10 +57,13 @@
                     <h2>{{user.name}}</h2>
                     <p>{{user.role.name}}</p>
                 </div>
+                
                 </div>
+                
             </div>
-                <router-link to="/changePassword">Đổi mật khẩu</router-link>
-                <button @click="updateAvatar">Save</button>
+            <router-link to="/changePassword">Đổi mật khẩu</router-link>
+            <button @click="updateAvatar">Save</button>
+               
       
     </body>
 </template>
