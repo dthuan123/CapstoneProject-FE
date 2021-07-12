@@ -40,23 +40,28 @@
                 </div>
             </div>
         </div> -->
-        <div>
-            <div>
-                <img :src="avatarLink" class="avatar_image">
-                <div class="form-row">
-                    <label class="label-attribute">Thay Avatar</label>
-                <div class="column">
-                <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'">
-                <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">
+       
+            <div class="container">
+                <div class="cover-images">
+                    <img src="https://i.pinimg.com/564x/48/3e/c5/483ec56eeacf4db4aab03eff76a6a5c1.jpg">
+                </div>
+                <div class="image-avatar">
+                    <div class="choose-file">
+                        <img :src="avatarLink" class="avatar_image">
+                        <div class="form-row">
+                            <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'">
+                            <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">    
+                        </div>
+                    </div>
+                <div class="lable-name">
+                    <h2>{{user.name}}</h2>
+                    <p>{{user.role.name}}</p>
                 </div>
                 </div>
-                <p>{{user.id}}</p>
-                <h3>{{user.name}}</h3>
-                <p>Chức vụ: {{user.role.name}}</p>
+            </div>
                 <router-link to="/changePassword">Đổi mật khẩu</router-link>
                 <button @click="updateAvatar">Save</button>
-            </div>
-        </div>
+      
     </body>
 </template>
 <script>
@@ -121,39 +126,64 @@ import axios from "axios";
     }
     
 </script>
-<style>
-    .profile-page {
-        width: 100%;
-        padding-bottom: 30px;
-        padding-top: 20px;
-    }
-    .profile-feature-wrapper {
-        position: relative;
+<style scoped>
+    .image-avatar{
+        flex-direction: row;
+        display: flex;
+        position: absolute;
+        bottom: 0;
         padding-bottom: 20px;
-        padding-top: 66px;
     }
-    *, :after, :before{
-        box-sizing: border-box;
+    .image-avatar img{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
     }
-    .div{
-        display: block;
+    .cover-images{
+        
     }
-    .container {
+    .cover-images img{
         width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
+        
     }
-    .profile-feature {
-        background-color: yellow;
-        border-radius: 4px;
-        overflow: hidden;
-        border-color: rgba(202, 204, 206, .8);
-        border-style: solid;
-        border-width: 1px;
+    .lable-name{
+         align-self: flex-end;
+         padding-bottom: 15px;
+         margin-left: 0px;
     }
-    .body{
+    .lable-name h{
+        font-weight: bold;
+        margion-left: 0px;
+    }
+    .lable-name p{
+        padding: 5px 20px;
+        border: 1px solid #000;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+        background-color: green;
+        margin-left: 10px;
+    }
+    .choose-file{
+        position: relative;
+
+    }
+    .form-row{
+        position: absolute;
+        bottom: 0;
+        
+    }
+    .container{
+        text-align: center;
+        margin-top: 30px;
+        padding-bottom: 100px;
+        background-color: white;
+        position: relative;
+        width: 80%;
+    }
+    
+
+    /* .body{
         font-family: open sans;
         font-size: 14px;
         font-size: 1.4rem;
@@ -162,63 +192,5 @@ import axios from "axios";
         color: #111;
         font-weight: 400;
         background: rgba(227, 229, 232, .3);
-    }
-    .profile-cover {
-        width: 100%;
-        background-color: #fff;
-        background-size: cover;
-        position: relative;
-    }
-    .fourone-ratio .content{
-        position: relative;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-    }
-    .img-in-ratio{
-        background-size: 100% auto;
-        background-position: inherit;
-    }
-    .profile-changer {
-        color: #fff;
-        z-index: 9;
-        position: absolute;
-        text-shadow: 0 0 4px #999;
-        left: 0;
-        padding: 10px;
-        width: 100%;
-        cursor: pointer;
-    }
-    .profile-nav{
-        padding: 10px;
-        position: relative;
-    }
-    .profile-ava-wrapper{
-        position: absolute;
-        bottom: 10px;
-        left: 20px;
-    }
-    .profile-ava{
-        width: 150px;
-        height: 150px;
-        overflow: hidden;
-        box-shadow: 0 0 4px #333;
-        background-color: #fff;
-        border-radius: 100px;
-        position: relative;
-    }
-    .profile-intro{
-        padding-left: 180px;
-        color: #fff;
-    }
-    .avatar_image{
-        width: 150px;
-        height: 150px;
-        overflow: hidden;
-        box-shadow: 0 0 4px #333;
-        background-color: #fff;
-        border-radius: 100px;
-        position: relative;
-    }
+    } */
 </style>
