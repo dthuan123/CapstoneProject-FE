@@ -34,10 +34,7 @@
                     <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
                 </ul>
             </div>
-            
-
         </div>
-        
     </div>
 </template>
 
@@ -152,7 +149,6 @@ export default {
                 });
         },
         reply() {
-          console.log(this.chapterComment);
             axios
                 .post("http://localhost:8000/creator/create/comment", this.chapterComment)
                 .then((response) => {

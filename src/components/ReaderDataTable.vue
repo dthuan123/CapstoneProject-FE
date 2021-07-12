@@ -176,6 +176,7 @@ export default {
             this.getData();
         },
         formatDate(date) {
+          console.log('date', date);
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
         },
@@ -200,13 +201,17 @@ export default {
             this.showDetail = false;       
         },
         deleteMess(row){
+          console.log(row);
             axios
                 .delete("http://localhost:8000/reader/delete-message", {   
                     headers: {
-                            reportId: row.reportId
-                        }
+                        reportId: row.id
+                    }
                 })
-                .then((response) => console.log(response));
+                .then((response) => {
+                  this.getData();
+                  console.log(response)
+                });
                 // .then(response => {
                 //    const index = this.tableData.findIndex(report => report.reportId === row.reportId) // find the post index 
                 //    if (~index) // if the post exists in array
