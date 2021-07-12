@@ -9,7 +9,8 @@
                     <router-link to="/list-category">Thể loại</router-link>
                 </li>
                 <div v-show="showDropDown">
-                  dasdl;asd;
+                    <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
+                    acsasc
                 </div>
                 <li>
                     <router-link to="/list-all-book">Danh sách</router-link>
@@ -71,8 +72,11 @@
 </template>
 
 <script>
-import { store } from "@/store"
-
+import Vue from 'vue';
+import { store } from "@/store";
+import axios from "axios";
+// import { DropDownListPlugin } from "@syncfusion/ej2-vue-dropdowns";
+// Vue.use(DropDownListPlugin);
 export default {
     name: "AppHeader",
     data() {
@@ -81,8 +85,8 @@ export default {
             searchword: "",
             user: this.$store.state.user,
             profileImg: null,
-            showDropDown: false
-            
+            showDropDown: false,
+            // categoryData: [],
         };
     },
     computed: {
@@ -94,6 +98,9 @@ export default {
           return this.$store.state.user? this.$store.state.user.avatarLink: "";
         },
     },
+    // created(){
+    //     this.getCategoryData();
+    // },
     methods: {
         toggleUserMenu: function () {
             this.showUserMenu = !this.showUserMenu;
@@ -104,7 +111,15 @@ export default {
         },
         show() {
           this.showDropDown = !this.showDropDown;
-        }
+        },
+        // getCategoryData(){
+        //      axios
+        //         .get("http://localhost:8000/category-list")
+        //         .then((response) => {
+        //             console.log(response.data);
+        //             this.categoryData = response.data
+        //         });
+        // },
     },
 };
 </script>
