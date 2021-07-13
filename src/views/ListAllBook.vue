@@ -30,12 +30,16 @@
                 Dropdown link
             </a>
 
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" @change="sort">
                 <li><a class="dropdown-item" id="az" href="#">A-Z</a></li>
                 <li><a class="dropdown-item" id="startedDate" href="#">Ngày phát hành</a></li>
                 <li><a class="dropdown-item" id="complete" href="#">Được yêu thích</a></li>
                 <li><a class="dropdown-item" id="writing" href="#">Mới cập nhập</a></li>
             </ul>
+            <select @change="sortList" v-model="sort">
+              <option value="a">A-Z </option>
+               <option value="date">Ngày phát hành</option>
+            </select>
         </div>
     </div>
 </div>
@@ -55,6 +59,7 @@ export default{
             currentPage: 0,
             totalPage: null,
             pageSize: 1,
+            sort: ""
         };
     },
     computed: {
@@ -90,12 +95,17 @@ export default{
         this.getListBook();
     },
     methods: {
+        sortList() {
+          console.log(this.sort);
+          this.getListBook();
+        },
         getListBook() {
             axios
                 .get("http://localhost:8000/all-books", {
                     headers: {
                         page: this.currentPage,
-                        pageSize: 12
+                        pageSize: 12,
+                        sort: this.sort
                     }
                 })
                 .then((response) =>{

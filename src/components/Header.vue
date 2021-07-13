@@ -5,13 +5,14 @@
                 <li>
                     <router-link to="/home">Logo</router-link>
                 </li>
-                <li @click="show">
+                <li @click="show" class="dropdown__parent">
                     <router-link to="/list-category">Thể loại</router-link>
+                    <div v-show="showDropDown" class="dropdown">
+                      <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
+                      acsasc
+                    </div>
                 </li>
-                <div v-show="showDropDown">
-                    <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
-                    acsasc
-                </div>
+                
                 <li>
                     <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
@@ -222,6 +223,17 @@ export default {
 .user-menu li {
     padding: 1rem;
     cursor: pointer;
+}
+
+.dropdown__parent {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: #fff;
 }
 
 </style>
