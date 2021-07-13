@@ -24,7 +24,11 @@
         </div>
       </div>
       <div class="right">
-        asdjkasdjkl
+        <comment-in-home-block
+        v-for="commentHome in top10NewestComments"
+        :key="commentHome.id"
+        v-bind:comments="commentHome">
+        </comment-in-home-block>
       </div>
     </div>
 </body>
@@ -33,21 +37,26 @@
 
 <script>
 import BookDetailBlock from "@/components/BookDetailBlock.vue";
+import CommentInHomeBlock from "@/components/CommentInHomeBlock.vue";
 import axios from "axios";
 export default {
     name: "HomePage",
     components: {
         BookDetailBlock,
+        CommentInHomeBlock,
     },
     data() {
         return {
             top10Books: [],
             top10NewestBooks: [],
+            top10NewestComments: [],
         };
     },
     created() {
         this.getTop10Book();
         this.getTop10NewestBook();
+        this.getTop10NewestComment();
+        console.log(this.top10NewestComments);
     },
     methods: {
         getTop10Book() {
@@ -59,6 +68,11 @@ export default {
             axios
                 .get("http://localhost:8000/newest-books")
                 .then((response) => (this.top10NewestBooks = response.data));
+        },
+        getTop10NewestComment(){
+            axios
+                .get("http://localhost:8000//get-top-newest-comment-book")
+                .then((response) => (this.top10NewestComments = response.data));
         }
     },
 };

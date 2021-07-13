@@ -26,19 +26,21 @@
     <div class="right">
         <h3>Sort By</h3>
         <div class="dropdown">
-            <a class="btn btn-secondary dropdown-toggle" href="https://www.google.com/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+            <!-- <a class="btn btn-secondary dropdown-toggle" href="https://www.google.com/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
-            </a>
-
+            </a> -->
+<!-- 
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" @change="sort">
                 <li><a class="dropdown-item" id="az" href="#">A-Z</a></li>
                 <li><a class="dropdown-item" id="startedDate" href="#">Ngày phát hành</a></li>
                 <li><a class="dropdown-item" id="complete" href="#">Được yêu thích</a></li>
                 <li><a class="dropdown-item" id="writing" href="#">Mới cập nhập</a></li>
-            </ul>
-            <select @change="sortList" v-model="sort">
-              <option value="a">A-Z </option>
-               <option value="date">Ngày phát hành</option>
+            </ul> -->
+            <select @change="sortList" v-model="sort" class="select-list">
+                <option value="a" selected class="select-list-item">A-Z</option>
+               <option value="date" class="select-list-item">Ngày phát hành</option>
+               <option value="likes" class="select-list-item">Được yêu thích</option>
+               <option value="newupdate" class="select-list-item">Mới cập nhật</option>
             </select>
         </div>
     </div>
@@ -59,7 +61,7 @@ export default{
             currentPage: 0,
             totalPage: null,
             pageSize: 1,
-            sort: ""
+            sort: this.a,
         };
     },
     computed: {
@@ -210,5 +212,12 @@ export default{
     }
     .pagination {
         right: 10px;
+    }
+    .select-list{
+        background-color: #595a59;
+        border-radius: 5px;
+    }
+    .select-list-item{
+        background-color: white;
     }
 </style>

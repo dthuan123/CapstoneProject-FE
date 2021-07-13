@@ -1,7 +1,7 @@
 <template>
 <main>
     <div class="list-group-item">     
-        <font-awesome-icon icon="thumbs-up" size="20px"></font-awesome-icon> 
+        <font-awesome-icon icon="thumbs-up"></font-awesome-icon> 
         <div class="category-name"> 
             <router-link :to="'/category?id=' + category.id">{{category.name}}</router-link>
             <div class="title-count">So luong: 100</div>

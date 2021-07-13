@@ -9,7 +9,11 @@
                     <router-link to="/list-category">Thể loại</router-link>
                     <div v-show="showDropDown" class="dropdown">
                       <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
-                      acsasc
+                      <select v-model="selectedCategory">
+                          <option v-for="category in categoriesheader" :key="category" v-bind:value="category.id">
+                                {{ category.name }}
+                            </option>
+                      </select>
                     </div>
                 </li>
                 
@@ -88,7 +92,12 @@ export default {
             profileImg: null,
             showDropDown: false,
             // categoryData: [],
+            categoriesheader: [],
+            selectedCategory: null,
         };
+    },
+    created(){
+        this.getCategories();
     },
     computed: {
         role () {
@@ -113,14 +122,15 @@ export default {
         show() {
           this.showDropDown = !this.showDropDown;
         },
-        // getCategoryData(){
-        //      axios
-        //         .get("http://localhost:8000/category-list")
-        //         .then((response) => {
-        //             console.log(response.data);
-        //             this.categoryData = response.data
-        //         });
-        // },
+        
+        getCategories(){
+             axios
+                .get("http://localhost:8000/category-list")
+                .then((response) => {
+                    console.log(response.data);
+                    this.categoriesheader = response.data
+                });
+        },
     },
 };
 </script>
