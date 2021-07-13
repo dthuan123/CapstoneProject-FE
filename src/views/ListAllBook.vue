@@ -33,8 +33,8 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li><a class="dropdown-item" id="az" href="#">A-Z</a></li>
                 <li><a class="dropdown-item" id="startedDate" href="#">Ngày phát hành</a></li>
-                <li><a class="dropdown-item" id="complete" href="#">Đã hoàn thành</a></li>
-                <li><a class="dropdown-item" id="writing" href="#">Đang tiến hành</a></li>
+                <li><a class="dropdown-item" id="complete" href="#">Được yêu thích</a></li>
+                <li><a class="dropdown-item" id="writing" href="#">Mới cập nhập</a></li>
             </ul>
         </div>
     </div>
