@@ -30,6 +30,9 @@
             <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Báo cáo
             <span class="badge badge-pill badge-primary"></span>
         </button>
+        <!-- <div id="app">
+            <AwesomeVueStarRating :star="this.star" :disabled="this.disabled" :maxstars="this.maxstars" :starsize="this.starsize" :hasresults="this.hasresults" :hasdescription="this.hasdescription" :ratingdescription="this.ratingdescription" />
+        </div> -->
         </div>
         <div class="book-description">
             <p>{{ book.description }}</p>
@@ -97,16 +100,45 @@
             </ul>
         </div>
     </div>
+
+    <div class="comment-block">
+        <div v-if="$store.state.user">
+            <ckeditor :editor="editor" v-model="chapterComment.content" :config="editorConfig" ></ckeditor>
+            <div class="reply-button">
+                <button class="btn btn-success" @click="reply">Đăng bình luận</button>
+            </div>
+        </div>
+        <comment-block
+            v-bind:comments="comments"
+            @comment="getComments"
+        ></comment-block>
+        <div class="row-end">
+            <ul class="pagination">
+                <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
+                <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
+                    <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
+                </li>
+                <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
+                <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+            </ul>
+        </div>
+    </div>
+    
 </div>
 </template>
 
 <script>
 import axios from "axios";
 import ChapterInBookBlock from "@/components/ChapterInBookBlock.vue";
+import CommentBlock from './CommentBlock.vue'
+import CKEditor from '@ckeditor/ckeditor5-vue';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+//import AwesomeVueStarRating from 'awesome-vue-star-rating'
 
 export default {
     name: "Bookinformation",
-    components: { ChapterInBookBlock },
+    components: { ChapterInBookBlock, CommentBlock, ckeditor: CKEditor.component},
     data() {
         return {
             bookId: this.$route.query.id,
@@ -138,6 +170,57 @@ export default {
             reportContent: null,
             reportError: false,
             reportSuccess: false,
+
+            // comments: [],
+            // Comment: {
+            //     book: {
+            //         id: null
+            //     },
+            //     content: null
+            // },
+            // editor: ClassicEditor,
+            // editorConfig: {
+            //     toolbar: {
+            //       items: [
+            //           'heading', 
+            //           'bold',
+            //           'italic',
+            //           'link',
+            //           'bulletedList', 
+            //           'numberedList',
+            //           'undo', 
+            //           'redo'
+            //       ]
+            //     }
+            // },
+
+            // star: 5,
+            // ratingdescription: [
+            // {
+            //     text: 'Poor',
+            //     class: 'star-poor'
+            // },
+            // {
+            //     text: 'Below Average',
+            //     class: 'star-belowAverage'
+            // },
+            // {
+            //     text: 'Average',
+            //     class: 'star-average'
+            // },
+            // {
+            //     text: 'Good',
+            //     class: 'star-good'
+            // },
+            // {
+            // text: 'Excellent',
+            // class: 'star-excellent'
+            // }],            
+            // hasresults: true,
+            // hasdescription: true,
+            // starsize: 'lg', //[xs,lg,1x,2x,3x,4x,5x,6x,7x,8x,9x,10x],
+            // maxstars: 5,
+            // disabled: false,
         };
     },
     computed: {
@@ -270,21 +353,57 @@ export default {
             this.reportSuccess = false;
             this.reportError = false;
         },
+        
+        // mounted() {
+        //     this.emitter.on("comment", () => {
+        //         this.getComments();
+        //     });
+        // },
+        // created() {
+        //     this.getComments();
+        // },
+        // getComments() {
+        //     axios
+        //         .get("http://localhost:8000/list-comments", {
+        //             headers: {
+        //                 page: this.currentPage,
+        //                 pageSize: this.pageSize,
+        //                 bookId: this.bookId,
+        //             }
+        //         })
+        //         .then((response) => {
+        //             this.comments = response.data.content;
+        //             this.currentPage = response.data.pageable.pageNumber;
+        //             this.totalPage = response.data.totalPages;
+        //             console.log(this.comments);
+        //         });
+        // },
+        // reply() {
+        //     axios
+        //         .post("http://localhost:8000/reader/create/comment", this.Comment)
+        //         .then((response) => {
+        //             this.getComments();
+        //         });
+        // },
+
         toPrevPage() {
             if (this.currentPage !== 0) {
                 this.currentPage--;
             }
             this.listChapters();
+            //this.getComments();
         },
         toNextPage() {
             if (this.currentPage < this.totalPage - 1) {
                 this.currentPage++;
             }
             this.listChapters();
+            //this.getComments();
         },
         setPage(pageIndex) {
             this.currentPage = pageIndex - 1;
             this.listChapters();
+            //this.getComments();
         },
     },
 };
@@ -365,4 +484,37 @@ export default {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
 }
+
+/* .star {
+    color: yellow;
+}
+.star.active {
+    color: yellow;
+} */
+/* .list, .list.disabled {
+    &:hover {
+        .star {
+            color: yellow !important;
+        }
+        .star.active {
+            color: yellow;
+        }
+    }
+} */
+
+/* .comment-block {
+    margin: 0 20rem;
+    padding: 1rem;
+    background-color: #fefefe;
+}
+
+.row-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.reply-button {
+    display: flex;
+    justify-content: flex-end;
+} */
 </style>
