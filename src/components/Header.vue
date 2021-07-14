@@ -6,15 +6,20 @@
                     <router-link to="/home">Logo</router-link>
                 </li>
                 <li @click="show" class="dropdown__parent">
-                    <router-link to="/list-category">Thể loại</router-link>
                     <div v-show="showDropDown" class="dropdown">
                       <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
-                      <select v-model="selectedCategory">
+                      <!-- <select v-model="selectedCategory">
                           <option v-for="category in categoriesheader" :key="category" v-bind:value="category.id">
                                 {{ category.name }}
                             </option>
-                      </select>
+                      </select> -->
+                      <category-block
+                          v-for="category in categoriesheader"
+                          :key="category.id"
+                          v-bind:category="category">
+                      </category-block>
                     </div>
+                    Thể loại
                 </li>
                 
                 <li>
@@ -77,13 +82,16 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import CategoryBlock from "@/components/CategoryBlock.vue";
 import { store } from "@/store";
 import axios from "axios";
 // import { DropDownListPlugin } from "@syncfusion/ej2-vue-dropdowns";
 // Vue.use(DropDownListPlugin);
 export default {
     name: "AppHeader",
+    components: {
+        CategoryBlock,
+    },
     data() {
         return {
             showUserMenu: false,
@@ -93,7 +101,7 @@ export default {
             showDropDown: false,
             // categoryData: [],
             categoriesheader: [],
-            selectedCategory: null,
+            selectedCategory: "",
         };
     },
     created(){
@@ -237,6 +245,7 @@ export default {
 
 .dropdown__parent {
   position: relative;
+  cursor: pointer;
 }
 
 .dropdown {

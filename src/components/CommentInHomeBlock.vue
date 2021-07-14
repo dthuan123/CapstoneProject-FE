@@ -1,23 +1,29 @@
 <template>
         <div class="comment-block">       
-                <!-- <router-link :to="'/books?id=' + comment.book.id">{{book.name}}</router-link> -->
-                <!-- <b>{{ comments.user.id }}</b> -->
-                <a href="#" class="novel-name-comment">Ten truyen</a>
-                <!-- <span>{{comments.content}}</span> -->
-                <p class="comment-p">Truyen nay hay qua</p>
+                <router-link :to="'/books?id=' + comment.book.id">{{comment.book.name}}</router-link>
+                <b>{{ comment.user.id }}</b>
+                <!-- <a href="#" class="novel-name-comment">Ten truyen</a> -->
+                <span>{{comment.content}}</span>
+                <!-- <p class="comment-p">Truyen nay hay qua</p> -->
             <div class="name-user-comment">
-                <a href="#">Ten nguoi</a>
-                <p>23 phút</p>
+                <!-- <a href="#">Ten nguoi</a> -->
+                <p>{{ moment(new Date(comment.startedDate)).fromNow() }}</p>
             </div>
         </div>
 </template>
 <script>
+import moment from 'moment';
     export default {
         name: "CommentInHomeBlock",
-        props: ["comments"],
+        props: ["comment"],
         comments: {
             user: null,
             content: "",
+        },
+        methods: {
+           moment: function () {
+            return moment();
+          }
         }
 
     }

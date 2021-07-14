@@ -30,7 +30,7 @@
             <comment-in-home-block
             v-for="commentHome in top10NewestComments"
             :key="commentHome.id"
-            v-bind:comments="commentHome">
+            v-bind:comment="commentHome">
             </comment-in-home-block>
           </div>
         </div>
@@ -72,12 +72,12 @@ export default {
         getTop10NewestBook(){
             axios
                 .get("http://localhost:8000/newest-books")
-                .then((response) => (this.top10NewestBooks = response.data));
+                .then((response) => {this.top10NewestBooks = response.data});
         },
         getTop10NewestComment(){
             axios
                 .get("http://localhost:8000//get-top-newest-comment-book")
-                .then((response) => (this.top10NewestComments = response.data));
+                .then((response) => {this.top10NewestComments = response.data;  console.log(response.data)});
         }
     },
 };

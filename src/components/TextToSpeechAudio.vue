@@ -24,18 +24,19 @@ export default {
     name: "TextToSpeechAudio",
     data() {
         return {
-            chapterId: 1,//this.$store.state.chapterId,
+            chapterId: this.$store.state.chapterId,
             src: "",
             isFemaleVoice: true,
             audioSpeed: 1
         }
     },
-    beforeMount() {
+    created() {
         this.loadAudio();
     },
 
     methods: {
         loadAudio() {
+            this.src = "";
             this.src = "http://localhost:8000/audio?chapterId=" + this.chapterId + "&female=" + this.isFemaleVoice;
         },
         setAudioSpeed() {

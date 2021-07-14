@@ -28,6 +28,12 @@ export default {
     created(){
         this.getResultSearchBook();
     },
+    watch:{
+        $route (to, from){
+            this.searchword = this.$route.query.searchword,
+            this.getResultSearchBook();
+        }
+    } ,
     methods: {
         getResultSearchBook() {
             axios
@@ -36,7 +42,7 @@ export default {
                         searchword: this.searchword,
                     }
                 })
-                .then((response) => (this.resultSearchBooks = response.data));
+                .then((response) => {this.resultSearchBooks = response.data; console.log(response.data)});
         },
         // getResultSearchUser() {
         //     axios

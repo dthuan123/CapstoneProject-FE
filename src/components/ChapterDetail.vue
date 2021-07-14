@@ -7,8 +7,8 @@
             <div class="audio">
                 <text-to-speech-audio></text-to-speech-audio>
             </div>
-            <div class="chapter-content">
-                {{ chapter.content }}
+            <div class="chapter-content" v-html="chapter.content">
+
             </div>
         </div>
         
@@ -51,6 +51,7 @@ export default {
     data() {
         return {
             comments: [],
+            chapterId: this.$route.query.chapterId,
             chapter: {},
             currentPage: 0,
             totalPage: null,
@@ -116,31 +117,36 @@ export default {
         });
     },
     created() {
+        this.$store.commit("setChapterId", this.$route.query.chapterId);
         this.getComments();
         this.getChapter();
     },
+    beforeRouteLeave (to, from, next) {
+      console.log('asdasdsd')
+    },
+
     methods: {
+        
         getComments() {
             axios
                 .get("http://localhost:8000/comments", {
                     headers: {
                         page: this.currentPage,
                         pageSize: this.pageSize,
-                        chapterId: 8
+                        chapterId: this.chapterId
                     }
                 })
                 .then((response) => {
                     this.comments = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
-                    console.log(this.comments);
                 });
         },
         getChapter() {
             axios
                 .get("http://localhost:8000/creator/get/chapter", {
                     headers: {
-                        chapterId: 8
+                        chapterId: this.chapterId
                     }
                 })
                 .then((response) => {
@@ -195,8 +201,9 @@ export default {
 }
 
 .chapter-content {
-    font-size: 1.5rem;
-    line-height: 2rem;;
+    font-size: 16px;
+    white-space: pre-line;
+    line-height: 22px;;
 }
 .comment-block {
     margin: 0 20rem;

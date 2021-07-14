@@ -1,5 +1,6 @@
 <template>
-<div class="c-container">
+<div class="main__container">
+  <div class="c-container">
     <img class="book-img" :src="book.imageLink" />
     <div class="book">
       <div class="book__info">
@@ -101,10 +102,10 @@
                     </div>
                 </div>
             </div>
-
+    </div>
     <div class="comment-block">
         <div v-if="$store.state.user">
-            <ckeditor :editor="editor" v-model="chapterComment.content" :config="editorConfig" ></ckeditor>
+            <ckeditor :editor="editor" v-model="Comment.content" :config="editorConfig" ></ckeditor>
             <div class="reply-button">
                 <button class="btn btn-success" @click="reply">Đăng bình luận</button>
             </div>
@@ -115,18 +116,18 @@
         ></comment-block>
         <div class="row-end">
             <ul class="pagination">
-                <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
-                <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
-                    <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
+                <li @click="setPageComment(1)" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">First</a></li>
+                <li @click="toPrevPageComment" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                <li v-for="page in pagesComment" :key="page.name" :class="{ 'active': currentPageComment === page.name - 1, 'page-item': true}">
+                    <a class="page-link" @click="setPageComment(page.name)">{{ page.name }}</a>
                 </li>
-                <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-                <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                <li v-show="currentPageComment !== totalPageComment" @click="toNextPageComment" class="page-item"><a class="page-link">Next</a></li>
+                <li @click="setPageComment(totalPageComment)" class="page-item"><a class="page-link">Last</a></li>
             </ul>
         </div>
     </div>
-    
 </div>
+
 </template>
 
 <script>
@@ -139,7 +140,7 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
     name: "Bookinformation",
-    components: { ChapterInBookBlock, CommentBlock, ckeditor: CKEditor.component},
+    components: { ChapterInBookBlock, ckeditor: CKEditor.component, CommentBlock },
     data() {
         return {
             bookId: this.$route.query.id,
@@ -172,28 +173,34 @@ export default {
             reportError: false,
             reportSuccess: false,
 
-            // comments: [],
-            // Comment: {
-            //     book: {
-            //         id: null
-            //     },
-            //     content: null
-            // },
-            // editor: ClassicEditor,
-            // editorConfig: {
-            //     toolbar: {
-            //       items: [
-            //           'heading', 
-            //           'bold',
-            //           'italic',
-            //           'link',
-            //           'bulletedList', 
-            //           'numberedList',
-            //           'undo', 
-            //           'redo'
-            //       ]
-            //     }
-            // },
+            comments: [],
+            Comment: {
+                book: {
+                    id: this.$route.query.id,
+                },
+                user: {
+                  id: this.$store.state.user.id
+                },
+                content: null
+            },
+            currentPageComment: 0,
+            totalPageComment: null,
+            pageSizeComment: 3,
+            editor: ClassicEditor,
+            editorConfig: {
+                toolbar: {
+                  items: [
+                      'heading', 
+                      'bold',
+                      'italic',
+                      'link',
+                      'bulletedList', 
+                      'numberedList',
+                      'undo', 
+                      'redo'
+                  ]
+                }
+            },
 
             // star: 5,
             // ratingdescription: [
@@ -252,10 +259,46 @@ export default {
 
             return pages;
         },
+        pagesComment() {
+            const pagesComment = [];
+
+            let current = this.currentPageComment + 1;
+            for (let i = current - 2; i < current; i++) {
+                if (i > 0) {
+                    pagesComment.push({
+                        name: i,
+                        isDisabled: false,
+                    });
+                }
+            }
+            pagesComment.push({
+                name: current,
+                isDisabled: true,
+            });
+            for (let i = current + 1; i <= current + 2; i++) {
+                if (i <= this.totalPageComment) {
+                    pagesComment.push({
+                        name: i,
+                        isDisabled: false,
+                    });
+                }
+            }
+
+            return pagesComment;
+        },
     },
+
     beforeMount() {
         this.books();
         this.listChapters();
+    },
+    mounted() {
+        this.emitter.on("comment", () => {
+            this.getComments();
+        });
+    },
+    created() {
+      this.getComments();
     },
     methods: {
         books() {
@@ -354,38 +397,29 @@ export default {
             this.reportSuccess = false;
             this.reportError = false;
         },
-        
-        // mounted() {
-        //     this.emitter.on("comment", () => {
-        //         this.getComments();
-        //     });
-        // },
-        // created() {
-        //     this.getComments();
-        // },
-        // getComments() {
-        //     axios
-        //         .get("http://localhost:8000/list-comments", {
-        //             headers: {
-        //                 page: this.currentPage,
-        //                 pageSize: this.pageSize,
-        //                 bookId: this.bookId,
-        //             }
-        //         })
-        //         .then((response) => {
-        //             this.comments = response.data.content;
-        //             this.currentPage = response.data.pageable.pageNumber;
-        //             this.totalPage = response.data.totalPages;
-        //             console.log(this.comments);
-        //         });
-        // },
-        // reply() {
-        //     axios
-        //         .post("http://localhost:8000/reader/create/comment", this.Comment)
-        //         .then((response) => {
-        //             this.getComments();
-        //         });
-        // },
+        getComments() {
+            axios
+                .get("http://localhost:8000/list-comments", {
+                    headers: {
+                        page: this.currentPageComment,
+                        pageSize: this.pageSizeComment,
+                        bookId: this.bookId,
+                    }
+                })
+                .then((response) => {
+                    this.comments = response.data.content;
+                    this.currentPageComment = response.data.pageable.pageNumber;
+                    this.totalPageComment = response.data.totalPages;
+                    console.log(this.comments);
+                });
+        },
+        reply() {
+            axios
+                .post("http://localhost:8000/reader/create/comment", this.Comment)
+                .then((response) => {
+                    this.getComments();
+                });
+        },
 
         toPrevPage() {
             if (this.currentPage !== 0) {
@@ -395,16 +429,34 @@ export default {
             //this.getComments();
         },
         toNextPage() {
-            if (this.currentPage < this.totalPage - 1) {
-                this.currentPage++;
+            if (this.currentPageComment < this.totalPageComment - 1) {
+                this.currentPageComment++;
             }
             this.listChapters();
             //this.getComments();
         },
         setPage(pageIndex) {
-            this.currentPage = pageIndex - 1;
+            this.currentPageComment = pageIndex - 1;
             this.listChapters();
             //this.getComments();
+        },
+
+        toPrevPageComment() {
+            if (this.currentPageComment !== 0) {
+                this.currentPageComment--;
+            }
+
+            this.getComments();
+        },
+        toNextPageComment() {
+            if (this.currentPageComment < this.totalPageComment - 1) {
+                this.currentPageComment++;
+            }
+            this.getComments();
+        },
+        setPageComment(pageIndex) {
+            this.currentPageComment = pageIndex - 1;
+            this.getComments();
         },
     },
 };
@@ -424,11 +476,16 @@ export default {
     /* padding-left: 20px; */
     padding-top: 20px;
 }
-
+.main__container {
+  display: flex;
+  flex-direction: column;
+}
 .c-container {
   /* max-width: 1200px; */
   margin: 0 auto;
   padding: 20px;
+  /* display: flex;
+  flex-direction: column; */
   font-family: "OpenSans";
 }
 .book {
@@ -511,7 +568,7 @@ export default {
     }
 } */
 
-/* .comment-block {
+.comment-block {
     margin: 0 20rem;
     padding: 1rem;
     background-color: #fefefe;
@@ -525,5 +582,5 @@ export default {
 .reply-button {
     display: flex;
     justify-content: flex-end;
-} */
+}
 </style>
