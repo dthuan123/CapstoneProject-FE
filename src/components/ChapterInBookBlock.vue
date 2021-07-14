@@ -1,6 +1,6 @@
 <template>
     <div class="chapter-name">
-      <router-link to="/chapter">{{'Chuong' + (index + 1)  + chapter.name }}</router-link>
+      <router-link :to="'/chapter?chapterId=' + chapter.id">{{'Chương' + (index + 1) + " : "  + chapter.name }}</router-link>
     </div>
 </template>
 

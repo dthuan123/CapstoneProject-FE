@@ -9,14 +9,6 @@
                 v-bind:book="bookHome">
             </book-detail-block>
         </div>
-        <h3>Tac gia</h3>
-        <div class="main-right">
-            <user-search-block
-                v-for="user in resultSearchUsers"
-                :key="user.id"
-                v-bind:user="user">
-            </user-search-block>
-        </div>
     </div>
 </body>
 </template>
@@ -26,19 +18,22 @@ import axios from "axios";
 import UserSearchBlock from '../components/UserSearchBlock.vue';
 export default {
     name: "SearchResult",
-    components: {BookDetailBlock,
-                 UserSearchBlock,},
+    components: {BookDetailBlock},
     data(){
         return {
             searchword: this.$route.query.searchword,
             resultSearchBooks: [],
-            resultSearchUsers: [],
         };
     },
     created(){
         this.getResultSearchBook();
-        this.getResultSearchUser();
     },
+    watch:{
+        $route (to, from){
+            this.searchword = this.$route.query.searchword,
+            this.getResultSearchBook();
+        }
+    } ,
     methods: {
         getResultSearchBook() {
             axios
@@ -47,17 +42,17 @@ export default {
                         searchword: this.searchword,
                     }
                 })
-                .then((response) => (this.resultSearchBooks = response.data));
+                .then((response) => {this.resultSearchBooks = response.data; console.log(response.data)});
         },
-        getResultSearchUser() {
-            axios
-                .get("http://localhost:8000/creator/search/user", {
-                    headers: {
-                        searchword: this.searchword,
-                    }
-                })
-                .then((response) => (this.resultSearchUsers = response.data));
-        }
+        // getResultSearchUser() {
+        //     axios
+        //         .get("http://localhost:8000/creator/search/user", {
+        //             headers: {
+        //                 searchword: this.searchword,
+        //             }
+        //         })
+        //         .then((response) => (this.resultSearchUsers = response.data));
+        // }
     }
 }
 </script>

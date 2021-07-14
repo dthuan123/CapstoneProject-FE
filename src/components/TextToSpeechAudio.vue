@@ -30,12 +30,13 @@ export default {
             audioSpeed: 1
         }
     },
-    beforeMount() {
+    created() {
         this.loadAudio();
     },
 
     methods: {
         loadAudio() {
+            this.src = "";
             this.src = "http://localhost:8000/audio?chapterId=" + this.chapterId + "&female=" + this.isFemaleVoice;
         },
         setAudioSpeed() {

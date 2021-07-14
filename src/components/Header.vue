@@ -5,9 +5,23 @@
                 <li>
                     <router-link to="/home">Logo</router-link>
                 </li>
-                <li>
-                    <router-link to="/list-category">Thể loại</router-link>
+                <li @click="show" class="dropdown__parent">
+                    <div v-show="showDropDown" class="dropdown">
+                      <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
+                      <!-- <select v-model="selectedCategory">
+                          <option v-for="category in categoriesheader" :key="category" v-bind:value="category.id">
+                                {{ category.name }}
+                            </option>
+                      </select> -->
+                      <category-block
+                          v-for="category in categoriesheader"
+                          :key="category.id"
+                          v-bind:category="category">
+                      </category-block>
+                    </div>
+                    Thể loại
                 </li>
+                
                 <li>
                     <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
@@ -39,7 +53,7 @@
                 </ul>
                 <div class="user-navigation" v-show="role">
                     <div class="user-profile-image" v-on:click="toggleUserMenu">
-                        <img :src="user.avatarLink" />
+                        <img :src="avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
                         <li>
@@ -68,23 +82,43 @@
 </template>
 
 <script>
-import { store } from "@/store"
-
+import CategoryBlock from "@/components/CategoryBlock.vue";
+import { store } from "@/store";
+import axios from "axios";
+// import { DropDownListPlugin } from "@syncfusion/ej2-vue-dropdowns";
+// Vue.use(DropDownListPlugin);
 export default {
     name: "AppHeader",
+    components: {
+        CategoryBlock,
+    },
     data() {
         return {
             showUserMenu: false,
             searchword: "",
-            user: this.$store.state.user
+            user: this.$store.state.user,
+            profileImg: null,
+            showDropDown: false,
+            // categoryData: [],
+            categoriesheader: [],
+            selectedCategory: "",
         };
+    },
+    created(){
+        this.getCategories();
     },
     computed: {
         role () {
             let user = this.$store.state.user;
             return user ? user.role.name : null;
-        }
+        },
+        avatarLink() {
+          return this.$store.state.user? this.$store.state.user.avatarLink: "";
+        },
     },
+    // created(){
+    //     this.getCategoryData();
+    // },
     methods: {
         toggleUserMenu: function () {
             this.showUserMenu = !this.showUserMenu;
@@ -92,7 +126,19 @@ export default {
         logout() {
             store.commit("removeUser");
             this.$router.push("/home");
-        }
+        },
+        show() {
+          this.showDropDown = !this.showDropDown;
+        },
+        
+        getCategories(){
+             axios
+                .get("http://localhost:8000/category-list")
+                .then((response) => {
+                    console.log(response.data);
+                    this.categoriesheader = response.data
+                });
+        },
     },
 };
 </script>
@@ -152,7 +198,7 @@ export default {
 }
 
 .form-search-button {
-    position: absolute;
+    position: absolute; ;
     right: 1rem;
     top: 15px;
     border: none;
@@ -196,4 +242,17 @@ export default {
     padding: 1rem;
     cursor: pointer;
 }
+
+.dropdown__parent {
+  position: relative;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: #fff;
+}
+
 </style>

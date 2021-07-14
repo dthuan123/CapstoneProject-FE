@@ -2,26 +2,38 @@
 <body>
     <div class="c-container">
       <div class="left">
-        <h3 class="label">Truyện đề cử</h3>
-            <div class="book-container">
-              
+        <div class="book-block">
+          <h3 class="label">Truyện đề cử</h3>
+            <div class="book-container">              
               <book-detail-block
                   v-for="bookHome in top10Books"
                   :key="bookHome.id"
                   v-bind:book="bookHome">
               </book-detail-block>
             </div>
-        <h3 class="label">Truyện đề cử</h3>
-        <div class="book-container">
-          <book-detail-block
-            v-for="bookHome1 in top10NewestBooks"
-            :key="bookHome1.id"
-            v-bind:book="bookHome1">
-          </book-detail-block>
+        </div>
+        <div class="book-block">
+          <h3 class="label">Truyện Mới nhất</h3>
+          <div class="book-container">
+            <book-detail-block
+              v-for="bookHome1 in top10NewestBooks"
+              :key="bookHome1.id"
+              v-bind:book="bookHome1">
+            </book-detail-block>
+          </div>
         </div>
       </div>
       <div class="right">
-        asdjkasdjkl
+        <div class="new-comment-block">
+          <h3 class="label">Bình luận gần đây</h3>
+          <div class="comment-container">
+            <comment-in-home-block
+            v-for="commentHome in top10NewestComments"
+            :key="commentHome.id"
+            v-bind:comment="commentHome">
+            </comment-in-home-block>
+          </div>
+        </div>
       </div>
     </div>
 </body>
@@ -30,21 +42,26 @@
 
 <script>
 import BookDetailBlock from "@/components/BookDetailBlock.vue";
-import axios from "axios";
+import CommentInHomeBlock from "@/components/CommentInHomeBlock.vue";
+import axios from "axios"
 export default {
     name: "HomePage",
     components: {
         BookDetailBlock,
+        CommentInHomeBlock,
     },
     data() {
         return {
             top10Books: [],
             top10NewestBooks: [],
+            top10NewestComments: [],
         };
     },
     created() {
         this.getTop10Book();
         this.getTop10NewestBook();
+        this.getTop10NewestComment();
+        console.log(this.top10NewestComments);
     },
     methods: {
         getTop10Book() {
@@ -55,7 +72,12 @@ export default {
         getTop10NewestBook(){
             axios
                 .get("http://localhost:8000/newest-books")
-                .then((response) => (this.top10NewestBooks = response.data));
+                .then((response) => {this.top10NewestBooks = response.data});
+        },
+        getTop10NewestComment(){
+            axios
+                .get("http://localhost:8000//get-top-newest-comment-book")
+                .then((response) => {this.top10NewestComments = response.data;  console.log(response.data)});
         }
     },
 };
@@ -71,6 +93,7 @@ export default {
 .left {
   flex: 0.7;
   margin-right: 50px;
+  border-radius: 10px;
 }
 
 .right {
@@ -81,22 +104,53 @@ export default {
     src: url("../assets/fonts/OpenSans-Regular.ttf");
 }
 
+.book-block{
+  margin-bottom: 50px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 5px 4px 10px #888888;
 
+}
+
+.new-comment-block {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 4px 10px #888888;
+}
 
 .book-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, 13rem);
   justify-content: space-between;
   width: 100%;
+  padding: 10px;
 }
 
 .book-container > * {
-    height: 18rem;
+    /* height: 18rem; */
     margin-bottom: 2rem;
+}
+
+.comment-container {
+  display: block;
+  /* grid-template-columns: repeat(auto-fit, 13rem); */
+  justify-content: space-between;
+  widows: 100%;
+  padding: 3px 0;
+  
+}
+
+.comment-container > * {
+  /* height: 5rem; */
 }
 
 .label {
   margin-bottom: 25px;
+  background-color:#cde2f3;
+  padding: 10px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 </style>
 

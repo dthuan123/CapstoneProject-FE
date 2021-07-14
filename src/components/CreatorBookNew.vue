@@ -1,9 +1,6 @@
 <template>
     <creator-book-info v-bind:mode="mode">
     </creator-book-info>
-    <audio controls>
-        <source src="http://localhost:8000/audio" type="audio/mpeg">
-    </audio>
 </template>
 
 <script>

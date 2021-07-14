@@ -1,14 +1,16 @@
 <template>
-    <div class="app-main">
-        <div>
-            <h1>Danh sách tất cả các truyện</h1>
-        </div>
-        <div class="main-right">
-            <book-detail-block
-                v-for="book in listbook"
-                :key="book.id"
-                v-bind:book="book">
-            </book-detail-block>
+        <div class="c-container">
+        <div class="left">
+        <div class="book-block">
+            <h3 class="label">Danh sách tất cả các truyện</h3>   
+            <div class="book-container">
+                <book-detail-block
+                    v-for="book in listbook"
+                    :key="book.id"
+                    v-bind:book="book">
+                </book-detail-block>
+            </div>
+         </div>
             <div class="row-end">
             <ul class="pagination">
                 <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
@@ -20,12 +22,30 @@
                 <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
             </ul>
         </div>
-        </div>
-        <div class="main-left">
-
+    </div>
+    <div class="right">
+        <h3>Sort By</h3>
+        <div class="dropdown">
+            <!-- <a class="btn btn-secondary dropdown-toggle" href="https://www.google.com/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown link
+            </a> -->
+<!-- 
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink" @change="sort">
+                <li><a class="dropdown-item" id="az" href="#">A-Z</a></li>
+                <li><a class="dropdown-item" id="startedDate" href="#">Ngày phát hành</a></li>
+                <li><a class="dropdown-item" id="complete" href="#">Được yêu thích</a></li>
+                <li><a class="dropdown-item" id="writing" href="#">Mới cập nhập</a></li>
+            </ul> -->
+            <select @change="sortList" v-model="sort" class="select-list">
+                <option value="" selected disabled hidden>A-Z</option>
+                <option value="a" selected="selected" class="select-list-item">A-Z</option>
+               <option value="date" class="select-list-item">Ngày phát hành</option>
+               <option value="likes" class="select-list-item">Được yêu thích</option>
+               <option value="newupdate" class="select-list-item">Mới cập nhật</option>
+            </select>
         </div>
     </div>
-
+</div>
 </template>
 
 <script>
@@ -42,6 +62,7 @@ export default{
             currentPage: 0,
             totalPage: null,
             pageSize: 1,
+            sort: this.a,
         };
     },
     computed: {
@@ -77,12 +98,17 @@ export default{
         this.getListBook();
     },
     methods: {
+        sortList() {
+          console.log(this.sort);
+          this.getListBook();
+        },
         getListBook() {
             axios
                 .get("http://localhost:8000/all-books", {
                     headers: {
                         page: this.currentPage,
-                        pageSize: 12
+                        pageSize: 12,
+                        sort: this.sort
                     }
                 })
                 .then((response) =>{
@@ -133,4 +159,68 @@ export default{
 .main-left {
     width: 22%;
 }
+.c-container {
+    display: flex;
+    max-width: 1200px;
+    margin: 30px auto;
+    }
+
+    .left {
+    flex: 0.7;
+    margin-right: 50px;
+    border-radius: 10px;
+    }
+
+    .right {
+    flex: 0.3;
+    }
+    @font-face {
+        font-family: "OpenSans";
+        src: url("../assets/fonts/OpenSans-Regular.ttf");
+    }
+
+    .book-block{
+    margin-bottom: 50px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 5px 4px 10px #888888;
+
+    }
+
+    .book-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 13rem);
+    justify-content: space-between;
+    width: 100%;
+    padding: 10px;
+    }
+
+    .book-container > * {
+        height: 18rem;
+        margin-bottom: 2rem;
+    }
+
+    .label {
+    margin-bottom: 25px;
+    background-color:#cde2f3;
+    padding: 10px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    }
+    .row-end{
+        padding-bottom: 20px;
+        margin-top: 5px;
+        display: flex;
+        flex-direction: row-reverse;
+    }
+    .pagination {
+        right: 10px;
+    }
+    .select-list{
+        background-color: #f0ed3a;
+        border-radius: 5px;
+    }
+    .select-list-item{
+        background-color: white;
+    }
 </style>
