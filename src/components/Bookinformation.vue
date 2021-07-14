@@ -1,7 +1,7 @@
 <template>
 <div class="c-container">
+    <img class="book-img" :src="book.imageLink" />
     <div class="book">
-      <img class="book-img" :src="book.imageLink" />
       <div class="book__info">
         <h1 class="book-name">{{ book.name }}</h1>
         <div class="cate">
@@ -33,36 +33,17 @@
         </div>
         <div class="book-description">
             <p>{{ book.description }}</p>
+            
         </div>
         </div>
-        <div class="report-detail-wrapper" v-if="showModal">
-                <div class="report-detail-container">
-                    <div class="model-field" v-show="showDetail">
-                        <label class="title">Báo cáo</label><br>
-                        <textarea class="form-control" v-model="reportContent"></textarea>
-                    </div>     
-                    <div class="alert alert-danger" role="alert" v-show="reportError">
-                        Gửi báo cáo thất bại!
-                    </div>
-                    <div class="alert alert-success" role="alert" v-show="reportSuccess">
-                        Gửi báo cáo thành công!
-                    </div>     
-
-                    <div class="modal-button">
-                        <button type="submit" class="btn btn-outline-secondary" @click="sendReport">Báo cáo</button>
-                        <button class="btn btn-outline-secondary" @click="closeReport">Đóng</button>
-                    </div>
-                </div>
-            </div>
-    </div> 
-    <div>
+        
+    <div class="chapter-book">
       <h2 class="chapter">Tất cả các chương của truyện</h2>
       <chapter-in-book-block
             v-for="(chapter, index) in data"
             :key="chapter.id"
             v-bind:chapter="chapter"
-            v-bind:index="index"
-      >
+            v-bind:index="index">
       </chapter-in-book-block>
       <div class="row-end">
         <ul class="pagination">
@@ -95,8 +76,28 @@
                     <a class="page-link">Last</a>
                 </li>
             </ul>
+            </div> 
         </div>
     </div>
+    <div class="report-detail-wrapper" v-if="showModal">
+                <div class="report-detail-container">
+                    <div class="model-field" v-show="showDetail">
+                        <label class="title">Báo cáo</label><br>
+                        <textarea class="form-control" v-model="reportContent"></textarea>
+                    </div>     
+                    <div class="alert alert-danger" role="alert" v-show="reportError">
+                        Gửi báo cáo thất bại!
+                    </div>
+                    <div class="alert alert-success" role="alert" v-show="reportSuccess">
+                        Gửi báo cáo thành công!
+                    </div>     
+
+                    <div class="modal-button">
+                        <button type="submit" class="btn btn-outline-secondary" @click="sendReport">Báo cáo</button>
+                        <button class="btn btn-outline-secondary" @click="closeReport">Đóng</button>
+                    </div>
+                </div>
+            </div>
 </div>
 </template>
 
@@ -296,15 +297,23 @@ export default {
     src: url("../assets/fonts/OpenSans-Regular.ttf");
 }
 
+.book__info {
+    border-bottom: 1px solid #000;
+    padding-bottom: 10px;
+}
+.chapter-book {
+    /* padding-left: 20px; */
+    padding-top: 20px;
+}
+
 .c-container {
-  max-width: 1200px;
-  height: 100vh;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 20px;
   font-family: "OpenSans";
 }
 .book {
-  display: flex;
+  /* display: flex; */
   margin-bottom: 20px;
 }
 .book-name {

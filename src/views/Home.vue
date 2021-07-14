@@ -24,11 +24,16 @@
         </div>
       </div>
       <div class="right">
-        <comment-in-home-block
-        v-for="commentHome in top10NewestComments"
-        :key="commentHome.id"
-        v-bind:comments="commentHome">
-        </comment-in-home-block>
+        <div class="new-comment-block">
+          <h3 class="label">Bình luận gần đây</h3>
+          <div class="comment-container">
+            <comment-in-home-block
+            v-for="commentHome in top10NewestComments"
+            :key="commentHome.id"
+            v-bind:comments="commentHome">
+            </comment-in-home-block>
+          </div>
+        </div>
       </div>
     </div>
 </body>
@@ -38,7 +43,7 @@
 <script>
 import BookDetailBlock from "@/components/BookDetailBlock.vue";
 import CommentInHomeBlock from "@/components/CommentInHomeBlock.vue";
-import axios from "axios";
+import axios from "axios"
 export default {
     name: "HomePage",
     components: {
@@ -107,6 +112,13 @@ export default {
 
 }
 
+.new-comment-block {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 5px 4px 10px #888888;
+}
+
 .book-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, 13rem);
@@ -116,8 +128,21 @@ export default {
 }
 
 .book-container > * {
-    height: 18rem;
+    /* height: 18rem; */
     margin-bottom: 2rem;
+}
+
+.comment-container {
+  display: block;
+  /* grid-template-columns: repeat(auto-fit, 13rem); */
+  justify-content: space-between;
+  widows: 100%;
+  padding: 3px 0;
+  
+}
+
+.comment-container > * {
+  /* height: 5rem; */
 }
 
 .label {

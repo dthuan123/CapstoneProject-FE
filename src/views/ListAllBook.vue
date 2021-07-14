@@ -37,7 +37,8 @@
                 <li><a class="dropdown-item" id="writing" href="#">Mới cập nhập</a></li>
             </ul> -->
             <select @change="sortList" v-model="sort" class="select-list">
-                <option value="a" selected class="select-list-item">A-Z</option>
+                <option value="" selected disabled hidden>A-Z</option>
+                <option value="a" selected="selected" class="select-list-item">A-Z</option>
                <option value="date" class="select-list-item">Ngày phát hành</option>
                <option value="likes" class="select-list-item">Được yêu thích</option>
                <option value="newupdate" class="select-list-item">Mới cập nhật</option>
@@ -209,12 +210,14 @@ export default{
     .row-end{
         padding-bottom: 20px;
         margin-top: 5px;
+        display: flex;
+        flex-direction: row-reverse;
     }
     .pagination {
         right: 10px;
     }
     .select-list{
-        background-color: #595a59;
+        background-color: #f0ed3a;
         border-radius: 5px;
     }
     .select-list-item{
