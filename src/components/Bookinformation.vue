@@ -434,14 +434,14 @@ export default {
             //this.getComments();
         },
         toNextPage() {
-            if (this.currentPageComment < this.totalPageComment - 1) {
-                this.currentPageComment++;
+            if (this.currentPage < this.totalPage - 1) {
+                this.currentPage++;
             }
             this.listChapters();
             //this.getComments();
         },
         setPage(pageIndex) {
-            this.currentPageComment = pageIndex - 1;
+            this.currentPage = pageIndex - 1;
             this.listChapters();
             //this.getComments();
         },
