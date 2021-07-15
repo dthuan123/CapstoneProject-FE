@@ -108,7 +108,6 @@ export default {
                     })
                 }
             }
-
             return pages;
         }
     },
@@ -117,15 +116,20 @@ export default {
     },
     methods: {
         getData() {
+            debugger
+            this.pagingSetting.searchKeyword = decodeURIComponent(this.pagingSetting.searchKeyword);
             axios
-                .get(this.apiURL, {
-                    headers: this.pagingSetting
-                })
+                .post(this.apiURL, this.pagingSetting
+                )
                 .then((response) => {
                     this.tableData = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
-                });
+                })
+                .catch((response)=>{
+                    alert(response);
+                })
+                ;
         },
         toPrevPage() {
             if(this.currentPage !== 1) {
