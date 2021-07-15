@@ -27,8 +27,8 @@
             <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
             <span class="badge badge-pill badge-primary">{{book.likes}}</span>
         </button>
-        <button type="button" class="btn btn-outline-primary" v-on:click="openReport">
-            <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Báo cáo
+        <button type="button" class="btn btn-outline-primary" id="report-button-1" v-on:click="openReport">
+            Báo cáo
             <span class="badge badge-pill badge-primary"></span>
         </button>
         <!-- <div id="app">
@@ -86,7 +86,7 @@
     <div class="report-detail-wrapper" v-if="showModal">
                 <div class="report-detail-container">
                     <div class="model-field" v-show="showDetail">
-                        <label class="title">Báo cáo</label><br>
+                        <label class="title">Nhập nội dung cần báo cáo:</label><br>
                         <textarea class="form-control" v-model="reportContent"></textarea>
                     </div>     
                     <div class="alert alert-danger" role="alert" v-show="reportError">
@@ -97,8 +97,8 @@
                     </div>     
 
                     <div class="modal-button">
-                        <button type="submit" class="btn btn-outline-secondary" @click="sendReport">Báo cáo</button>
-                        <button class="btn btn-outline-secondary" @click="closeReport">Đóng</button>
+                        <button type="submit" class="btn btn-outline-secondary" id="report-button-2" @click="sendReport">Báo cáo</button>
+                        <button class="btn btn-outline-secondary" id="close-button" @click="closeReport">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -379,6 +379,7 @@ export default {
                 .then((response) => {    
                     this.reportSuccess = true;
                     this.reportError = false;
+                    this.reportContent = null;
                     console.log('1123', response);
                 })
                 // .catch((error) => {
@@ -523,6 +524,39 @@ export default {
 
 .chapter {
   margin-bottom: 10px;
+}
+
+#report-button-1 {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.modal-button #report-button-2 {
+  margin-top: 7px;
+  margin-left: 75px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
+}
+
+.modal-button #close-button {
+  margin-top: 7px;
+  margin-left: 169px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
+}
+
+.form-control {
+    resize: none;
+    height: 160px;
+    width: 440px;
+    font-size : 15px;
+}
+
+.title {
+    margin-bottom: 5px;
+    font-size: 15px;
 }
 
 .report-detail-wrapper {

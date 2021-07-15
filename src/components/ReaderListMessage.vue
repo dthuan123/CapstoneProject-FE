@@ -47,10 +47,10 @@ export default {
         //this.getMessageByUser();
         let self = this;
         this.columnDefs = [
-            {
-                header: "STT",
-                field: "reportId"
-            },
+            // {
+            //     header: "STT",
+            //     field: "reportId"
+            // },
             {
                 header: "Ngày gửi",
                 field: "reportedDate",
@@ -80,14 +80,14 @@ export default {
                 field: "statusName"
             },
             {
-                header: "Xem chi tiết",
+                header: "Chi tiết",
                 name: "detail",
                 display: "<button class='btn btn-primary'>Xem chi tiết</button>", 
             },
             {
                 header: "Phản hồi",
                 name: "response",
-                display: "<button class='btn btn-primary'>Phản hồi</button>",
+                display: "<button class='btn btn-primary'>Xem phản hồi</button>",
             },     
             {
                 header: "Thao tác",

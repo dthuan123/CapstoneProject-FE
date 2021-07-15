@@ -71,7 +71,7 @@
                     <textarea type="text" class="form-control" v-model="report.responseContent" readonly/>
                 </div>
                 <div class="modal-button">
-                    <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
+                    <button class="btn btn-outline-secondary" id="close-button" @click="closeModal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -302,7 +302,6 @@ export default {
     transition: opacity 0.3s ease;
 }
 
-
 .message-detail-container {
     display: flex;
     flex-direction: column;
@@ -314,5 +313,20 @@ export default {
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
+}
+
+.form-control {
+    resize: none;
+    height: 200px;
+    width: 440px;
+    font-size : 15px;
+}
+
+.modal-button #close-button {
+  margin-top: 22px;
+  margin-left: 300px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
 }
 </style>
