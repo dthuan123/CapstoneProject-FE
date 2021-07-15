@@ -123,6 +123,7 @@ export default {
     },
     beforeRouteLeave (to, from, next) {
       console.log('asdasdsd')
+      next();
     },
 
     methods: {

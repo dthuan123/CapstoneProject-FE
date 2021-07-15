@@ -105,6 +105,12 @@ export default {
     created(){
         this.listbooks();
     },
+    watch:{
+        $route (to, from){
+            this.categoryId = this.$route.query.id;
+            this.listbooks();
+        }
+    } ,
     methods: {
         listbooks(){
             axios

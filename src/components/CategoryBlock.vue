@@ -1,13 +1,7 @@
 <template>
-<main>
-    <div class="list-group-item">     
-        <font-awesome-icon icon="thumbs-up"></font-awesome-icon> 
         <div class="category-name"> 
             <router-link :to="'/category?id=' + category.id">{{category.name}}</router-link>
-            <div class="title-count">So luong: 100</div>
         </div>
-    </div>
-    </main>
 </template>
 
 <script>
@@ -18,19 +12,16 @@
 </script>
 <style scoped>
     .category-name {
-        display: flex;
+        display: grid;
         justify-content: space-between;
-        margin-top: auto;
-        width: 100%;
-        text-align: left;
-        color: blue;
+        width: 120px;
+        color: #000;
         font-family: open sans;
-        font-weight: 700;
-        white-space: inherit;
-        font-size: 20px;
-        padding-left: 10px;
+        font-size: 15px;
+        padding: 10px;
+        border: 1px solid #ccd9d5;
     }
-    .list-group-item{
+    /* .list-group-item{
         display: flex;
         align-items: center;
         background-color: #fff;
@@ -39,5 +30,5 @@
     }
     .title-count{
         font-size: 13px;
-    }
+    } */
 </style>
