@@ -10,7 +10,7 @@
                 <!-- <a href="#">Ten nguoi</a> -->
                 <h5>By: {{comment.user.name}}</h5>
                 <!-- <p class="comment-p">{{ moment(new Date(comment.startedDate)).fromNow() }}</p> -->
-                <p class="comment-p">{{ moment(new Date(comment.startedDate)).endOf("hour").fromNow() }}</p>
+                <p class="comment-p">{{ moment(comment.startedDate) }}</p>
                 <!-- <p class="comment-p">{{comment.startedDate}}</p> -->
                 <!-- <p class="comment-p">{{dateTime}}</p> -->
             </div>
@@ -30,11 +30,15 @@ import moment from 'moment';
             content: "",
         },
         methods: {
-           moment: function () {
-            return moment();
+           moment: function (date) {
+            return moment(new Date(date)).fromNow();
+          }
+        },
+        computed: {
+          format(date) {
+            return moment(date).fromNow();
           }
         }
-
     }
 </script>
 <style scoped>
