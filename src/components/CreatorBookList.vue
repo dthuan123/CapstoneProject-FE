@@ -34,18 +34,20 @@ export default {
     beforeMount() {
         let self = this;
         this.columnDefs = [
-            {
-                header: "STT",
-                field: "id"
-            },
+            // {
+            //     header: "STT",
+            //     isRowIndex: true
+            // },
             {
                 header: "Tên",
                 field: "name",
+                width: "100px"
             },
             {
                 header: "Ảnh bìa",
                 field: "imageLink",
-                isImage: true
+                isImage: true,
+                width: "150px"
             },
             {
                 header: "Ngày bắt đầu",
@@ -59,10 +61,10 @@ export default {
                 isDate: true,
                 width: "9rem"
             },
-            {
-                header: "Mô tả",
-                field: "description"
-            },
+            // {
+            //     header: "Mô tả",
+            //     field: "description"
+            // },
             {
                 header: "Điểm đánh giá",
                 field: "overallRating"

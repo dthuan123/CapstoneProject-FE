@@ -46,3 +46,7 @@ li {
 :root {
     font-size: 10px;
 }
+
+body {
+  background-color: #f6f4ec;
+}

@@ -8,11 +8,11 @@
                     <div class="form-group">
                         <div>
                         <label for="username">Tên đăng nhập(<span style="color:red">*</span>): </label>
-                        <input type="text" class="form-control" id="username" value={{user.name}} disabled>
+                        <input type="text" class="form-control" id="username" :value="user.name" disabled>
                         </div>
                         <div>
                         <label for="email">Địa chỉ email(<span style="color:red">*</span>): </label>
-                        <input type="email" class="form-control" id="email" value={{user.email}} disabled>
+                        <input type="email" class="form-control" id="email" :value="user.email" disabled>
                         </div>
                         <div>
                         <label for="password">Mật khẩu mới(<span style="color:red">*</span>): </label>
@@ -47,7 +47,7 @@
             return {
                 user: this.$store.state.user,
                 password: null,
-                repassword: this.repassword,
+                repassword: null,
                 passwordValidate: false,
                 isError: false,
             }
@@ -65,16 +65,20 @@
                     this.passwordValidate = true;
                     return;
                 }
-            axios.post("http://localhost:8000/changePassword", {
-                headers: {
-                    userId: this.$store.state.user.id,
-                    password: this.password
-                }
-            })
-            .then(res =>{
-                    console.log(res);
-                    alert("doi mat khau thanh cong");
-                })
+                
+                let formData = new FormData();
+                formData.append("password", new Blob([JSON.stringify(this.password)], {
+                  type: "application/json"
+                }));
+                formData.append("userId", new Blob([JSON.stringify(this.$store.state.user.id)], {
+                  type: "application/json"
+                }));
+            axios
+              .post("http://localhost:8000/changePassword", formData)
+              .then(res =>{
+                console.log(res);
+                alert("doi mat khau thanh cong");
+              })
             }
         }
     }

@@ -28,7 +28,7 @@
                 </thead>
                 <tbody>
                     <tr
-                        v-for="row in tableData"
+                        v-for="(row) in tableData"
                         :key="row"
                         class="table-row"
                     >
@@ -38,12 +38,13 @@
                             :style="{ width: col.width ? col.width : 'auto' }"
                             :class="{'img-cell' : col.isImage, 'cell' : true}"
                         >
-                            <div v-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
+                            <div v-if="col.deleteDisplay" v-html="col.deleteDisplay" v-on:click="deleteChapter(row)"></div>
+                            <div v-else-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
                             <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
                             <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
-                            <span v-else>{{ row[col.field] }}</span>
+                            <span class="word-cell" v-else>{{ row[col.field] }}</span>
                         </td>
                     </tr>
                 </tbody>
@@ -158,6 +159,17 @@ export default {
         formatDate(date) {
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
+        },
+        deleteChapter(row) {
+          axios
+            .delete("http://localhost:8000/creator/delete/chapter", {   
+              headers: {
+                  chapterId: row.id
+              }
+            })
+            .then((response) => {
+              this.getData();
+            });
         }
     }
 }
@@ -174,6 +186,7 @@ export default {
 }
 .table-row {
     font-size: 1.5rem;
+    height: 50px;
 }
 .img-cell {
     width: 15rem;
@@ -228,5 +241,11 @@ export default {
     background-color: transparent;
     height: 3rem;
     width: 4rem;
+}
+
+.word-cell {
+    height: 50px;
+    word-wrap: break-word;
+  
 }
 </style>

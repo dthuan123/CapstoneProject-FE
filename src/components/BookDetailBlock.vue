@@ -17,16 +17,20 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .novel-detail-block {
-    position: relative;
-    height: 200px;
+  position: relative;
+  height: 200px;
+  margin: 5px;
 }
 
 .book-img1 {
-    width: 120px;
+    width: 100%;
     height: 150px;
+    object-fit: cover;
 }
+
+
 
 .novel-chapter {
     z-index: 100;
@@ -40,8 +44,18 @@ export default {
     color: #111;
     font-family: OpenSans;
     font-weight: 700;
+    height: 48px;
+    font-size: 15px;
     overflow: hidden;
     word-wrap: normal;
 }
+
+.novel-title a {
+  font-size: 10px;
+  color: black;
+}
+.novel-tittle a:hover {
+    color: red;
+  }
 
 </style>

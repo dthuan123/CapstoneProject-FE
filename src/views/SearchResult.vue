@@ -15,19 +15,25 @@
 <script>
 import BookDetailBlock from "@/components/BookDetailBlock.vue";
 import axios from "axios";
+import UserSearchBlock from '../components/UserSearchBlock.vue';
 export default {
     name: "SearchResult",
-    components: {BookDetailBlock,
-    },
+    components: {BookDetailBlock},
     data(){
         return {
             searchword: this.$route.query.searchword,
-            resultSearchBook: [],
+            resultSearchBooks: [],
         };
     },
     created(){
         this.getResultSearchBook();
     },
+    watch:{
+        $route (to, from){
+            this.searchword = this.$route.query.searchword,
+            this.getResultSearchBook();
+        }
+    } ,
     methods: {
         getResultSearchBook() {
             axios
@@ -36,8 +42,17 @@ export default {
                         searchword: this.searchword,
                     }
                 })
-                .then((response) => (this.resultSearchBook = response.data));
-        }
+                .then((response) => {this.resultSearchBooks = response.data; console.log(response.data)});
+        },
+        // getResultSearchUser() {
+        //     axios
+        //         .get("http://localhost:8000/creator/search/user", {
+        //             headers: {
+        //                 searchword: this.searchword,
+        //             }
+        //         })
+        //         .then((response) => (this.resultSearchUsers = response.data));
+        // }
     }
 }
 </script>

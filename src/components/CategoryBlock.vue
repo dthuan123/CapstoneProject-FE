@@ -1,12 +1,7 @@
 <template>
-<main>
-    <div class="list-group-item" style="background-color: #CCFFFF;">
-        <div class="category-name">
+        <div class="category-name"> 
             <router-link :to="'/category?id=' + category.id">{{category.name}}</router-link>
-            <div>So luong</div>
         </div>
-    </div>
-    </main>
 </template>
 
 <script>
@@ -15,20 +10,25 @@
         props: ["category"]
     }
 </script>
-<style>
+<style scoped>
     .category-name {
-        display: flex;
+        display: grid;
         justify-content: space-between;
-        margin-top: auto;
-        width: 100%;
-        text-align: left;
-        color: blue;
+        width: 120px;
+        color: #000;
         font-family: open sans;
-        font-weight: 700;
-        white-space: inherit;
-        font-size: 20px;
+        font-size: 15px;
+        padding: 10px;
+        border: 1px solid #ccd9d5;
     }
-    .list-group-item{
-        display: flex
+    /* .list-group-item{
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        padding: 10px;
+        width: 50%;
     }
+    .title-count{
+        font-size: 13px;
+    } */
 </style>
