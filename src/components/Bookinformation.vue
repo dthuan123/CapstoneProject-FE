@@ -19,21 +19,6 @@
           <span>{{ book.bookStatus.name }}</span>
         </div>
         <div>
-        <button
-            type="button"
-            class="btn btn-outline-primary c-btn"
-            v-on:click="like"
-        >
-            <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
-            <span class="badge badge-pill badge-primary">{{book.likes}}</span>
-        </button>
-        <button type="button" class="btn btn-outline-primary" id="report-button-1" v-on:click="openReport">
-            Báo cáo
-            <span class="badge badge-pill badge-primary"></span>
-        </button>
-        <!-- <div id="app">
-            <AwesomeVueStarRating :star="this.star" :disabled="this.disabled" :maxstars="this.maxstars" :starsize="this.starsize" :hasresults="this.hasresults" :hasdescription="this.hasdescription" :ratingdescription="this.ratingdescription" />
-        </div> -->
             <button
                 type="button"
                 class="btn btn-outline-primary c-btn"
