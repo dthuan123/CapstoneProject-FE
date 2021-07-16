@@ -6,12 +6,12 @@
       <div class="book__info">
         <h1 class="book-name">{{ book.name }}</h1>
         <div class="cate">
-          <span class="book-label">Tac gia:</span>
+          <span class="book-label">Tác giả:</span>
           <router-link :to="'/bookbycreator?creatorId=' + book.creator.id">{{ book.alias.name }}</router-link>
         </div>
         <div class="cate">
           <span class="book-label">Thể loại:</span>
-          <span v-for="category in book.categories" :key="category">{{ category.name }}</span>
+          <span v-for="category in book.categories" :key="category">{{ category.name + '' }}</span>
           <br />
         </div>
         <div class="cate">
@@ -34,7 +34,29 @@
         <!-- <div id="app">
             <AwesomeVueStarRating :star="this.star" :disabled="this.disabled" :maxstars="this.maxstars" :starsize="this.starsize" :hasresults="this.hasresults" :hasdescription="this.hasdescription" :ratingdescription="this.ratingdescription" />
         </div> -->
+            <button
+                type="button"
+                class="btn btn-outline-primary c-btn"
+                v-on:click="like"
+            >
+                <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
+                <span class="badge badge-pill badge-primary">{{book.likes}}</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary  c-btn" v-on:click="openReport">
+                Báo cáo
+                <span class="badge badge-pill badge-primary"></span>
+            </button>
+            
         </div>
+        <div>
+            <star-rating class="star-rate" v-model:rating="rating" 
+                v-bind:show-rating="false" 
+                v-bind:star-size="30"
+                @update:rating="setRating" v-bind:increment="0.5">
+            </star-rating>
+            <span class="star-total">Số lượt đánh giá: {{book.totalRating}}</span>
+        </div>
+        <!-- <facebook @url="'local'" @scale="3">Share on</facebook> -->
         <div class="book-description">
             <p>{{ book.description }}</p>
             
@@ -110,10 +132,11 @@
                 <button class="btn btn-success" @click="reply">Đăng bình luận</button>
             </div>
         </div>
-        <comment-block
+        <book-comment
             v-bind:comments="comments"
+            v-bind:bookId="bookId"
             @comment="getComments"
-        ></comment-block>
+        ></book-comment>
         <div class="row-end">
             <ul class="pagination">
                 <li @click="setPageComment(1)" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">First</a></li>
@@ -133,14 +156,15 @@
 <script>
 import axios from "axios";
 import ChapterInBookBlock from "@/components/ChapterInBookBlock.vue";
-import CommentBlock from './CommentBlock.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-//import AwesomeVueStarRating from 'awesome-vue-star-rating'
+import StarRating from 'vue-star-rating'
+import BookComment from "@/components/BookComment.vue"
+// import { Facebook } from 'vue-socialmedia-share';
 
 export default {
     name: "Bookinformation",
-    components: { ChapterInBookBlock, ckeditor: CKEditor.component, CommentBlock },
+    components: { ChapterInBookBlock, ckeditor: CKEditor.component, BookComment, StarRating },
     data() {
         return {
             bookId: this.$route.query.id,
@@ -154,7 +178,7 @@ export default {
                 },
                 creator: {
                     id: null,
-                },
+                }
             },
             data: [],
             currentPage: 0,
@@ -172,7 +196,7 @@ export default {
             reportContent: null,
             reportError: false,
             reportSuccess: false,
-
+            rating: 0,
             comments: [],
             Comment: {
                 book: {
@@ -201,34 +225,6 @@ export default {
                   ]
                 }
             },
-
-            // star: 5,
-            // ratingdescription: [
-            // {
-            //     text: 'Poor',
-            //     class: 'star-poor'
-            // },
-            // {
-            //     text: 'Below Average',
-            //     class: 'star-belowAverage'
-            // },
-            // {
-            //     text: 'Average',
-            //     class: 'star-average'
-            // },
-            // {
-            //     text: 'Good',
-            //     class: 'star-good'
-            // },
-            // {
-            // text: 'Excellent',
-            // class: 'star-excellent'
-            // }],            
-            // hasresults: true,
-            // hasdescription: true,
-            // starsize: 'lg', //[xs,lg,1x,2x,3x,4x,5x,6x,7x,8x,9x,10x],
-            // maxstars: 5,
-            // disabled: false,
         };
     },
     computed: {
@@ -311,11 +307,10 @@ export default {
                 .then((response) => {
                     this.book = response.data;
                     this.likecount = this.book.likes;
-                    console.log("1", this.book);
+                    this.rating = this.book.overallRating;
                 });
         },
         like() {
-            console.log(this.user);
             if (!this.user) {
                 alert("Bạn cần phải đăng nhập trước!");
                 return;
@@ -329,7 +324,6 @@ export default {
                     },
                 })
                 .then((res) => {
-                    console.log("user", this.user);
                     this.books();
                 });
         },
@@ -378,7 +372,6 @@ export default {
                   statusId: 1
                 }
             }
-            console.log('body', report);
             axios
                 .post("http://localhost:8000/reader/create-report", report)
                 .then((response) => {    
@@ -416,12 +409,11 @@ export default {
                     this.comments = response.data.content;
                     this.currentPageComment = response.data.pageable.pageNumber;
                     this.totalPageComment = response.data.totalPages;
-                    console.log(this.comments);
                 });
         },
         reply() {
             axios
-                .post("http://localhost:8000/reader/create/comment", this.Comment)
+                .post("http://localhost:8000/reader/comment", this.Comment)
                 .then((response) => {
                     this.getComments();
                 });
@@ -464,6 +456,18 @@ export default {
             this.currentPageComment = pageIndex - 1;
             this.getComments();
         },
+        setRating(rating) {
+            let formData = new FormData();
+            formData.append("book", new Blob([JSON.stringify(this.book)], {
+                type: "application/json"
+            }));
+            formData.append("rating", new Blob([JSON.stringify(this.rating)], {
+                type: "application/json"
+            }));
+            axios
+                .post("http://localhost:8000/reader/rate", formData)
+                .then((response) => this.books());
+        }
     },
 };
 </script>
@@ -525,8 +529,13 @@ export default {
 
 .c-btn {
   margin-bottom: 10px;
+  width: 80px;
+  margin-right: 20px;
 }
 
+.star-rate {
+    margin-bottom: 20px;
+}
 .chapter {
   margin-bottom: 10px;
 }
@@ -590,23 +599,6 @@ export default {
     transition: all 0.3s ease;
 }
 
-/* .star {
-    color: yellow;
-}
-.star.active {
-    color: yellow;
-} */
-/* .list, .list.disabled {
-    &:hover {
-        .star {
-            color: yellow !important;
-        }
-        .star.active {
-            color: yellow;
-        }
-    }
-} */
-
 .comment-block {
     margin: 0 20rem;
     padding: 1rem;
@@ -621,5 +613,11 @@ export default {
 .reply-button {
     display: flex;
     justify-content: flex-end;
+}
+
+.star-total {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 20px;
 }
 </style>

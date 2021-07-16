@@ -5,7 +5,7 @@
         class="custom-container"
     >
         <div class="profile-container">
-            <img class="profile-img" src="http://localhost:8000/content/images/books/1.png">
+            <img class="profile-img" :src="user ? user.avatarLink : 'http://localhost:8000/content/images/books/1.png'">
         </div>
         <div class="comment-section">
             <div class="comment-container">
@@ -45,6 +45,7 @@ export default {
     },
     data() {
         return {
+            user: this.$store.state.user,
             parentCommentId: null,
             showEditor: false,
             chapterComment: {
@@ -83,7 +84,7 @@ export default {
         },
         reply() {
             axios
-                .post("http://localhost:8000/creator/create/comment", this.chapterComment)
+                .post("http://localhost:8000/reader/create/comment", this.chapterComment)
                 .then(() => {
                     this.showEditor = false;
                     this.emitter.emit("comment");

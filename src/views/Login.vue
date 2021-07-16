@@ -1,9 +1,9 @@
 <template>
     <div class="login-page">
         <form @submit.prevent="login" class="login-form">
-            <input v-model="name" type="text" name="name" >
-            <input v-model="password" type="password" name="password">
-            <button type="submit">Login</button>
+            <input v-model="name" type="text" name="name" placeholder="Tên đăng nhập" class="form-control c-input">
+            <input v-model="password" type="password" name="password" placeholder="Mật khẩu" class="form-control c-input">
+            <button type="submit" class="btn btn-primary">Login</button>
             <span v-show="isError">Wrong username or password</span>
         </form>
     </div>
@@ -49,10 +49,22 @@ export default {
 </script>
 
 <style>
-
+.login-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+    padding: 70px;
+}
 .login-form {
     width: 150px;
     height: 100px;
     margin: 0 auto;
+}
+
+.c-input {
+    margin-bottom: 20px;
+    font-size: 15px;
+    width: 200px;
+    padding: 10px;
 }
 </style>

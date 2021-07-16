@@ -121,13 +121,24 @@ export default {
         this.getComments();
         this.getChapter();
     },
-    beforeRouteLeave (to, from, next) {
-      console.log('asdasdsd')
-      next();
-    },
-
     methods: {
-        
+        // saveHistory() {
+        //     if(this.$store.state.user) {
+        //         let user = {
+        //             id: this.$store.state.user.id,
+        //         }
+        //         let chapter = {
+        //             id: this.chapter.id,
+        //             book: this.chapter.book
+        //         }
+        //         axios     
+        //             .post("http://localhost:8000/reader/history", {
+        //                 user, 
+        //                 chapter
+        //             })
+        //     }
+
+        // },
         getComments() {
             axios
                 .get("http://localhost:8000/comments", {
@@ -153,14 +164,35 @@ export default {
                 .then((response) => {
                     this.chapter = response.data;
                     this.chapterComment.chapter.id = this.chapter.id;
+                    this.saveHistory();
                 });
         },
         reply() {
             axios
-                .post("http://localhost:8000/creator/create/comment", this.chapterComment)
+                .post("http://localhost:8000/reader/create/comment", this.chapterComment)
                 .then((response) => {
                     this.getComments();
                 });
+        },
+        saveHistory() {
+            if(this.$store.state.user) {
+                let chapter = {
+                    id: this.chapter.id,
+                    book: this.chapter.book
+                }
+                let user = {
+                    id: this.$store.state.user.id,
+                }
+                let formData = new FormData();
+                formData.append("user", new Blob([JSON.stringify(user)], {
+                        type: "application/json"
+                    }));
+                formData.append("chapter", new Blob([JSON.stringify(chapter)], {
+                        type: "application/json"
+                    }));
+                axios     
+                    .post("http://localhost:8000/reader/history", formData)
+            }
         },
         toPrevPage() {
             if(this.currentPage !== 0) {

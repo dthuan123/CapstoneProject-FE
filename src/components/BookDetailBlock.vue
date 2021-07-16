@@ -4,8 +4,11 @@
       <!-- <router-link :to="'/books?id=' + book.id" tag="img" :src="book.imageLink"></router-link> -->
       <div class="novel-chapter">
       </div>
-      <div class="novel-title">
+      <div class="novel-title" v-if="!chapter">
          <router-link :to="'/books?id=' + book.id">{{book.name}}</router-link>
+      </div>
+      <div class="novel-title" v-else>
+         <router-link :to="'/chapter?chapterId=' + chapter.id">{{book.name}}</router-link>
       </div>
   </div>
 </template>
@@ -13,7 +16,7 @@
 <script>
 export default {
     name: "BookDetailBlock",
-    props: ["book"]
+    props: ["book", "chapter"]
 }
 </script>
 

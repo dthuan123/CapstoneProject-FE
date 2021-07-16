@@ -116,7 +116,7 @@ export default {
             let headers = {
                     page: this.currentPage,
                     pageSize: this.pageSize,
-                    searchKeyword: this.searchKeyword
+                    searchKeyword: encodeURIComponent(this.searchKeyword)
                 }
             
             this.headerOption.forEach(option => {
