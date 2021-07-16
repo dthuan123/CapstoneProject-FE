@@ -178,4 +178,8 @@ export default {
     .pagination-container li:hover {
         color: #097059;
     }
+
+    .app-main {
+        min-height: 100vh;
+    }
 </style>

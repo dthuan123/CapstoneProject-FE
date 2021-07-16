@@ -139,8 +139,8 @@ export default {
 </script>
 <style scoped>
 .reader-message-list {
-    height: 100vh;
+    min-height: 100vh;
     background-color: white;
-    padding-top: 40px;
+    padding-top: 20px;
 }
 </style>

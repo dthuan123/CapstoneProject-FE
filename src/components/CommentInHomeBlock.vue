@@ -4,7 +4,7 @@
                 
                 <!-- <b>{{ comment.user.id }}</b> -->
                 <!-- <a href="#" class="novel-name-comment">Ten truyen</a> -->
-                <span>{{comment.content}}</span>
+                <div v-html="comment.content"></div>
                 <!-- <p class="comment-p">Truyen nay hay qua</p> -->
             <div class="name-user-comment">
                 <!-- <a href="#">Ten nguoi</a> -->
