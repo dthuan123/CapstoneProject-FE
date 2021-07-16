@@ -91,10 +91,10 @@ export default {
 
             },
             {
-                header: "Phản hồi",
+                header: "Xem phản hồi",
                 name: "response",
-                display: "<button class='btn btn-primary'>Phản hồi</button>",
-                width: "80px"
+                display: "<button class='btn btn-primary'>Xem phản hồi</button>",
+                width: "110px"
             },     
             {
                 header: "Thao tác",

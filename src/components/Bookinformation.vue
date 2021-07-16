@@ -173,7 +173,7 @@ export default {
             user: this.$store.state.user,
 
             reportSender: {
-                id: this.$store.state.user.id,
+                id: this.$store.state.user?.id,
             },
             reports: [],
             showModal: false,
@@ -188,7 +188,7 @@ export default {
                     id: this.$route.query.id,
                 },
                 user: {
-                  id: this.$store.state.user.id
+                  id: this.$store.state.user?.id
                 },
                 content: null
             },
@@ -343,6 +343,7 @@ export default {
             //     alert("Bạn cần phải đăng nhập trước!");
             //     return;
             // }
+
             let report = {
                 reportContent: this.reportContent,
                 // reportedDate: this.currentDate(),
@@ -371,6 +372,10 @@ export default {
                 // })
         },
         openReport() {
+            if (!this.user) {
+                alert("Bạn cần phải đăng nhập trước!");
+                return;
+            }
             this.showModal = true;
             this.showDetail = true;
         },
@@ -442,6 +447,10 @@ export default {
             this.getComments();
         },
         setRating(rating) {
+            if (!this.user) {
+                alert("Bạn cần phải đăng nhập trước!");
+                return;
+            }
             let formData = new FormData();
             formData.append("book", new Blob([JSON.stringify(this.book)], {
                 type: "application/json"

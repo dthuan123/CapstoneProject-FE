@@ -122,23 +122,6 @@ export default {
         this.getChapter();
     },
     methods: {
-        // saveHistory() {
-        //     if(this.$store.state.user) {
-        //         let user = {
-        //             id: this.$store.state.user.id,
-        //         }
-        //         let chapter = {
-        //             id: this.chapter.id,
-        //             book: this.chapter.book
-        //         }
-        //         axios     
-        //             .post("http://localhost:8000/reader/history", {
-        //                 user, 
-        //                 chapter
-        //             })
-        //     }
-
-        // },
         getComments() {
             axios
                 .get("http://localhost:8000/comments", {

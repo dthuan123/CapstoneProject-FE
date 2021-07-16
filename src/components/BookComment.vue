@@ -14,7 +14,7 @@
                 </div>
                 <div class="comment-content" v-html="comment.content">
                 </div>
-                <button class="btn btn-success" @click="displayReplyEditor(comment.id)">Trả lời</button>
+                <button class="btn btn-success" v-show="$store.state.user" @click="displayReplyEditor(comment.id)">Trả lời</button>
             </div>
             <div v-show="showEditor && bookComment.parent.id === comment.id">
                 <ckeditor :editor="editor" v-model="bookComment.content" :config="editorConfig"></ckeditor>

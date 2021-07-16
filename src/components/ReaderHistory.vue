@@ -95,6 +95,8 @@ export default {
     methods: {
         getData() {
             this.data = [];
+            this.currentPage = 0;
+            this.totalPage = null;
             if(this.route === '/reader/history') {
                 this.getHistory();
             } else {
@@ -114,7 +116,7 @@ export default {
                     this.data = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;  
-                    console.log('hí',this.data);
+                    console.log('hí',response);
                 });
         },
         getLikeList() {
@@ -130,7 +132,6 @@ export default {
                     this.data = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;  
-                    console.log('like', this.data);
                 });
         },
         toPrevPage() {

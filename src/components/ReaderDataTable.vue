@@ -154,7 +154,7 @@ export default {
                     this.tableData = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
-                    console.log('dât', this.tableData)
+                    console.log(this.tableData)
                 });
         },
         search() {
@@ -178,7 +178,6 @@ export default {
             this.getData();
         },
         formatDate(date) {
-          console.log('date', date);
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
         },
@@ -187,23 +186,26 @@ export default {
         },
         detail(row) {
             this.tableData.forEach((r) => {
-                if(r.reportId === row.reportId) {                   
+                if(r.id === row.id) {   
                     this.report = r;
                 }
-            })           
+            })      
+                
             this.showModal = true;
             this.showDetail = true;
             this.showResponseContent = false; 
         }, 
         showResponse(row) {
-            axios.get(row.id)
-            .then((response) => (this.report = response.data))
+            this.tableData.forEach((r) => {
+                if(r.id === row.id) {                   
+                    this.report = r;
+                }
+            })      
             this.showModal = true;
             this.showResponseContent = true;   
             this.showDetail = false;       
         },
         deleteMess(row){
-          console.log(row);
             axios
                 .delete("http://localhost:8000/reader/delete-message", {   
                     headers: {
@@ -211,8 +213,7 @@ export default {
                     }
                 })
                 .then((response) => {
-                  this.getData();
-                  console.log(response)
+                    this.getData();
                 });
                 // .then(response => {
                 //    const index = this.tableData.findIndex(report => report.reportId === row.reportId) // find the post index 
@@ -256,7 +257,7 @@ export default {
 }
 
 .cell {
-    height: 20rem;
+    height: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
   
