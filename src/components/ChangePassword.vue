@@ -60,6 +60,7 @@
                 passwordValidate: false,
                 isError: false,
                 oldpassword: this.oldpassword,
+                oldpasswordValidate: false
             }
         },
         methods: {
@@ -91,6 +92,9 @@
               .then(res =>{
                 console.log(res);
                 alert("doi mat khau thanh cong");
+              })
+              .catch(err => {
+                  this.oldpasswordValidate = true;
               })
             }
         }
