@@ -14,6 +14,15 @@
                         <label for="email">Địa chỉ email(<span style="color:red">*</span>): </label>
                         <input type="email" class="form-control" id="email" :value="user.email" disabled>
                         </div>
+
+                         <div>
+                        <label for="old-password">Mật khẩu cũ(<span style="color:red">*</span>): </label>
+                        <input type="password" class="form-control" v-model="oldpassword" id="password" placeholde="Nhập mật khẩu cũ">
+                        </div>
+                         <div>
+                            <span style="color:red" v-show="oldpasswordValidate">Your old password wrong</span>
+                        </div>
+
                         <div>
                         <label for="password">Mật khẩu mới(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
@@ -50,6 +59,7 @@
                 repassword: null,
                 passwordValidate: false,
                 isError: false,
+                oldpassword: this.oldpassword,
             }
         },
         methods: {
@@ -71,6 +81,9 @@
                   type: "application/json"
                 }));
                 formData.append("userId", new Blob([JSON.stringify(this.$store.state.user.id)], {
+                  type: "application/json"
+                }));
+                formData.append("oldPassword", new Blob([JSON.stringify(this.oldpassword)], {
                   type: "application/json"
                 }));
             axios
