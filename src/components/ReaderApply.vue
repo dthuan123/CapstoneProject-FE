@@ -4,7 +4,9 @@
         <form class="apply-form" v-if="user.role.id === 1" v-on:submit.prevent >
             <h3>Đăng kí làm người viết truyện</h3>
             <div class="form-group c-row">
-                <label for="card">Chứng minh nhân dân</label>
+                <label for="card">Chứng minh nhân dân</label><br>
+                <input type="radio" :value="true" v-model="is9digit"> 9 số
+                <input type="radio" :value="false" v-model="is9digit"> 12 số
                 <input type="number" v-model="card" class="form-control" placeholder="Nhập chứng minh nhân dân" id="card" required>
             </div>
             <div class="form-group c-row">
@@ -17,6 +19,9 @@
             </div>
             <div class="alert alert-danger" role="alert" v-show="error">
                 Chứng minh nhân dân bạn nhập đã tồn tại.
+            </div>
+             <div class="alert alert-danger" role="alert" v-show="!validIdentityCard">
+                Chứng minh nhân dân bạn nhập không đúng định dạng.
             </div>
             <div class="alert alert-success" role="alert" v-show="saveSuccess">
                 Bạn đã đăng kí thành công, xin vui lòng chờ quản trị viên duyệt.
@@ -41,7 +46,9 @@ export default {
             backImage: null,
             saveSuccess: false,
             error: false,
-            user: this.$store.state.user
+            user: this.$store.state.user,
+            is9digit: true,
+            validIdentityCard: true
         }
     },
     created() {
@@ -49,9 +56,27 @@ export default {
     },
     methods: {
         apply(event) {
+            this.error = false;
+            this.saveSuccess = false;
+            this.validIdentityCard = true;
             if(!this.card || !this.frontImage || !this.backImage) {
                 return;
             }
+            console.log(this.is9digit, this.card.length)
+            if (this.is9digit) {
+                if(this.card.length != 9) {
+                    this.validIdentityCard = false;
+                    console.log('sai 1')
+                    return;
+                }
+            } else {
+                if(this.card.length != 12) {
+                    this.validIdentityCard = false;
+                    console.log('sai')
+                    return;
+                }
+            }
+            this.validIdentityCard = true;
             let formData = new FormData();
             formData.append("card", new Blob([JSON.stringify(this.card)], {
                     type: "application/json"
