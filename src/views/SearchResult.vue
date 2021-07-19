@@ -39,7 +39,7 @@ export default {
             axios
                 .get("http://localhost:8000/search-book", {
                     headers: {
-                        searchword: this.searchword,
+                        searchword: encodeURIComponent(this.searchword),
                     }
                 })
                 .then((response) => {this.resultSearchBooks = response.data; console.log(response.data)});

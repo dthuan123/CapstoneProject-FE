@@ -19,8 +19,8 @@
                         <label for="old-password">Mật khẩu cũ(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="oldpassword" id="password" placeholde="Nhập mật khẩu cũ">
                         </div>
-                         <div>
-                            <span style="color:red" v-show="oldpasswordValidate">Your old password wrong</span>
+                         <div class="alert alert-danger" role="alert" v-show="oldpasswordValidate">
+                                    Mật khẩu cũ của bạn không chính xác
                         </div>
 
                         <div>
@@ -28,14 +28,14 @@
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
                          <div>
-                            <span style="color:red" v-show="passwordValidate">Your password must atleast 6 character and less than 18 character</span>
+                            <span style="color:red" v-show="passwordValidate">Mật khẩu phải chứa ít nhất 6 ký tự và nhiều nhất 18 ký tự</span>
                         </div>
                         <div>
                         <label for="re-password">Xác nhận mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="repassword" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
                         <div>
-                            <span style="color:red" v-show="isError">Your password is not match</span>
+                            <span style="color:red" v-show="isError">Xác nhận mật khẩu không chính xác</span>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-success btn-block my-3">Đổi mật khẩu</button>
@@ -95,6 +95,7 @@
               })
               .catch(err => {
                   this.oldpasswordValidate = true;
+                  return;
               })
             }
         }

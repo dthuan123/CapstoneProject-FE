@@ -8,7 +8,7 @@
                 <!-- <p class="comment-p">Truyen nay hay qua</p> -->
             <div class="name-user-comment">
                 <!-- <a href="#">Ten nguoi</a> -->
-                <h5>By: {{comment.user.name}}</h5>
+            <router-link :to="'/account?userId=' + comment.user.id" style="font-size: 12px">{{comment.user.name}}</router-link>
                 <!-- <p class="comment-p">{{ moment(new Date(comment.startedDate)).fromNow() }}</p> -->
                 <p class="comment-p">{{ moment(comment.startedDate) }}</p>
                 <!-- <p class="comment-p">{{comment.startedDate}}</p> -->
