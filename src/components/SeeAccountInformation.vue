@@ -1,56 +1,15 @@
 <template>
     <body>
-        <!-- <div class="profile-page" style="min-height: 1213px">
-            <div class="profile-feature-wrapper">
-                <div class="container">
-                    <div class="profile-feature">
-                        <div class="profile-cover">
-                            <div class="fourone-ratio">
-                                ::before
-                                <img :src="user.coverLink">
-                                <div class="content img-in-ratio"></div>
-                            </div>
-                            <div class="profile-changer none block-m">
-                                <div class="p-c_wrapper">
-                                    <i class="fas fa-camera">
-                                        ::before
-                                    </i>
-                                    <span class="p-c_text">1200 x 300px</span>
-                                </div>
-                            </div>
-                            <input type="file" id="user_cover_file" style="display: none"/>
-                            <input type="file" id="user_avatar_file" style="display: none"/>
-                        </div>
-                        <div class="profile-nav">
-                            <div class="profile-ava-wrapper">
-                                <div class="profile-ava">
-                                    <div class="profile-changer">
-                                        <span class="p-c_text">
-                                            <i class="fas fa-camera"></i>
-                                        </span>
-                                    </div>
-                                    <img :src="user.avatarLink">
-                                </div>
-                            </div>
-                            <div class="profile-intro">
-                                <h3 class="profile-intro_name">{{user.name}}</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-       
             <div class="container">
                 <div class="cover-images">
                     <img src="https://i.pinimg.com/564x/48/3e/c5/483ec56eeacf4db4aab03eff76a6a5c1.jpg">
                 </div>
                 <div class="image-avatar">
-                    <div class="choose-file">
-                        <img :src="avatarLink" class="avatar_image">
+                    <div class="choose-file  img-container">
+                        <img :src="avatarLink" class="avatar_image" @mouseover="showButton = true" @mouseleave="showButton = false" @click="$refs.file.click()">
                         <div class="form-row">
-                            <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'">
-                            <input class="form-control-file" v-on:change="getAvatarImage($event)" type="file">    
+                            <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'" >
+                            <input class="form-control-file" v-on:change="getAvatarImage($event)" ref="file" type="file" style="display: none">    
                         </div>
                     </div>
                 <div class="lable-name">
@@ -59,10 +18,12 @@
                 </div>
                 
                 </div>
-                
             </div>
-            <router-link to="/changePassword">Đổi mật khẩu</router-link>
-            <button @click="updateAvatar">Save</button>
+            <div class="footer">
+                <router-link to="/changePassword">Đổi mật khẩu</router-link>
+                <button v-show="avatarImageFile" class="c-btn btn btn-primary" @click="updateAvatar">Save</button>
+            </div>
+           
                
       
     </body>
@@ -75,6 +36,7 @@ import axios from "axios";
             return {
                 user: this.$store.state.user,
                 avatarImageFile: null,
+                showButton: false,
             }
         },
         computed: {
@@ -130,70 +92,94 @@ import axios from "axios";
     
 </script>
 <style scoped>
-    .image-avatar{
-        flex-direction: row;
-        display: flex;
-        position: absolute;
-        bottom: 0;
-        padding-bottom: 20px;
-    }
-    .image-avatar img{
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-    }
-    .cover-images{
-        
-    }
-    .cover-images img{
-        width: 100%;
-        
-    }
-    .lable-name{
-         align-self: flex-end;
-         padding-bottom: 15px;
-         margin-left: 0px;
-    }
-    .lable-name h{
-        font-weight: bold;
-        margion-left: 0px;
-    }
-    .lable-name p{
-        padding: 5px 20px;
-        border: 1px solid #000;
-        font-size: 20px;
-        font-weight: bold;
-        color: white;
-        background-color: green;
-        margin-left: 10px;
-    }
-    .choose-file{
-        position: relative;
+.img-container {
+    position: relative;
+}
 
-    }
-    .form-row{
-        position: absolute;
-        bottom: 0;
-        
-    }
-    .container{
-        text-align: center;
-        margin-top: 30px;
-        padding-bottom: 100px;
-        background-color: white;
-        position: relative;
-        width: 80%;
-    }
+.open-file {
+    position: absolute;
+    top: -60px;
+    left: 20px;
+    width: 80px;
+    height: 50px;
+}
+
+
+.image-avatar{
+    flex-direction: row;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    padding-bottom: 20px;
+}
+.image-avatar img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+.cover-images{
     
+}
+.cover-images img{
+    width: 100%;
+    
+}
+.lable-name{
+        align-self: flex-end;
+        padding-bottom: 15px;
+        margin-left: 0px;
+}
+.lable-name h{
+    font-weight: bold;
+    margin-left: 0px;
+}
+.lable-name p{
+    padding: 5px 20px;
+    border: 1px solid #000;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: green;
+    margin-left: 10px;
+}
+.choose-file{
+    position: relative;
 
-    /* .body{
-        font-family: open sans;
-        font-size: 14px;
-        font-size: 1.4rem;
-        line-height: 22px;
-        line-height: 2.2rem;
-        color: #111;
-        font-weight: 400;
-        background: rgba(227, 229, 232, .3);
-    } */
+}
+.form-row{
+    position: absolute;
+    bottom: 0;
+    
+}
+.container{
+    text-align: center;
+    margin-top: 30px;
+    padding-bottom: 100px;
+    background-color: white;
+    position: relative;
+    width: 80%;
+}
+
+.footer {
+    width: 80%;
+    background-color: white;
+    margin: 0 auto;
+    padding: 10px;
+    display:  flex;
+    flex-direction: column;
+}
+
+.c-btn {
+    width: 100px;
+}
+/* .body{
+    font-family: open sans;
+    font-size: 14px;
+    font-size: 1.4rem;
+    line-height: 22px;
+    line-height: 2.2rem;
+    color: #111;
+    font-weight: 400;
+    background: rgba(227, 229, 232, .3);
+} */
 </style>

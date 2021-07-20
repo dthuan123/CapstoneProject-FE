@@ -7,7 +7,7 @@
         <h1 class="book-name">{{ book.name }}</h1>
         <div class="cate">
           <span class="book-label">Tác giả:</span>
-          <router-link :to="'/bookbycreator?creatorId=' + book.creator.id">{{ book.alias.name }}</router-link>
+          <router-link :to="'/bookbycreator?creatorId=' + book.creator.id">{{ book.alias ? book.alias.name : book.creator.name}}</router-link>
         </div>
         <div class="cate">
           <span class="book-label">Thể loại:</span>

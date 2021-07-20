@@ -8,10 +8,6 @@
                     <span class="acc-label">Chức vụ</span>
                     <span>{{users.role.name}}</span>
                 </div>
-                <div class="acc-book">
-                    <span class="acc-label">Số truyện đã đăng: </span>
-                    <span>{{users.book.size}}</span>
-                </div>
             </div>
         </div>
     </div>
@@ -39,12 +35,12 @@
                 axios
                     .get("http://localhost:8000/reader/account/seeInfo", {
                         headers: {
-                            userId: this.usersId,
+                            userId: this.users.usersId,
                         }
                     })
                     .then((response) => {
                         this.users = response.data;
-                        console.log(this.data)
+                        console.log(this.users)
                     })
             }
         }
