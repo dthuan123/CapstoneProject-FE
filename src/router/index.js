@@ -26,6 +26,9 @@ import BookListByCreator from "@/components/BookListByCreator.vue"
 import SeeAccountInformation from "@/components/SeeAccountInformation.vue"
 import ChangePassword from "@/components/ChangePassword.vue"
 import SearchResult from "@/views/SearchResult.vue"
+import ReaderHistory from "@/components/ReaderHistory.vue";
+import ReaderApply from "@/components/ReaderApply.vue";
+import SeeOtherAccountInformation from "@/components/SeeOtherAccountInformation.vue";
 
 const routes = [
     {
@@ -67,6 +70,10 @@ const routes = [
     {
         path: "/search-result",
         component: SearchResult
+    },
+    {
+        path: "/account",
+        component: SeeOtherAccountInformation
     },
     {
         path: "/accountInfor",
@@ -189,6 +196,18 @@ const routes = [
     {
         path: "/reader/messages",
         component: ReaderListMessage
+    },
+    {
+        path: "/reader/history",
+        component: ReaderHistory
+    },
+    {
+        path: "/reader/likes",
+        component: ReaderHistory
+    },
+    {
+        path: "/reader/apply",
+        component: ReaderApply
     },
   
 ];

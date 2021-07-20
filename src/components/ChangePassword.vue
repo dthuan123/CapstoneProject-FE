@@ -14,19 +14,28 @@
                         <label for="email">Địa chỉ email(<span style="color:red">*</span>): </label>
                         <input type="email" class="form-control" id="email" :value="user.email" disabled>
                         </div>
+
+                         <div>
+                        <label for="old-password">Mật khẩu cũ(<span style="color:red">*</span>): </label>
+                        <input type="password" class="form-control" v-model="oldpassword" id="password" placeholde="Nhập mật khẩu cũ">
+                        </div>
+                         <div class="alert alert-danger" role="alert" v-show="oldpasswordValidate">
+                                    Mật khẩu cũ của bạn không chính xác
+                        </div>
+
                         <div>
                         <label for="password">Mật khẩu mới(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
                          <div>
-                            <span style="color:red" v-show="passwordValidate">Your password must atleast 6 character and less than 18 character</span>
+                            <span style="color:red" v-show="passwordValidate">Mật khẩu phải chứa ít nhất 6 ký tự và nhiều nhất 18 ký tự</span>
                         </div>
                         <div>
                         <label for="re-password">Xác nhận mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="repassword" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
                         <div>
-                            <span style="color:red" v-show="isError">Your password is not match</span>
+                            <span style="color:red" v-show="isError">Xác nhận mật khẩu không chính xác</span>
                         </div>
                         <div>
                             <button type="submit" class="btn btn-success btn-block my-3">Đổi mật khẩu</button>
@@ -50,6 +59,8 @@
                 repassword: null,
                 passwordValidate: false,
                 isError: false,
+                oldpassword: this.oldpassword,
+                oldpasswordValidate: false
             }
         },
         methods: {
@@ -73,11 +84,18 @@
                 formData.append("userId", new Blob([JSON.stringify(this.$store.state.user.id)], {
                   type: "application/json"
                 }));
+                formData.append("oldPassword", new Blob([JSON.stringify(this.oldpassword)], {
+                  type: "application/json"
+                }));
             axios
               .post("http://localhost:8000/changePassword", formData)
               .then(res =>{
                 console.log(res);
                 alert("doi mat khau thanh cong");
+              })
+              .catch(err => {
+                  this.oldpasswordValidate = true;
+                  return;
               })
             }
         }

@@ -229,7 +229,7 @@ export default {
             let body = {
                 name: this.newAlias,
                 user: {
-                    id: 2
+                    id: this.$store.state.user.id
                 }
             }
             axios

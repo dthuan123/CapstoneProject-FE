@@ -6,12 +6,12 @@
       <div class="book__info">
         <h1 class="book-name">{{ book.name }}</h1>
         <div class="cate">
-          <span class="book-label">Tac gia:</span>
-          <router-link :to="'/bookbycreator?creatorId=' + book.creator.id">{{ book.alias.name }}</router-link>
+          <span class="book-label">Tác giả:</span>
+          <router-link :to="'/bookbycreator?creatorId=' + book.creator.id">{{ book.alias ? book.alias.name : book.creator.name}}</router-link>
         </div>
         <div class="cate">
           <span class="book-label">Thể loại:</span>
-          <span v-for="category in book.categories" :key="category">{{ category.name }}</span>
+          <span v-for="category in book.categories" :key="category">{{ category.name + '' }}</span>
           <br />
         </div>
         <div class="cate">
@@ -19,22 +19,29 @@
           <span>{{ book.bookStatus.name }}</span>
         </div>
         <div>
-        <button
-            type="button"
-            class="btn btn-outline-primary c-btn"
-            v-on:click="like"
-        >
-            <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
-            <span class="badge badge-pill badge-primary">{{book.likes}}</span>
-        </button>
-        <button type="button" class="btn btn-outline-primary" v-on:click="openReport">
-            <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Báo cáo
-            <span class="badge badge-pill badge-primary"></span>
-        </button>
-        <!-- <div id="app">
-            <AwesomeVueStarRating :star="this.star" :disabled="this.disabled" :maxstars="this.maxstars" :starsize="this.starsize" :hasresults="this.hasresults" :hasdescription="this.hasdescription" :ratingdescription="this.ratingdescription" />
-        </div> -->
+            <button
+                type="button"
+                class="btn btn-outline-primary c-btn"
+                v-on:click="like"
+            >
+                <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
+                <span class="badge badge-pill badge-primary">{{book.likes}}</span>
+            </button>
+            <button type="button" class="btn btn-outline-primary  c-btn" v-on:click="openReport">
+                Báo cáo
+                <span class="badge badge-pill badge-primary"></span>
+            </button>
+            
         </div>
+        <div>
+            <star-rating class="star-rate" v-model:rating="rating" 
+                v-bind:show-rating="false" 
+                v-bind:star-size="30"
+                @update:rating="setRating" v-bind:increment="0.5">
+            </star-rating>
+            <span class="star-total">Số lượt đánh giá: {{book.totalRating}}</span>
+        </div>
+        <!-- <facebook @url="'local'" @scale="3">Share on</facebook> -->
         <div class="book-description">
             <p>{{ book.description }}</p>
             
@@ -86,7 +93,7 @@
     <div class="report-detail-wrapper" v-if="showModal">
                 <div class="report-detail-container">
                     <div class="model-field" v-show="showDetail">
-                        <label class="title">Báo cáo</label><br>
+                        <label class="title">Nhập nội dung cần báo cáo:</label><br>
                         <textarea class="form-control" v-model="reportContent"></textarea>
                     </div>     
                     <div class="alert alert-danger" role="alert" v-show="reportError">
@@ -97,8 +104,8 @@
                     </div>     
 
                     <div class="modal-button">
-                        <button type="submit" class="btn btn-outline-secondary" @click="sendReport">Báo cáo</button>
-                        <button class="btn btn-outline-secondary" @click="closeReport">Đóng</button>
+                        <button type="submit" class="btn btn-outline-secondary" id="report-button-2" @click="sendReport">Báo cáo</button>
+                        <button class="btn btn-outline-secondary" id="close-button" @click="closeReport">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -110,10 +117,11 @@
                 <button class="btn btn-success" @click="reply">Đăng bình luận</button>
             </div>
         </div>
-        <comment-block
+        <book-comment
             v-bind:comments="comments"
+            v-bind:bookId="bookId"
             @comment="getComments"
-        ></comment-block>
+        ></book-comment>
         <div class="row-end">
             <ul class="pagination">
                 <li @click="setPageComment(1)" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">First</a></li>
@@ -133,14 +141,15 @@
 <script>
 import axios from "axios";
 import ChapterInBookBlock from "@/components/ChapterInBookBlock.vue";
-import CommentBlock from './CommentBlock.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-//import AwesomeVueStarRating from 'awesome-vue-star-rating'
+import StarRating from 'vue-star-rating'
+import BookComment from "@/components/BookComment.vue"
+// import { Facebook } from 'vue-socialmedia-share';
 
 export default {
     name: "Bookinformation",
-    components: { ChapterInBookBlock, ckeditor: CKEditor.component, CommentBlock },
+    components: { ChapterInBookBlock, ckeditor: CKEditor.component, BookComment, StarRating },
     data() {
         return {
             bookId: this.$route.query.id,
@@ -154,7 +163,7 @@ export default {
                 },
                 creator: {
                     id: null,
-                },
+                }
             },
             data: [],
             currentPage: 0,
@@ -164,7 +173,7 @@ export default {
             user: this.$store.state.user,
 
             reportSender: {
-                id: this.$store.state.user.id,
+                id: this.$store.state.user?.id,
             },
             reports: [],
             showModal: false,
@@ -172,14 +181,14 @@ export default {
             reportContent: null,
             reportError: false,
             reportSuccess: false,
-
+            rating: 0,
             comments: [],
             Comment: {
                 book: {
                     id: this.$route.query.id,
                 },
                 user: {
-                  id: this.$store.state.user.id
+                  id: this.$store.state.user?.id
                 },
                 content: null
             },
@@ -201,34 +210,6 @@ export default {
                   ]
                 }
             },
-
-            // star: 5,
-            // ratingdescription: [
-            // {
-            //     text: 'Poor',
-            //     class: 'star-poor'
-            // },
-            // {
-            //     text: 'Below Average',
-            //     class: 'star-belowAverage'
-            // },
-            // {
-            //     text: 'Average',
-            //     class: 'star-average'
-            // },
-            // {
-            //     text: 'Good',
-            //     class: 'star-good'
-            // },
-            // {
-            // text: 'Excellent',
-            // class: 'star-excellent'
-            // }],            
-            // hasresults: true,
-            // hasdescription: true,
-            // starsize: 'lg', //[xs,lg,1x,2x,3x,4x,5x,6x,7x,8x,9x,10x],
-            // maxstars: 5,
-            // disabled: false,
         };
     },
     computed: {
@@ -311,11 +292,10 @@ export default {
                 .then((response) => {
                     this.book = response.data;
                     this.likecount = this.book.likes;
-                    console.log("1", this.book);
+                    this.rating = this.book.overallRating;
                 });
         },
         like() {
-            console.log(this.user);
             if (!this.user) {
                 alert("Bạn cần phải đăng nhập trước!");
                 return;
@@ -329,7 +309,6 @@ export default {
                     },
                 })
                 .then((res) => {
-                    console.log("user", this.user);
                     this.books();
                 });
         },
@@ -349,9 +328,14 @@ export default {
                 });
         },
         currentDate() {
-            const current = new Date();
-            const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
-            return date;
+            // const current = new Date();
+            // const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+            // return date;
+            const today = new Date();
+                    const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                    const time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+                    const dateTime = date +' '+ time;
+            return dateTime;
         },
         sendReport() {
             // console.log(this.user);
@@ -359,6 +343,7 @@ export default {
             //     alert("Bạn cần phải đăng nhập trước!");
             //     return;
             // }
+
             let report = {
                 reportContent: this.reportContent,
                 // reportedDate: this.currentDate(),
@@ -373,12 +358,12 @@ export default {
                   statusId: 1
                 }
             }
-            console.log('body', report);
             axios
                 .post("http://localhost:8000/reader/create-report", report)
                 .then((response) => {    
                     this.reportSuccess = true;
                     this.reportError = false;
+                    this.reportContent = null;
                     console.log('1123', response);
                 })
                 // .catch((error) => {
@@ -387,6 +372,10 @@ export default {
                 // })
         },
         openReport() {
+            if (!this.user) {
+                alert("Bạn cần phải đăng nhập trước!");
+                return;
+            }
             this.showModal = true;
             this.showDetail = true;
         },
@@ -410,12 +399,11 @@ export default {
                     this.comments = response.data.content;
                     this.currentPageComment = response.data.pageable.pageNumber;
                     this.totalPageComment = response.data.totalPages;
-                    console.log(this.comments);
                 });
         },
         reply() {
             axios
-                .post("http://localhost:8000/reader/create/comment", this.Comment)
+                .post("http://localhost:8000/reader/comment", this.Comment)
                 .then((response) => {
                     this.getComments();
                 });
@@ -429,14 +417,14 @@ export default {
             //this.getComments();
         },
         toNextPage() {
-            if (this.currentPageComment < this.totalPageComment - 1) {
-                this.currentPageComment++;
+            if (this.currentPage < this.totalPage - 1) {
+                this.currentPage++;
             }
             this.listChapters();
             //this.getComments();
         },
         setPage(pageIndex) {
-            this.currentPageComment = pageIndex - 1;
+            this.currentPage = pageIndex - 1;
             this.listChapters();
             //this.getComments();
         },
@@ -458,6 +446,22 @@ export default {
             this.currentPageComment = pageIndex - 1;
             this.getComments();
         },
+        setRating(rating) {
+            if (!this.user) {
+                alert("Bạn cần phải đăng nhập trước!");
+                return;
+            }
+            let formData = new FormData();
+            formData.append("book", new Blob([JSON.stringify(this.book)], {
+                type: "application/json"
+            }));
+            formData.append("rating", new Blob([JSON.stringify(this.rating)], {
+                type: "application/json"
+            }));
+            axios
+                .post("http://localhost:8000/reader/rate", formData)
+                .then((response) => this.books());
+        }
     },
 };
 </script>
@@ -519,10 +523,48 @@ export default {
 
 .c-btn {
   margin-bottom: 10px;
+  width: 80px;
+  margin-right: 20px;
 }
 
+.star-rate {
+    margin-bottom: 20px;
+}
 .chapter {
   margin-bottom: 10px;
+}
+
+#report-button-1 {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.modal-button #report-button-2 {
+  margin-top: 7px;
+  margin-left: 75px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
+}
+
+.modal-button #close-button {
+  margin-top: 7px;
+  margin-left: 169px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
+}
+
+.form-control {
+    resize: none;
+    height: 160px;
+    width: 440px;
+    font-size : 15px;
+}
+
+.title {
+    margin-bottom: 5px;
+    font-size: 15px;
 }
 
 .report-detail-wrapper {
@@ -551,23 +593,6 @@ export default {
     transition: all 0.3s ease;
 }
 
-/* .star {
-    color: yellow;
-}
-.star.active {
-    color: yellow;
-} */
-/* .list, .list.disabled {
-    &:hover {
-        .star {
-            color: yellow !important;
-        }
-        .star.active {
-            color: yellow;
-        }
-    }
-} */
-
 .comment-block {
     margin: 0 20rem;
     padding: 1rem;
@@ -582,5 +607,11 @@ export default {
 .reply-button {
     display: flex;
     justify-content: flex-end;
+}
+
+.star-total {
+    font-size: 14px;
+    font-weight: 800;
+    margin-bottom: 20px;
 }
 </style>

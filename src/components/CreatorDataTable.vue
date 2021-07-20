@@ -44,6 +44,7 @@
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
                             <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
+                            <router-link v-else-if="col.field === 'name'" :to="'/books?id=' + row.id">{{row[col.field]}}</router-link>
                             <span class="word-cell" v-else>{{ row[col.field] }}</span>
                         </td>
                     </tr>
@@ -116,7 +117,7 @@ export default {
             let headers = {
                     page: this.currentPage,
                     pageSize: this.pageSize,
-                    searchKeyword: this.searchKeyword
+                    searchKeyword: encodeURIComponent(this.searchKeyword)
                 }
             
             this.headerOption.forEach(option => {

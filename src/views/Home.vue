@@ -66,7 +66,7 @@ export default {
     methods: {
         getTop10Book() {
             axios
-                .get("http://localhost:8000/top-10-books")
+                .get("top-10-books")
                 .then((response) => (this.top10Books = response.data));
         },
         getTop10NewestBook(){

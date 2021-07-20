@@ -1,13 +1,20 @@
 <template>
-    <div class="creator-home">
-        <div class="creator-home-left">
-            <creator-vertical-navigation v-bind:menuList="menuList"></creator-vertical-navigation>
-        </div>
+    <div v-if="user.role.id === 2 && user.approved">
+        <div class="creator-home" >
+            <div class="creator-home-left">
+                <creator-vertical-navigation v-bind:menuList="menuList"></creator-vertical-navigation>
+            </div>
 
-        <div class="creator-home-right">
-            <router-view></router-view>
+            <div class="creator-home-right">
+                <router-view></router-view>
+            </div>
         </div>
-       
+    </div>
+    <div class="c-error" v-else-if="!user.enabled">
+        Tài khoản của bạn hiện tại đang bị cấm do vi phạm điều lệ của hệ thống.
+    </div>
+    <div v-else class="c-error">
+        Bạn đã đăng kí làm tác giả thành công, vui lòng đợi quản trị viên duyệt.
     </div>
 </template>
 
@@ -31,8 +38,12 @@ export default {
                     name: "Viết mới",
                     routeName: "/creator/create/book"
                 }
-            ]
+            ],
+            user: this.$store.state.user
         }
+    },
+    created() {
+        console.log(this.user);
     }
 }
 </script>
@@ -52,5 +63,12 @@ export default {
 
 .creator-home-right {
     width: 80%;
+}
+
+.c-error {
+    max-width: 1200px;
+    margin: 40px auto;
+    height: 100vh;
+    font-size: 30px;
 }
 </style>

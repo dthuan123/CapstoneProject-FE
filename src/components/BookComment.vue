@@ -16,16 +16,17 @@
                 </div>
                 <button class="btn btn-success" v-show="$store.state.user" @click="displayReplyEditor(comment.id)">Trả lời</button>
             </div>
-            <div v-show="showEditor && chapterComment.parent.id === comment.id">
-                <ckeditor :editor="editor" v-model="chapterComment.content" :config="editorConfig"></ckeditor>
+            <div v-show="showEditor && bookComment.parent.id === comment.id">
+                <ckeditor :editor="editor" v-model="bookComment.content" :config="editorConfig"></ckeditor>
                 <div class="reply-button">
                     <button class="btn btn-success" @click="reply">Đăng bình luận</button>
                 </div>
             </div>
             <div class="reply">
-                <comment-block 
+                <book-comment
                     v-bind:comments="comment.replies"
-                ></comment-block>
+                    v-bind:bookId="bookId"
+                ></book-comment>
             </div>
         </div>
     </div>
@@ -37,20 +38,23 @@ import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 export default {
-    name: "CommentBlock",
-    props: ["comments"],
+    name: "BookComment",
+    props: ["comments", "bookId"],
     emits: ["comment"],
     components: {  
       ckeditor: CKEditor.component
+    },
+    mounted() {
+        console.log('comm',this.comments);
     },
     data() {
         return {
             user: this.$store.state.user,
             parentCommentId: null,
             showEditor: false,
-            chapterComment: {
-                chapter: {
-                    id: 8
+            bookComment: {
+                book: {
+                    id: this.bookId
                 },
                 user: {
                     id:  this.$store.state.user ? this.$store.state.user.id : null
@@ -80,11 +84,13 @@ export default {
     methods: {
         displayReplyEditor(parentId) {
             this.showEditor = true;
-            this.chapterComment.parent.id = parentId;
+            this.bookComment.parent.id = parentId;
+
         },
         reply() {
+            console.log(this.bookComment);
             axios
-                .post("http://localhost:8000/reader/create/comment", this.chapterComment)
+                .post("http://localhost:8000/reader/comment", this.bookComment)
                 .then(() => {
                     this.showEditor = false;
                     this.emitter.emit("comment");

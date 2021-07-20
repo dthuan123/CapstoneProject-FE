@@ -47,27 +47,30 @@ export default {
         //this.getMessageByUser();
         let self = this;
         this.columnDefs = [
-            {
-                header: "STT",
-                field: "reportId"
-            },
+            // {
+            //     header: "STT",
+            //     field: "reportId"
+            // },
             {
                 header: "Ngày gửi",
                 field: "reportedDate",
                 isDate: true,
-                width: "8rem"
+                width: "100px"
             },
             {
                 header: "Tên truyện",
                 isObject: true,
                 object: "book",
-                field: "name"               
+                field: "name",
+                width: "250px"   
+
             },
             {
                 header: "Người gửi",
                 isObject: true,
                 object: "userSender",
-                field: "name"
+                field: "name",
+                width: "150px"
             },
             {
                 header: "Nội dung",
@@ -77,22 +80,27 @@ export default {
                 header: "Tình trạng",
                 isObject: true,
                 object: "statusId",
-                field: "statusName"
+                field: "statusName",
+                width: "120px"
             },
             {
-                header: "Xem chi tiết",
+                header: "Chi tiết",
                 name: "detail",
-                display: "<button class='btn btn-primary'>Xem chi tiết</button>", 
+                display: "<button class='btn btn-primary'>Chi tiết</button>",
+                width: "80px"
+
             },
             {
-                header: "Phản hồi",
+                header: "Xem phản hồi",
                 name: "response",
-                display: "<button class='btn btn-primary'>Phản hồi</button>",
+                display: "<button class='btn btn-primary'>Xem phản hồi</button>",
+                width: "110px"
             },     
             {
                 header: "Thao tác",
                 name: "delete",
                 display: "<button class='btn btn-primary'>Xóa</button>",
+                width: "80px"
                 // action: function edit(row) {
                     // axios
                     //     .delete("http://localhost:8000/reader/delete-message", {   
@@ -130,5 +138,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.reader-message-list {
+    min-height: 100vh;
+    background-color: white;
+    padding-top: 20px;
+}
 </style>

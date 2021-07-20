@@ -1,5 +1,4 @@
 <template>
-    <span>{{category}}</span>
     <main> 
         <div class="category-list-book-block">
             <img class="book-img" :src="book.imageLink">
@@ -40,9 +39,10 @@
     color: rgb(117, 5, 20);
 }
 .book-img{
-    max-width: 150px;
-    height: 130px;
+    max-width: 100px;
+    height: 150px;
     box-shadow: 5px 2px 10px #888888;
+    object-fit: cover;
 }
 .column p{
     margin-top: 10px;

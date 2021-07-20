@@ -38,10 +38,11 @@
                             :style="{ width: col.width ? col.width : 'auto' }"
                             :class="{'img-cell' : col.isImage, 'cell' : true}"
                         >
-                            <div v-if="col.display && col.name === 'detail'" v-html="col.display" @click="detail(row)"></div>
-                            <div v-if="col.display && col.name === 'response'" v-html="col.display" v-on:click="showResponse(row)"></div>
-                            <div v-if="col.display && col.name === 'delete'" v-html="col.display" @click="deleteMess(row)"></div>
+                            <div class="action-col" v-if="col.display && col.name === 'detail'" v-html="col.display" @click="detail(row)"></div>
+                            <div class="action-col" v-if="col.display && col.name === 'response'" v-html="col.display" v-on:click="showResponse(row)"></div>
+                            <div class="action-col" v-if="col.display && col.name === 'delete'" v-html="col.display" @click="deleteMess(row)"></div>
                             <span v-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
+                            <router-link v-else-if="col.object === 'book'" :to="'/books?id=' + row[col.object].id">{{row[col.object].name}}</router-link>
                             <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
                             <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
                             <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
@@ -71,7 +72,7 @@
                     <textarea type="text" class="form-control" v-model="report.responseContent" readonly/>
                 </div>
                 <div class="modal-button">
-                    <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
+                    <button class="btn btn-outline-secondary" id="close-button" @click="closeModal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -135,7 +136,7 @@ export default {
             let headers = {
                     page: this.currentPage,
                     pageSize: this.pageSize,
-                    searchKeyword: this.searchKeyword
+                    searchKeyword: encodeURIComponent(this.searchKeyword)
                 }
             
             this.headerOption.forEach(option => {
@@ -153,6 +154,7 @@ export default {
                     this.tableData = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
+                    console.log(this.tableData)
                 });
         },
         search() {
@@ -176,7 +178,6 @@ export default {
             this.getData();
         },
         formatDate(date) {
-          console.log('date', date);
             date =  date.split("T")[0];
             return date.split("-").reverse().join("-");
         },
@@ -185,23 +186,26 @@ export default {
         },
         detail(row) {
             this.tableData.forEach((r) => {
-                if(r.reportId === row.reportId) {                   
+                if(r.id === row.id) {   
                     this.report = r;
                 }
-            })           
+            })      
+                
             this.showModal = true;
             this.showDetail = true;
             this.showResponseContent = false; 
         }, 
         showResponse(row) {
-            axios.get(row.id)
-            .then((response) => (this.report = response.data))
+            this.tableData.forEach((r) => {
+                if(r.id === row.id) {                   
+                    this.report = r;
+                }
+            })      
             this.showModal = true;
             this.showResponseContent = true;   
             this.showDetail = false;       
         },
         deleteMess(row){
-          console.log(row);
             axios
                 .delete("http://localhost:8000/reader/delete-message", {   
                     headers: {
@@ -209,8 +213,7 @@ export default {
                     }
                 })
                 .then((response) => {
-                  this.getData();
-                  console.log(response)
+                    this.getData();
                 });
                 // .then(response => {
                 //    const index = this.tableData.findIndex(report => report.reportId === row.reportId) // find the post index 
@@ -254,7 +257,7 @@ export default {
 }
 
 .cell {
-    height: 20rem;
+    height: 100px;
     overflow: hidden;
     text-overflow: ellipsis;
   
@@ -302,7 +305,6 @@ export default {
     transition: opacity 0.3s ease;
 }
 
-
 .message-detail-container {
     display: flex;
     flex-direction: column;
@@ -314,5 +316,24 @@ export default {
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
+}
+
+.form-control {
+    resize: none;
+    height: 200px;
+    width: 440px;
+    font-size : 15px;
+}
+
+.modal-button #close-button {
+  margin-top: 22px;
+  margin-left: 300px;
+  height: 30px;
+  width: 60px;
+  font-size : 11px;
+}
+.action-col {
+    display: flex;
+    justify-content: center;
 }
 </style>

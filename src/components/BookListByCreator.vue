@@ -1,20 +1,44 @@
 <template>
-    <main>
+    <main class="app-main">
+        <div>
         <list-book-by-creator-block
                 v-for="book in data"
                 :key="book.id"
                 v-bind:book="book">
-            </list-book-by-creator-block>
-            <ul class="pagination-container">
-            <li v-show="currentPage > 0" @click="toPrevPage">Prev</li>
-            <li v-for="page in pages" :key="page.name">
-                <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
-                    {{ page.name }}
-                </button>
-            </li>
-            <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
-            <li @click="setPage(totalPage)">Last</li>
-        </ul>
+        </list-book-by-creator-block>
+            <div class="row-end">
+        <ul class="pagination">
+          <li @click="setPage(1)" :class="{ disabled: currentPage <= 0, 'page-item': true }">
+            <a class="page-link">First</a>
+          </li>
+          <li @click="toPrevPage" :class="{ disabled: currentPage <= 0, 'page-item': true }">
+            <a class="page-link">Prev</a>
+          </li>
+                <li
+                    v-for="page in pages"
+                    :key="page.name"
+                    :class="{
+                        active: currentPage === page.name - 1,
+                        'page-item': true,
+                    }"
+                >
+                    <a class="page-link" @click="setPage(page.name)">{{
+                        page.name
+                    }}</a>
+                </li>
+                <li
+                    v-show="currentPage !== totalPage"
+                    @click="toNextPage"
+                    class="page-item"
+                >
+                    <a class="page-link">Next</a>
+                </li>
+                <li @click="setPage(totalPage)" class="page-item">
+                    <a class="page-link">Last</a>
+                </li>
+            </ul>
+        </div>
+        </div>
     </main>
 </template>
 
@@ -111,3 +135,36 @@ import ListBookByCreatorBlock from './ListBookByCreatorBlock.vue';
     }
 
 </script>
+<style scoped>
+    .app-main{
+        margin-top: 10px;
+        border: 1px solid #000;
+        border-radius: 10px;
+        min-height: 100vh;
+    }
+    .pagination-container {
+        display: flex;
+        margin-bottom: 10px;
+        justify-content: center;
+        align-items: center;
+        font-size: 15px;
+    }
+    .pagination{
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+    .pagination-container button {
+        padding: 5px;
+        margin: 5px;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+    }
+    .pagination-container li:hover {
+        color: #097059;
+    }
+    .row-end{
+        flex-direction: column;
+        padding-bottom: 5px;
+    }
+</style>
