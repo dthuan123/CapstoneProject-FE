@@ -12,7 +12,7 @@
                 <font-awesome-icon icon="search"></font-awesome-icon>
             </button>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive" v-if="tableData.length > 0">
             <table class="table table-hover table-bordered">
                 <thead class="table-header">
                     <tr>
@@ -50,7 +50,7 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="row-end">
+            <div class="row-end" v-if="tableData.length > 0">
                 <ul class="pagination">
                     <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
                     <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
@@ -62,6 +62,9 @@
                 </ul>
             </div>
         </div>
+         <h2 v-if="tableData.length === 0">
+                Không có dữ liệu.
+            </h2>
     </div>
 </template>
 
