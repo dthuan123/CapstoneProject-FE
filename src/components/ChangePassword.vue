@@ -27,15 +27,15 @@
                         <label for="password">Mật khẩu mới(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
-                         <div>
-                            <span style="color:red" v-show="passwordValidate">Mật khẩu phải chứa ít nhất 6 ký tự và nhiều nhất 18 ký tự</span>
+                         <div class="alert alert-info" role="alert" v-show="passwordValidate">
+                           Mật khẩu phải chứa ít nhất 6 ký tự và nhiều nhất 18 ký tự
                         </div>
                         <div>
                         <label for="re-password">Xác nhận mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="repassword" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
-                        <div>
-                            <span style="color:red" v-show="isError">Xác nhận mật khẩu không chính xác</span>
+                        <div class="alert alert-danger" role="alert" v-show="isError">
+                         Xác nhận mật khẩu không chính xác
                         </div>
                         <div>
                             <button type="submit" class="btn btn-success btn-block my-3">Đổi mật khẩu</button>

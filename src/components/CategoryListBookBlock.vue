@@ -19,11 +19,11 @@
 <style scoped>
 .category-list-book-block{
     display: flex;
-    margin-bottom: 10px;
     border-bottom: 1px solid #000;
     padding: 10px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
+    background-color: white;
 }
 
 .column {
