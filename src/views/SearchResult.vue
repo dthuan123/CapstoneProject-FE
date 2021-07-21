@@ -2,7 +2,11 @@
 <body>
     <div class="container">
         <h3>Truyện</h3>
+        <h2 v-if="resultSearchBooks.length === 0">
+                Không tìm thấy kết quả
+        </h2>
         <div class="main-right">
+            
             <book-detail-block
                 v-for="bookHome in resultSearchBooks"
                 :key="bookHome.id"
@@ -56,3 +60,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.container {
+    min-height: 100vh;
+}
+</style>
