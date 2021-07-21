@@ -24,6 +24,7 @@ export default {
 .novel-detail-block {
   position: relative;
   height: 200px;
+  max-width: 120px;
   margin: 5px;
 }
 

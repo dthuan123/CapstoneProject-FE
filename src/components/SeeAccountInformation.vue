@@ -6,9 +6,11 @@
                 </div>
                 <div class="image-avatar">
                     <div class="choose-file  img-container">
-                        <img :src="avatarLink" class="avatar_image" @mouseover="showButton = true" @mouseleave="showButton = false" @click="$refs.file.click()">
+                        
+                            <img :src="avatarLink" class="avatar_image" @mouseover="showButton = true" @mouseleave="showButton = false" @click="$refs.file.click()">
+                        
                         <div class="form-row">
-                            <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'" >
+                            <!-- <img class="cover-img" :src="avatarLink" v-show="mode === 'EDIT'" > -->
                             <input class="form-control-file" v-on:change="getAvatarImage($event)" ref="file" type="file" style="display: none">    
                         </div>
                     </div>
@@ -103,8 +105,6 @@ import axios from "axios";
     width: 80px;
     height: 50px;
 }
-
-
 .image-avatar{
     flex-direction: row;
     display: flex;
@@ -116,6 +116,7 @@ import axios from "axios";
     width: 150px;
     height: 150px;
     border-radius: 50%;
+    border: 5px solid #fff;
 }
 .cover-images{
     

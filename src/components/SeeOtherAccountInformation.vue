@@ -5,8 +5,8 @@
             <div class="account-info">
                 <h1 class="acc-name">{{users.name}}</h1>
                 <div class="role">
-                    <span class="acc-label">Chức vụ</span>
-                    <span>{{users.role.name}}</span>
+                    <span class="acc-label">Chức vụ:</span>
+                    <b style="font-size:15px">{{users.role.name}}</b>
                 </div>
             </div>
         </div>
@@ -51,6 +51,13 @@
     margin: 0 auto;
     padding: 20px;
     font-family: "OpenSans";
+    display: flex;
+    flex-direction: row;
+}
+.container img{
+    width: 150px;
+    height: 150px;
+
 }
 .acc-img{
     width: 150px;
