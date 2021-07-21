@@ -23,18 +23,18 @@ export default {
             menuList: [
                 {
                     id: 1,
-                    name: "Danh sách báo cáo",
+                    name: "Quản lý báo cáo",
                     routeName: "/admin/report-list"
                 },
                 {
                     id: 2,
-                    name: "Danh sách thành viên",
-                    routeName: "/admin/user-list"
+                    name: "Quản lý thành viên",
+                    routeName: "/admin/user-list/-1"
                 },
                 {
                     id: 2,
-                    name: "Danh sách truyện",
-                    routeName: "/admin/book-list"
+                    name: "Quản lý truyện",
+                    routeName: "/admin/book-list/0"
                 }
             ]
         }

@@ -27,6 +27,7 @@ export default {
   },
     beforeMount() {
         let that = this;
+        
         this.columnDefs = [
             {
                 header: "STT",
@@ -93,6 +94,10 @@ export default {
             searchKeyword:"",
             issearchKeyword:true
         };
+        
+        if(this.$router.currentRoute._value.params.id != "0"){
+            this.paging.searchKeyword = this.$router.currentRoute._value.params.id;
+        }
         this.url = "admin/book-listadmin";
     }
 };

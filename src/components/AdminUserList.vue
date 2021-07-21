@@ -119,8 +119,12 @@ export default {
       sortField: "id",
       sortOrder: "des",
       searchKeyword:"",
-      issearchKeyword:true
+      issearchKeyword:true,
+      userid:-1
     };
+    if(this.$router.currentRoute._value.params.id != "0"){
+            this.paging.userid = this.$router.currentRoute._value.params.id;
+        }
     this.url = "admin/user-list";
   },
 };

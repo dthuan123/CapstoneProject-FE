@@ -107,7 +107,8 @@ const routes = [
                 component: AdminReportResponse
             },
             {
-                path: "user-list",
+                path: "user-list/:id",
+                name: "AdminUserList",
                 component: AdminUserList
             },
             {
@@ -116,8 +117,8 @@ const routes = [
                 component: AdminUserEdit
             },
             {
-                path: "book-list",
-                name: "BookEdit",
+                path: "book-list/:id",
+                name: "AdminBookList",
                 component: AdminBookList
             }
             ,

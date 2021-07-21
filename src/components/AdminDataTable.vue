@@ -44,8 +44,13 @@
                         <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
                         <span v-else-if="col.TT"><span v-if="row['role']">{{ row['role']['name'] }}</span></span>
                         <span v-else-if="col.bookStatus"><span v-if="row['bookStatus']">{{ row['bookStatus']['name'] }}</span></span>
-                        <span v-else-if="col.alias"><span v-if="row['alias']">{{ row['alias']['name'] }}</span></span>
-                        <span v-else-if="col.book"><span v-if="row['book']">{{ row['book']['name'] }}</span></span>
+                        <span v-else-if="col.alias"><span v-if="row['alias']">
+                            
+                             <router-link :to="{ name: 'AdminUserList', params: { id: row['alias']['id']  }}">{{ row['alias']['name'] }}}</router-link>
+                            </span></span>
+                        <span v-else-if="col.book"><span v-if="row['book']">
+                            <router-link :to="{ name: 'AdminBookList', params: { id: row['book']['name']  }}">{{row['book']['name']}}</router-link>
+                            </span></span>
                         <span v-else-if="col.userSender"><span v-if="row['userSender']">{{ row['userSender']['name'] }}</span></span>
                         <span v-else-if="col.statusId"><span v-if="row['statusId']">{{ row['statusId']['statusName'] }}</span></span>
                         
@@ -116,7 +121,6 @@ export default {
     },
     methods: {
         getData() {
-            debugger
             this.pagingSetting.searchKeyword = decodeURIComponent(this.pagingSetting.searchKeyword);
             axios
                 .post(this.apiURL, this.pagingSetting
