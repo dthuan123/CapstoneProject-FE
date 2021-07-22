@@ -12,8 +12,9 @@
                 <font-awesome-icon icon="search"></font-awesome-icon>
             </button>
         </div>
-        <table class="data-table">
-            <thead>
+         <div class="table-responsive" >
+            <table class="table table-hover table-bordered"  v-if="tableData.length > 0">
+                <thead class="table-header">
                 <tr>
                     <th 
                         v-for="(col, index) in columnDefs"
@@ -46,7 +47,7 @@
                         <span v-else-if="col.bookStatus"><span v-if="row['bookStatus']">{{ row['bookStatus']['name'] }}</span></span>
                         <span v-else-if="col.alias"><span v-if="row['alias']">
                             
-                             <router-link :to="{ name: 'AdminUserList', params: { id: row['alias']['id']  }}">{{ row['alias']['name'] }}}</router-link>
+                             <router-link :to="{ name: 'AdminUserList', params: { id: row['alias']['id']  }}">{{ row['alias']['name'] }}</router-link>
                             </span></span>
                         <span v-else-if="col.book"><span v-if="row['book']">
                             <router-link :to="{ name: 'AdminBookList', params: { id: row['book']['name']  }}">{{row['book']['name']}}</router-link>
@@ -60,15 +61,21 @@
                 </tr>
             </tbody>
         </table>
-        <ul class="pagination-container">
-            <li v-show="currentPage > 1" @click="toPrevPage">Prev</li>
-            <li v-for="page in pages" :key="page.name">
-                <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
-                    {{ page.name }}
-                </button>
-            </li>
-            <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
-        </ul>
+         <div class="row-end"  v-if="tableData.length > 0">
+                <ul class="pagination">
+                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
+                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                    <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
+                        <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
+                    </li>
+                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
+                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                </ul>
+            </div>
+        </div>
+        <h2 v-if="tableData.length === 0">
+                Không có dữ liệu.
+            </h2>
     </div>
 </template>
 
@@ -80,7 +87,7 @@ export default {
     props: ["columnDefs", "data", "paging", "url"],
     data() {
         return {
-            tableData: this.data,
+            tableData: [],   
             pagingSetting: this.paging,
             apiURL: this.url,
             currentPage: 0,
@@ -165,29 +172,76 @@ export default {
 </script>
 
 <style scoped>
-.data-table {
+.container {
+    padding: 2rem;
+}
+
+.table-header {
+    font-size: 1.5rem;
+    vertical-align: text-top;
+}
+.table-row {
+    font-size: 1.5rem;
+    height: 50px;
+}
+.img-cell {
+    width: 15rem;
+    height: 20rem;
+}
+
+.table-img {
     width: 100%;
-    font-size: 12px;
+    height: auto;
 }
-
-.data-table td, .data-table th {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.data-table th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  /* background-color; */
-  color: #111;
-  font: bold 2rem Calibri, sans-setif;
-}
-
-.data-table tr:hover {background-color: #ddd;}
 
 .pagination-container {
     display: flex;
-    font-size: 12px;
+}
+
+.row-end {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.cell {
+    height: 20rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  
+}
+
+.search-form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.form-search-field {
+    width: 20%;
+    height: 3rem;
+    border-radius: 3rem;
+    border: none;
+    padding-right: 5rem;
+    padding-left: 2rem;
+    background-color: #e0e0e0;
+    vertical-align: baseline;
+}
+
+.form-search-button {
+    position: absolute;
+    right: 2rem;
+    border: none;
+    background-color: transparent;
+    height: 3rem;
+    width: 4rem;
+}
+
+.word-cell {
+    height: 50px;
+    word-wrap: break-word;
+  
 }
 </style>
