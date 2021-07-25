@@ -35,6 +35,11 @@ export default {
                     id: 2,
                     name: "Quản lý truyện",
                     routeName: "/admin/book-list/0"
+                },
+                {
+                    id: 3,
+                    name: "Quản lý thể loại",
+                    routeName: "/admin/categories"
                 }
             ]
         }
