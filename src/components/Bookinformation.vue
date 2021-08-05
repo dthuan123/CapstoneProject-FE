@@ -104,7 +104,7 @@
                     </div>     
 
                     <div class="modal-button">
-                        <button type="submit" class="btn btn-outline-secondary" id="report-button-2" @click="sendReport">Báo cáo</button>
+                        <button type="submit" class="btn btn-outline-secondary" id="report-button-2" @click="sendReport">Gửi</button>
                         <button class="btn btn-outline-secondary" id="close-button" @click="closeReport">Đóng</button>
                     </div>
                 </div>

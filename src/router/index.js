@@ -130,7 +130,7 @@ const routes = [
             },
             {
               path: "categories",
-              name: "AdminBookView",
+              name: "AdminBookCate",
               component: AdminCategories
           }
         ]
