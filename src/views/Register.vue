@@ -11,35 +11,35 @@
                         <input type="text" class="form-control" v-model="username" id="username" placeholder="Nhập tên đăng nhập">
                         </div>
                          <div class="alert alert-danger" role="alert" v-show="usernameValidate">
-                            Must input username
+                            Tên đăng nhập không được để trống
                         </div>
                         <div>
                         <label for="email">Địa chỉ email(<span style="color:red">*</span>): </label>
                         <input type="email" class="form-control" v-model="email" id="email" placeholder="Nhập địa chỉ email">
                         </div>
                          <div class="alert alert-danger" role="alert" v-show="emailValidate">
-                            Must input email
+                            Email không được để trống
                         </div>
                         <div>
                         <label for="password">Mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
                          <div class="alert alert-danger" role="alert" v-show="passwordValidate">
-                            Your password must atleast 6 character and less than 18 character
+                            Mật khẩu phải chứa từ 6-18 ký tự
                         </div>
                         <div>
                         <label for="re-password">Xác nhận mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="repassword" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
                         <div class="alert alert-danger" role="alert" v-show="isError">
-                            Your password is not match
+                            Xác nhận mật khẩu không chính xác
                         </div>
                         <div>
                         <label for="phone">Số điện thoại: </label>
                         <input type="text" class="form-control" v-model="phone" id="phone" placeholder="Nhập số điện thoại"><br/>
                         </div>
                         <div class="alert alert-danger" role="alert" v-show="isExist">
-                            This username or email is already exist
+                            Tên đăng nhập đã tồn tại
                         </div>
                         <div style="text-align: center">
                             <button type="submit" class="btn btn-success btn-block my-3">Đăng ký</button>
@@ -104,16 +104,16 @@
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{
-                if(res){
-                    console.log(res);
+                
                     this.$router.push("/login");
-                }else{
+                })
+            .catch(err => {
                     this.usernameValidate = false;
                     this.passwordValidate = false;
                     this.emailValidate = false;
                     this.isExist = true;
-                }
-            })
+                    return;
+                    })
             }
         }
     }

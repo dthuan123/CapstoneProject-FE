@@ -2,7 +2,7 @@
     <body>
             <div class="container">
                 <div class="cover-images">
-                    <img src="https://i.pinimg.com/564x/48/3e/c5/483ec56eeacf4db4aab03eff76a6a5c1.jpg">
+                    <img :src="coverLink" class="cover-image">
                 </div>
                 <div class="image-avatar">
                     <div class="choose-file  img-container">
