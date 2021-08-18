@@ -55,6 +55,8 @@ import moment from 'moment';
     font-weight: bold;
     color: black;
     font-size: 15px;
+    display: inline-block;
+    white-space: nowrap;
 }
 .comment-block span{
     padding: 5px 0px;
