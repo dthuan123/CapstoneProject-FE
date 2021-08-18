@@ -402,6 +402,9 @@ export default {
                 });
         },
         reply() {
+            if (!this.Comment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/comment", this.Comment)
                 .then((response) => {

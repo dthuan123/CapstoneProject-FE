@@ -83,6 +83,9 @@ export default {
             this.chapterComment.parent.id = parentId;
         },
         reply() {
+            if (!this.bookComment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/create/comment", this.chapterComment)
                 .then(() => {
