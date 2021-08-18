@@ -16,7 +16,7 @@
         </div>
         <div class="cate">
           <span class="book-label">Tình trạng:</span>
-          <span>{{ book.bookStatus.name }}</span>
+          <span>{{ book.bookStatus.name }}</span>  
         </div>
         <div>
             <button
@@ -24,8 +24,8 @@
                 class="btn btn-outline-primary c-btn"
                 v-on:click="like"
             >
-                <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
-                <span class="badge badge-pill badge-primary">{{book.likes}}</span>
+                <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Thích {{book.likes}}
+                <!-- <span class="badge badge-pill badge-primary">{{book.likes}}</span> -->
             </button>
             <button type="button" class="btn btn-outline-primary  c-btn" v-on:click="openReport">
                 Báo cáo

@@ -110,7 +110,7 @@ import axios from "axios";
     display: flex;
     position: absolute;
     bottom: 0;
-    padding-bottom: 20px;
+    padding-bottom: 240px;
 }
 .image-avatar img{
     width: 150px;
@@ -154,11 +154,12 @@ import axios from "axios";
 }
 .container{
     text-align: center;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     padding-bottom: 100px;
     background-color: white;
     position: relative;
     width: 80%;
+    min-height: 50vh;
 }
 
 .footer {
