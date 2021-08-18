@@ -151,6 +151,9 @@ export default {
                 });
         },
         reply() {
+            if (!this.chapterComment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/create/comment", this.chapterComment)
                 .then((response) => {

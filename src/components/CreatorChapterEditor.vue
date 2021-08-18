@@ -20,6 +20,9 @@
         <div>
             <span class="alert alert-success" role="alert" v-show="saveStatus">Success!</span>
         </div>
+        <div>
+            <span class="alert alert-danger" role="alert" v-show="noName">Hãy nhập tên chương</span>
+        </div>
         <div class="datetime">
           <p style="margin-right: 10px;">Chọn ngày và giờ: </p>
           <datepicker style="margin-right: 10px;" v-model="picked" :lowerLimit="lowerLimit"/>
@@ -47,6 +50,7 @@ export default {
     data() {
         return {
             mode: this.$route.name,
+            noName: false,
             book: {},
             chapter: {
                 name: "",
@@ -55,8 +59,8 @@ export default {
             editor: ClassicEditor,
             editorConfig: {
                 cloudServices: {
-                  tokenUrl: 'https://81882.cke-cs.com/token/dev/aacfa923a509229b4a63ccacee9bd8577e9de6f69a378e3df8712010586b',
-                  uploadUrl: 'https://81882.cke-cs.com/easyimage/upload/'
+                  tokenUrl: 'https://82747.cke-cs.com/token/dev/9dee74f9f69d604d94fef27290db9d459c8fef1bfe90c267e0276a72448c',
+                  uploadUrl: 'https://82747.cke-cs.com/easyimage/upload/'
               }
             },
             saveStatus: false,
@@ -106,6 +110,10 @@ export default {
           })
         },
         saveChapter() {
+            if (!this.chapter.name) {
+                this.noName = true;
+                return;
+            }
             this.chapter.book = this.book;
             this.chapter.content = this.editorValue;
             let url = "http://localhost:8000/creator/create/chapter";
@@ -116,6 +124,7 @@ export default {
                 .post(url, this.chapter)
                 .then((response) => {
                     this.saveStatus = true;
+                    this.noName = false;
                 });
         },
         formatDate(date) {

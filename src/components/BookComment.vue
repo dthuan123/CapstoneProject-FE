@@ -88,7 +88,9 @@ export default {
 
         },
         reply() {
-            console.log(this.bookComment);
+            if (!this.bookComment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/comment", this.bookComment)
                 .then(() => {
