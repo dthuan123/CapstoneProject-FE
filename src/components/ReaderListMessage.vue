@@ -51,12 +51,12 @@ export default {
             //     header: "STT",
             //     field: "reportId"
             // },
-            {
-                header: "Ngày gửi",
-                field: "reportedDate",
-                isDate: true,
-                width: "100px"
-            },
+            // {
+            //     header: "Ngày gửi",
+            //     field: "reportedDate",
+            //     isDate: true,
+            //     width: "100px"
+            // },
             {
                 header: "Tên truyện",
                 isObject: true,

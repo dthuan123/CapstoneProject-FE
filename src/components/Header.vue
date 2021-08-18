@@ -3,7 +3,7 @@
         <nav class="header-container">
             <ul class="header-left menu-item-container">
                 <li>
-                    <router-link to="/home">Logo</router-link>
+                    <router-link to="/home">Trang chủ</router-link>
                 </li>
                 <li @mouseover="show()" class="dropdown__parent">
                     <div v-show="showDropDown" @mouseleave="showDropDown=false" class="dropdown">
@@ -166,6 +166,7 @@ export default {
 
 .menu-item-container {
     display: flex;
+    
     align-items: center;
 }
 
@@ -174,7 +175,7 @@ export default {
 }
 
 .header-right {
-    width: 30%;
+    width: 35%;
     justify-content: space-between;
     display: flex;
 }

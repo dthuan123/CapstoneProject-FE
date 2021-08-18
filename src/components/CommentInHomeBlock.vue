@@ -4,7 +4,7 @@
                 
                 <!-- <b>{{ comment.user.id }}</b> -->
                 <!-- <a href="#" class="novel-name-comment">Ten truyen</a> -->
-                <div v-html="comment.content"></div>
+                <div class="c-comment" v-html="comment.content"></div>
                 <!-- <p class="comment-p">Truyen nay hay qua</p> -->
             <div class="name-user-comment">
                 <!-- <a href="#">Ten nguoi</a> -->
@@ -73,5 +73,9 @@ import moment from 'moment';
 .comment-p{
     font-size: 10px;
     padding: 3px 5px;
+}
+.c-comment {
+    font-size: 12px;
+    margin: 10px 0;
 }
 </style>

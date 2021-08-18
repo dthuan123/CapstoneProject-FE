@@ -3,11 +3,12 @@
         <form @submit.prevent="login" class="login-form">
             <input v-model="name" type="text" name="name" placeholder="Tên đăng nhập" class="form-control c-input">
             <input v-model="password" type="password" name="password" placeholder="Mật khẩu" class="form-control c-input">
-            <button type="submit" class="btn btn-primary">Login</button>
-                <div class="alert alert-danger" role="alert" v-show="isError">
-                    Tên đăng nhập hoặc mật khẩu không chính xác
-                </div>
+            <div class="custom-alert alert alert-danger" role="alert" v-show="isError">
+                Tên đăng nhập hoặc mật khẩu không chính xác
+            </div>
+            <button type="submit" class="btn btn-primary">Đăng nhập</button> 
         </form>
+        
     </div>
 </template>
 
@@ -68,5 +69,9 @@ export default {
     font-size: 15px;
     width: 200px;
     padding: 10px;
+}
+.custom-alert {
+    width: 150px;
+    margin: 0 auto;
 }
 </style>
