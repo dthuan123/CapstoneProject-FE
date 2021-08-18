@@ -21,6 +21,13 @@
         padding: 10px;
         border: 1px solid #ccd9d5;
     }
+    .category-name a{
+        color: black;
+    }
+    .category-name:hover{
+        background-color: #80808a;
+        transition: 0.3s ease;
+    }
     /* .list-group-item{
         display: flex;
         align-items: center;

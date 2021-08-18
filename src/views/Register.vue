@@ -10,38 +10,38 @@
                         <label for="username">Tên đăng nhập(<span style="color:red">*</span>): </label>
                         <input type="text" class="form-control" v-model="username" id="username" placeholder="Nhập tên đăng nhập">
                         </div>
-                         <div>
-                            <span style="color:red" v-show="usernameValidate">Must input username</span>
+                         <div class="alert alert-danger" role="alert" v-show="usernameValidate">
+                            Tên đăng nhập không được để trống
                         </div>
                         <div>
                         <label for="email">Địa chỉ email(<span style="color:red">*</span>): </label>
                         <input type="email" class="form-control" v-model="email" id="email" placeholder="Nhập địa chỉ email">
                         </div>
-                         <div>
-                            <span style="color:red" v-show="emailValidate">Must input email</span>
+                         <div class="alert alert-danger" role="alert" v-show="emailValidate">
+                            Email không được để trống
                         </div>
                         <div>
                         <label for="password">Mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="password" id="password" placeholde="Nhập mật khẩu">
                         </div>
-                         <div>
-                            <span style="color:red" v-show="passwordValidate">Your password must atleast 6 character and less than 18 character</span>
+                         <div class="alert alert-danger" role="alert" v-show="passwordValidate">
+                            Mật khẩu phải chứa từ 6-18 ký tự
                         </div>
                         <div>
                         <label for="re-password">Xác nhận mật khẩu(<span style="color:red">*</span>): </label>
                         <input type="password" class="form-control" v-model="repassword" id="re-password" placeholder="Nhập lại mật khẩu">
                         </div>
-                        <div>
-                            <span style="color:red" v-show="isError">Your password is not match</span>
+                        <div class="alert alert-danger" role="alert" v-show="isError">
+                            Xác nhận mật khẩu không chính xác
                         </div>
                         <div>
                         <label for="phone">Số điện thoại: </label>
-                        <input type="number" class="form-control" v-model="phone" id="phone" placeholder="Nhập số điện thoại"><br/>
+                        <input type="text" class="form-control" v-model="phone" id="phone" placeholder="Nhập số điện thoại"><br/>
                         </div>
-                        <div>
-                            <span v-show="isExist">This username or email is already exist</span>
+                        <div class="alert alert-danger" role="alert" v-show="isExist">
+                            Tên đăng nhập đã tồn tại
                         </div>
-                        <div>
+                        <div style="text-align: center">
                             <button type="submit" class="btn btn-success btn-block my-3">Đăng ký</button>
                         </div>
                     </div>
@@ -104,16 +104,16 @@
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{
-                if(res){
-                    console.log(res);
+                
                     this.$router.push("/login");
-                }else{
+                })
+            .catch(err => {
                     this.usernameValidate = false;
                     this.passwordValidate = false;
                     this.emailValidate = false;
                     this.isExist = true;
-                }
-            })
+                    return;
+                    })
             }
         }
     }
@@ -125,5 +125,13 @@
         margin-top: 10vh;
         margin-bottom: 10vh;;
         padding: 10px;
+        background-color: white;
+    }
+    .form-group label{
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+    .form-group button{
+        text-align: center;
     }
 </style>

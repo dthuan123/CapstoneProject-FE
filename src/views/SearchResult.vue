@@ -65,4 +65,8 @@ export default {
 .container {
     min-height: 100vh;
 }
+.main-right{
+    justify-content: flex-start;
+}
+
 </style>

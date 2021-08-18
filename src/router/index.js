@@ -29,6 +29,7 @@ import SearchResult from "@/views/SearchResult.vue"
 import ReaderHistory from "@/components/ReaderHistory.vue";
 import ReaderApply from "@/components/ReaderApply.vue";
 import SeeOtherAccountInformation from "@/components/SeeOtherAccountInformation.vue";
+import AdminCategories from "@/components/AdminCategories.vue";
 
 const routes = [
     {
@@ -107,7 +108,8 @@ const routes = [
                 component: AdminReportResponse
             },
             {
-                path: "user-list",
+                path: "user-list/:id",
+                name: "AdminUserList",
                 component: AdminUserList
             },
             {
@@ -116,8 +118,8 @@ const routes = [
                 component: AdminUserEdit
             },
             {
-                path: "book-list",
-                name: "BookEdit",
+                path: "book-list/:id",
+                name: "AdminBookList",
                 component: AdminBookList
             }
             ,
@@ -125,7 +127,12 @@ const routes = [
                 path: "book-view",
                 name: "AdminBookView",
                 component: AdminBookView
-            }
+            },
+            {
+              path: "categories",
+              name: "AdminBookCate",
+              component: AdminCategories
+          }
         ]
 
      

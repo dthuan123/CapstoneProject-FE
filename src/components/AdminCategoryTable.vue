@@ -1,5 +1,6 @@
 <template>
     <div class="container">   
+        <div class="c-header">
         <div class="search-form">
             <input
                 class="form-search-field"
@@ -12,6 +13,9 @@
                 <font-awesome-icon icon="search"></font-awesome-icon>
             </button>
         </div>
+        <button class="btn btn-primary" @click="showModal = true">Thêm thể loại mới</button>  
+        </div>
+        
         <div class="table-responsive" v-if="tableData.length > 0">
             <table class="table table-hover table-bordered">
                 <thead class="table-header">
@@ -36,15 +40,8 @@
                             v-for="(col, index) in columnDefs"
                             :key="index"
                             :style="{ width: col.width ? col.width : 'auto' }"
-                            :class="{'img-cell' : col.isImage, 'cell' : true}"
                         >
-                            <div v-if="col.deleteDisplay" v-html="col.deleteDisplay" v-on:click="deleteChapter(row)"></div>
-                            <div v-else-if="col.display" v-html="col.display" v-on:click="col.action(row)"></div>
-                            <span v-else-if="col.isConditionalRendering">{{ row[col.field] ? col.fieldTrue : col.fieldFalse }}</span>
-                            <span v-else-if="col.isObject">{{ row[col.object][col.field] }}</span>
-                            <img v-else-if="col.isImage" :src="row[col.field]" class="table-img">
-                            <span v-else-if="col.isDate">{{ row[col.field] ? formatDate(row[col.field]) : ""}}</span>
-                            <router-link v-else-if="col.field === 'name'" :to="'/books?id=' + row.id">{{row[col.field]}}</router-link>
+                            <router-link v-if="col.field === 'name'" :to="'/category?id=' + row.id">{{row[col.field]}}</router-link>
                             <span class="word-cell" v-else>{{ row[col.field] }}</span>
                         </td>
                     </tr>
@@ -62,9 +59,27 @@
                 </ul>
             </div>
         </div>
-         <h2 v-if="tableData.length === 0">
+        <h2 v-if="tableData.length === 0">
                 Không có dữ liệu.
-            </h2>
+        </h2>
+        <div class="alias-modal-wrapper" v-if="showModal">
+            <div class="alias-modal-container">
+                <div class="modal-field">
+                    <input type="text" class="form-control" placeholder="Tên thể loại..." v-model="categoryName">
+                </div>
+                <div class="alert alert-danger" role="alert" v-show="error">
+                    Alias name already exists!
+                </div>
+                <div class="alert alert-success" role="alert" v-show="success">
+                    Success!
+                </div>
+
+                <div class="modal-button">
+                    <button class="btn btn-outline-secondary" @click="createCategory">Lưu</button>
+                    <button class="btn btn-outline-secondary" @click="closeModal">Đóng</button>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -72,7 +87,7 @@
 import axios from "axios"
 
 export default {    
-    name: "DataTable",
+    name: "AdminCategoryTable",
     props: ["columnDefs", "page", "pageSize", "url", "headerOption"], 
     data() {
         return {
@@ -80,7 +95,11 @@ export default {
             creatorId: this.$store.state.user.id,
             currentPage: 0,
             totalPage: null,
-            searchKeyword: ""
+            searchKeyword: "",
+            showModal: false,
+            categoryName: "",
+            success: false, 
+            error: false
         }
     },
     computed: {
@@ -116,6 +135,26 @@ export default {
         this.getData();
     },
     methods: {
+        closeModal() {
+            this.showModal = false;
+            this.success = false;
+            this.error = false;
+        },
+        createCategory() {
+            let body = {
+                name: this.categoryName,
+            }
+            axios
+                .post("http://localhost:8000/admin/categories", body)
+                .then((res) => {
+                    this.getData();
+                    this.success = true;
+                    this.error = false
+                })
+                .catch((error) => {
+                    this.aliasError = true;
+                })
+        },
         setHeader() {
             let headers = {
                     page: this.currentPage,
@@ -160,21 +199,6 @@ export default {
             this.currentPage = pageIndex - 1;
             this.getData();
         },
-        formatDate(date) {
-            date =  date.split("T")[0];
-            return date.split("-").reverse().join("-");
-        },
-        deleteChapter(row) {
-          axios
-            .delete("http://localhost:8000/creator/delete/chapter", {   
-              headers: {
-                  chapterId: row.id
-              }
-            })
-            .then((response) => {
-              this.getData();
-            });
-        }
     }
 }
 </script>
@@ -184,13 +208,20 @@ export default {
     padding: 2rem;
 }
 
+.c-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
 .table-header {
     font-size: 1.5rem;
     vertical-align: text-top;
 }
 .table-row {
     font-size: 1.5rem;
-    height: 50px;
+    height: 50px !important;
 }
 .img-cell {
     width: 15rem;
@@ -251,5 +282,58 @@ export default {
     height: 50px;
     word-wrap: break-word;
   
+}
+
+.alias-name {
+    display: flex;
+    flex-direction: column;
+}
+
+.alias-modal-wrapper {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 9998;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+}
+
+
+.alias-modal-container {
+    display: flex;
+    flex-direction: column;
+    width: 50rem;
+    height: 30rem;
+    margin: 0 auto;
+    padding: 3rem;
+    background-color: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
+    transition: all 0.3s ease;
+}
+
+.modal-field {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+}
+
+.modal-field > input {
+    font-size: 2rem;
+    padding: 2rem;
+}
+
+.modal-button {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.modal-button > button {
+    padding: 1rem;
+    margin-left: 1rem;
 }
 </style>

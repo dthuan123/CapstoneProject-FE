@@ -1,13 +1,13 @@
 <template>
   <div class="user_detail">
-    <img v-if="data.profileImageLink" class="user_detail_image"  :src="data.profileImageLink" />
+    <img v-if="data.avatarLink" class="user_detail_image"  :src="data.avatarLink" />
     <p><b>Tên người dùng:</b> {{ data.name }}</p>
     <p><b>Kiểu:</b> <span v-if="data.role">{{ data.role['name'] }}</span></p>
     <p><b>Email:</b> {{ data.email }}</p>
-    <p><b>CMND:</b> {{ data.cmnd }}</p>
+    <p><b>CMND:</b> {{ data.identityCard }}</p>
     <p><b>Ảnh CMND:</b></p>
-    <img v-if="data.cmndBack" style="width: 250px;" :src="data.cmndBack" />
-    <img v-if="data.cmndFront" style="width: 250px;" :src="data.cmndFront" />
+    <img v-if="data.identityCardBack" style="width: 250px;" :src="data.identityCardBack" />
+    <img v-if="data.identityCardFront" style="width: 250px;" :src="data.identityCardFront" />
   </div>
 </template>
 
@@ -32,7 +32,10 @@ export default {
             userid: this.bookId,
           },
         })
-        .then((response) => (this.data = response.data[0]));
+        .then((response) => (
+          // console.log(response)
+          this.data = response.data[0]
+          ));
     },
   },
 };

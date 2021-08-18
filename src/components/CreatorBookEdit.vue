@@ -70,7 +70,10 @@ export default {
             },
             {
                 header: "Tình trạng",
-                field: ""
+                isObject: true,
+                object: "chapterStatus",
+                field: "name"
+
             },
             {
                 display: "<button class='btn btn-primary'>Chỉnh sửa</button>",

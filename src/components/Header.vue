@@ -5,8 +5,8 @@
                 <li>
                     <router-link to="/home">Logo</router-link>
                 </li>
-                <li @click="show" class="dropdown__parent">
-                    <div v-show="showDropDown" class="dropdown">
+                <li @mouseover="show()" class="dropdown__parent">
+                    <div v-show="showDropDown" @mouseleave="showDropDown=false" class="dropdown">
                       <!-- <ejs-dropdownlist id="dropdownlist" :dataSource='categoryData' :fields='fields'></ejs-dropdownlist> -->
                       <!-- <select v-model="selectedCategory">
                           <option v-for="category in categoriesheader" :key="category" v-bind:value="category.id">
@@ -128,7 +128,7 @@ export default {
             this.$router.push("/home");
         },
         show() {
-          this.showDropDown = !this.showDropDown;
+          this.showDropDown = true;
         },
         
         getCategories(){
@@ -247,6 +247,7 @@ export default {
   position: relative;
   cursor: pointer;
 }
+
 
 .dropdown {
   position: absolute;

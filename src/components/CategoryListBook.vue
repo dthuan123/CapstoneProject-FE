@@ -108,6 +108,7 @@ export default {
     watch:{
         $route (to, from){
             this.categoryId = this.$route.query.id;
+            this.pagingSetting.page = 0;
             this.listbooks();
         }
     } ,
