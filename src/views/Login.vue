@@ -4,7 +4,9 @@
             <input v-model="name" type="text" name="name" placeholder="Tên đăng nhập" class="form-control c-input">
             <input v-model="password" type="password" name="password" placeholder="Mật khẩu" class="form-control c-input">
             <button type="submit" class="btn btn-primary">Login</button>
-            <span v-show="isError">Wrong username or password</span>
+                <div class="alert alert-danger" role="alert" v-show="isError">
+                    Tên đăng nhập hoặc mật khẩu không chính xác
+                </div>
         </form>
     </div>
 </template>
