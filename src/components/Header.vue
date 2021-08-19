@@ -56,19 +56,19 @@
                         <img :src="avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/accountInfor">Tài khoản</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/history">Lịch sử</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/likes">Kệ sách</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/messages">Tin nhắn</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link v-show="role == 'reader'" to="/reader/apply">Hệ thống</router-link>
                             <router-link v-show="role == 'creator'" to="/creator">Hệ thống</router-link>
                             <router-link v-show="role == 'admin'" to="/admin">Hệ thống</router-link>

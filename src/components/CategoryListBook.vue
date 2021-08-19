@@ -7,22 +7,22 @@
                 v-bind:book="book">
             </category-list-book-block>
         <!-- <ul class="pagination-container">
-            <li v-show="currentPage > 0" @click="toPrevPage">Prev</li>
+            <li v-show="currentPage > 0" @click="toPrevPage">Trang trước</li>
             <li v-for="page in pages" :key="page.name">
                 <button type="button" :disabled="page.isDisabled" @click="setPage(page.name)">
                     {{ page.name }}
                 </button>
             </li>
-            <li v-show="currentPage !== totalPage" @click="toNextPage">Next</li>
-            <li @click="setPage(totalPage)">Last</li>
+            <li v-show="currentPage !== totalPage" @click="toNextPage">Trang tiếp</li>
+            <li @click="setPage(totalPage)">Trang cuối</li>
         </ul> -->
         <div class="row-end">
         <ul class="pagination">
           <li @click="setPage(1)" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">First</a>
+            <a class="page-link">Trang đầu</a>
           </li>
           <li @click="toPrevPage" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">Prev</a>
+            <a class="page-link">Trang trước</a>
           </li>
                 <li
                     v-for="page in pages"
@@ -41,10 +41,10 @@
                     @click="toNextPage"
                     class="page-item"
                 >
-                    <a class="page-link">Next</a>
+                    <a class="page-link">Trang tiếp</a>
                 </li>
                 <li @click="setPage(totalPage)" class="page-item">
-                    <a class="page-link">Last</a>
+                    <a class="page-link">Trang cuối</a>
                 </li>
             </ul>
         </div>

@@ -1,5 +1,4 @@
 <template>
-    <body>
             <div class="container">
                 <div class="cover-images">
                     <img :src="coverLink" class="cover-image">
@@ -25,10 +24,6 @@
                 <router-link to="/changePassword">Đổi mật khẩu</router-link>
                 <button v-show="avatarImageFile" class="c-btn btn btn-primary" @click="updateAvatar">Save</button>
             </div>
-           
-               
-      
-    </body>
 </template>
 <script>
 import axios from "axios";
@@ -159,6 +154,7 @@ import axios from "axios";
     background-color: white;
     position: relative;
     width: 80%;
+    min-height: 100vh;
 }
 
 .footer {

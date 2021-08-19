@@ -36,7 +36,7 @@ export default {
 
     methods: {
         loadAudio() {
-            this.src = "";
+            //this.src = "";
             this.src = "http://localhost:8000/audio?chapterId=" + this.chapterId + "&female=" + this.isFemaleVoice;
         },
         setAudioSpeed() {

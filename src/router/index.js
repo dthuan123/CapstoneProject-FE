@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "@/views/Home.vue";
 import CreatorHome from "@/views/CreatorHome.vue";
 import Login from "@/views/Login.vue";
-import ErrorPermission from "@/views/ErrorPermission.vue";
+import LoginError from "@/views/LoginError.vue";
 import CreatorBookList from "@/components/CreatorBookList.vue";
 import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
 import CreatorBookNew from "@/components/CreatorBookNew.vue";
@@ -49,8 +49,8 @@ const routes = [
         component: Login,
     },
     {
-        path: "/error-permission",
-        component: ErrorPermission
+        path: "/login-error",
+        component: LoginError
     },
     {
         path: "/list-category",

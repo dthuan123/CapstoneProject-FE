@@ -34,11 +34,16 @@ export default {
             axios.post("http://localhost:8000/login", body)
                 .then(res => {
                     if(res.data) {
+                        let user = res.data;
+                        if (!user.enabled) {
+                            this.$router.push("/login-error");
+                            return;
+                        }
                         store.commit("setUser", res.data);
                         if (res.data.role.id == 3) {
-                             this.$router.push("/admin");
+                            this.$router.push("/admin");
                         } else {
-                             this.$router.push("/home");
+                            this.$router.push("/home");
                         }
                     } else {
                         this.isError = true;

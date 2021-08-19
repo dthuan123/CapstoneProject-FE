@@ -1,5 +1,8 @@
 <template>
-    <div class="custom-container">
+    <div v-if="!chapter.book.enabled" class="ban-chapter">
+        Chương bạn lựa chọn hiện đã bị cấm do vi phạm nội dung.
+    </div>
+    <div v-else class="custom-container">
         <div class="chapter-container">
             <div class="chapter-title">
                 <span>{{ chapter.name }}</span>
@@ -25,13 +28,13 @@
             ></comment-block>
             <div class="row-end">
                 <ul class="pagination">
-                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang đầu</a></li>
+                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang trước</a></li>
                     <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
                         <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
                     </li>
-                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Trang tiếp</a></li>
+                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Trang cuối</a></li>
                 </ul>
             </div>
         </div>
@@ -52,7 +55,11 @@ export default {
         return {
             comments: [],
             chapterId: this.$route.query.chapterId,
-            chapter: {},
+            chapter: {
+                book: {
+                    enabled: true
+                }
+            },
             currentPage: 0,
             totalPage: null,
             pageSize: 5,
@@ -148,6 +155,7 @@ export default {
                     this.chapter = response.data;
                     this.chapterComment.chapter.id = this.chapter.id;
                     this.saveHistory();
+                    console.log(this.chapter);
                 });
         },
         reply() {
@@ -238,5 +246,13 @@ export default {
 .reply-button {
     display: flex;
     justify-content: flex-end;
+}
+
+.ban-chapter {
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 30px auto;
+    font-size: 20px;
+    font-weight: bold;
 }
 </style>
