@@ -18,7 +18,7 @@
         </div>
         <ckeditor @ready="setEditorData" :editor="editor" v-model="editorValue" :config="editorConfig"></ckeditor>
         <div>
-            <span class="alert alert-success" role="alert" v-show="saveStatus">Success!</span>
+            <span class="alert alert-success" role="alert" v-show="saveStatus">Thành công!</span>
         </div>
         <div>
             <span class="alert alert-danger" role="alert" v-show="noName">Hãy nhập tên chương</span>

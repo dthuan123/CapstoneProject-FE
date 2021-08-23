@@ -81,7 +81,7 @@
                     Alias name already exists!
                 </div>
                 <div class="alert alert-success" role="alert" v-show="aliasSuccess">
-                    Success!
+                    Thành công!
                 </div>
 
                 <div class="modal-button">

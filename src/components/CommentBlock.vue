@@ -83,7 +83,7 @@ export default {
             this.chapterComment.parent.id = parentId;
         },
         reply() {
-            if (!this.bookComment.content) {
+            if (!this.chapterComment.content) {
                 return;
             }
             axios

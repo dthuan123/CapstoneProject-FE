@@ -71,7 +71,7 @@
                     Alias name already exists!
                 </div>
                 <div class="alert alert-success" role="alert" v-show="success">
-                    Success!
+                    Thành công!
                 </div>
 
                 <div class="modal-button">

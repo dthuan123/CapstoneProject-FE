@@ -24,7 +24,7 @@
         </div>
     </div>
     <div class="right">
-        <h3>Sort By</h3>
+        <h3>Sắp xếp theo</h3>
         <div class="dropdown">
             <!-- <a class="btn btn-secondary dropdown-toggle" href="https://www.google.com/" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                 Dropdown link
