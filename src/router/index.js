@@ -30,6 +30,9 @@ import ReaderHistory from "@/components/ReaderHistory.vue";
 import ReaderApply from "@/components/ReaderApply.vue";
 import SeeOtherAccountInformation from "@/components/SeeOtherAccountInformation.vue";
 import AdminCategories from "@/components/AdminCategories.vue";
+import Introduce from "@/components/Introduce.vue";
+import InstructionsForPostingNovels from "@/components/InstructionsForPostingNovels.vue";
+import InstructionsForReportNovels from "@/components/InstructionsForReportNovels.vue"
 
 const routes = [
     {
@@ -39,6 +42,18 @@ const routes = [
     {
         path: "/home",
         component: HomePage,
+    },
+    {
+        path: "/intro-reporting",
+        component: InstructionsForReportNovels,
+    },
+    {
+        path: "/introduce",
+        component: Introduce,
+    },
+    {
+        path: "/intro-posting",
+        component: InstructionsForPostingNovels,
     },
     {
         path: "/list-all-book",

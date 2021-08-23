@@ -26,7 +26,7 @@
                     <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
                 <li>
-                    <router-link to="">Hướng dẫn</router-link>
+                    <router-link to="/introduce">Hướng dẫn</router-link>
                 </li>
             </ul>
             <div class="header-right">
