@@ -116,7 +116,7 @@
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{
-                
+                    alert('Đăng ký thành công!');
                     this.$router.push("/login");
                 })
             .catch(err => {
