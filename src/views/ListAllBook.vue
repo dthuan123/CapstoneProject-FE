@@ -99,7 +99,6 @@ export default{
     },
     methods: {
         sortList() {
-          console.log(this.sort);
           this.getListBook();
         },
         getListBook() {

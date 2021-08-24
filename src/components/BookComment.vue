@@ -45,7 +45,6 @@ export default {
       ckeditor: CKEditor.component
     },
     mounted() {
-        console.log('comm',this.comments);
     },
     data() {
         return {

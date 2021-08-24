@@ -52,7 +52,6 @@ export default {
         }
     },
     created() {
-        console.log(this.user);
     },
     methods: {
         apply(event) {
@@ -62,17 +61,14 @@ export default {
             if(!this.card || !this.frontImage || !this.backImage) {
                 return;
             }
-            console.log(this.is9digit, this.card.length)
             if (this.is9digit) {
                 if(this.card.length != 9) {
                     this.validIdentityCard = false;
-                    console.log('sai 1')
                     return;
                 }
             } else {
                 if(this.card.length != 12) {
                     this.validIdentityCard = false;
-                    console.log('sai')
                     return;
                 }
             }

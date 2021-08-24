@@ -126,10 +126,8 @@ export default {
                 })
                 .then((response) => {
                     this.data = response.data.content;
-                    console.log(this.data);
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
-                    console.log(this.totalPage)
                 });
         },
         toPrevPage() {

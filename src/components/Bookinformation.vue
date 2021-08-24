@@ -299,7 +299,6 @@ export default {
                     this.book = response.data;
                     this.likecount = this.book.likes;
                     this.rating = this.book.overallRating;
-                    console.log(this.book);
                 });
         },
         like() {
@@ -371,7 +370,6 @@ export default {
                     this.reportSuccess = true;
                     this.reportError = false;
                     this.reportContent = null;
-                    console.log('1123', response);
                 })
                 // .catch((error) => {
                 //     this.reportError = true;

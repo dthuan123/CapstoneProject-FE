@@ -155,7 +155,7 @@ export default {
                     this.chapter = response.data;
                     this.chapterComment.chapter.id = this.chapter.id;
                     this.saveHistory();
-                    console.log(this.chapter);
+                    // console.log(this.chapter);
                 });
         },
         reply() {

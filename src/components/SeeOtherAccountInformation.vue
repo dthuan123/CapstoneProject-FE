@@ -40,7 +40,6 @@
                     })
                     .then((response) => {
                         this.users = response.data;
-                        console.log(this.users)
                     })
             }
         }

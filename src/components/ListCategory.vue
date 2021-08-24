@@ -39,7 +39,6 @@ export default{
             axios
                 .get("http://localhost:8000/category-list")
                 .then((response) => {
-                    console.log(response.data);
                     this.listCategoriess = response.data
                 });
         },

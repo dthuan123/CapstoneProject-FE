@@ -47,7 +47,6 @@ import axios from "axios";
         methods: {
             getAvatarImage(event){
                 this.avatarImageFile = event.target.files[0];
-                console.log(this.user);
             },
             getUser() {
                 axios
@@ -71,7 +70,6 @@ import axios from "axios";
               axios
                   .post("http://localhost:8000/reader/update/avatar", formData)
                   .then((response) => {
-                    console.log(response)
                     this.saveSuccess = true
                     alert("upload anh thanh cong")
                     // goi req voi user id de lay lai user

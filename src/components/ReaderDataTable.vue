@@ -157,7 +157,6 @@ export default {
                     this.tableData = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;
-                    console.log(this.tableData)
                 });
         },
         search() {

@@ -116,7 +116,6 @@ export default {
                     this.data = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;  
-                    console.log('hí',response);
                 });
         },
         getLikeList() {

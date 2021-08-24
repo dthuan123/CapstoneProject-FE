@@ -71,7 +71,6 @@ export default {
         }
     },
     created() {
-      console.log(this.chapter);
         this.getBook();
         if(this.mode === "EditChapter") {
             this.getChapter();
