@@ -1,7 +1,11 @@
 <template>
+<!-- <component-to-re-render :key="chapterId" /> -->
     <div v-if="!chapter.book.enabled" class="ban-chapter">
         Chương bạn lựa chọn hiện đã bị cấm do vi phạm nội dung.
     </div>
+    <!-- <div v-else-if="chapter.id > maxChapter" class="ban-chapter">
+        Chương không hợp lệ.
+    </div> -->
     <div v-else class="custom-container">
         <div class="chapter-container">
             <div class="chapter-title">
@@ -13,6 +17,10 @@
             <div class="chapter-content" v-html="chapter.content">
 
             </div>
+            <div class="button-pass-chapter">
+                <input type="button" value="Chương trước" @click.prevent="getPreChapter()">
+                <input type="button" value="Chương tiếp" @click.prevent="getNextChapter()">     
+            </div>      
         </div>
         
         <div class="comment-block">
@@ -47,6 +55,7 @@ import CommentBlock from './CommentBlock.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import TextToSpeechAudio from './TextToSpeechAudio.vue';
+import Vue from 'vue';
 
 export default {
     name: "ChapterDetail",
@@ -55,6 +64,7 @@ export default {
         return {
             comments: [],
             chapterId: this.$route.query.chapterId,
+            maxChapter: 0,
             chapter: {
                 book: {
                     enabled: true
@@ -128,6 +138,12 @@ export default {
         this.getComments();
         this.getChapter();
     },
+    // watch:{
+    //     $route (to, from){
+    //         this.chapterId = this.$route.query.chapterId,
+    //         this.getChapter();
+    //     }
+    // } ,
     methods: {
         getComments() {
             axios
@@ -156,6 +172,43 @@ export default {
                     this.chapterComment.chapter.id = this.chapter.id;
                     this.saveHistory();
                     // console.log(this.chapter);
+                });
+        },
+        getNextChapter(){
+            axios
+                .get("http://localhost:8000/creator/get/next-chapter", {
+                    headers: {
+                        chapterId: this.chapterId
+                    }
+                })
+                .then((response) => {
+                    if(response.data === 0){
+                        alert("Đã hết chương rồi")
+                    }else{
+                    this.chapterId = response.data;
+                    this.getChapter();
+                    this.$forceUpdate();
+                    // this.$router.go(this.$router.currentRoute)
+                    this.$router.push('/chapter?chapterId='+this.chapterId); 
+                    }
+                });
+        },getPreChapter(){
+            axios
+                .get("http://localhost:8000/creator/get/pre-chapter", {
+                    headers: {
+                        chapterId: this.chapterId
+                    }
+                })
+                .then((response) => {
+                    if(response.data === 0){
+                        alert("Đây là chương đầu")
+                    }else{
+                    this.chapterId = response.data;
+                    this.getChapter();
+                    this.$forceUpdate();
+                    // this.$router.go(this.$router.currentRoute)
+                    this.$router.push('/chapter?chapterId='+this.chapterId); 
+                    }
                 });
         },
         reply() {
@@ -254,5 +307,8 @@ export default {
     margin: 30px auto;
     font-size: 20px;
     font-weight: bold;
+}
+.button-pass-chapter{
+    display: flex;
 }
 </style>
