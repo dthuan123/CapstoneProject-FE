@@ -1,5 +1,7 @@
 <template>
-  <div class="login-error">Bạn không có quyền truy cập trang này.</div>
+  <div class="login-error">
+      Tài khoản của bạn đã bị cấm do vi phạm quy định hệ thống.
+  </div>
 </template>
 
 <script>

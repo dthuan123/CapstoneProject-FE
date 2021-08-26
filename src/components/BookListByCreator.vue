@@ -9,10 +9,10 @@
             <div class="row-end">
         <ul class="pagination">
           <li @click="setPage(1)" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">First</a>
+            <a class="page-link">Trang đầu</a>
           </li>
           <li @click="toPrevPage" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">Prev</a>
+            <a class="page-link">Trang trước</a>
           </li>
                 <li
                     v-for="page in pages"
@@ -31,10 +31,10 @@
                     @click="toNextPage"
                     class="page-item"
                 >
-                    <a class="page-link">Next</a>
+                    <a class="page-link">Trang tiếp</a>
                 </li>
                 <li @click="setPage(totalPage)" class="page-item">
-                    <a class="page-link">Last</a>
+                    <a class="page-link">Trang cuối</a>
                 </li>
             </ul>
         </div>
@@ -109,10 +109,8 @@ import ListBookByCreatorBlock from './ListBookByCreatorBlock.vue';
                     })
                     .then((response) => {
                         this.data = response.data.content;
-                        console.log(this.data);
                         this.currentPage = response.data.pageable.pageNumber;
                         this.totalPage = response.data.totalPages;
-                        console.log(this.totalPage)
                     })
             },
             toPrevPage() {

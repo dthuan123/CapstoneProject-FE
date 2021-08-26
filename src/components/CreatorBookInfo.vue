@@ -58,8 +58,14 @@
             <label class="label-attribute">Tóm tắt</label><br>
             <textarea class="form-control" v-model="book.description"></textarea>
         </div>
-        <div class="alert alert-success" role="alert" v-show="saveSuccess">
-            Success!
+        <div class="alert alert-success" role="alert" v-show="saveSuccess && mode !== 'EDIT'">
+            Bạn đã tạo mới sách thành công!
+        </div>
+        <div class="alert alert-success" role="alert" v-show="saveSuccess && mode === 'EDIT'">
+            Bạn đã chỉnh sửa thành công!
+        </div>
+        <div class="alert alert-danger" role="alert" v-show="noBookName">
+            Xin hãy nhập tên sách!
         </div>
         <div class="row-center">
             <button class="btn btn-primary" v-if="mode !== 'EDIT'" v-on:click="createBook">Tạo mới</button>
@@ -75,7 +81,7 @@
                     Alias name already exists!
                 </div>
                 <div class="alert alert-success" role="alert" v-show="aliasSuccess">
-                    Success!
+                    Thành công!
                 </div>
 
                 <div class="modal-button">
@@ -123,7 +129,8 @@ export default {
             newAlias: null,
             aliasError: false,
             aliasSuccess: false,
-            saveSuccess: false
+            saveSuccess: false,
+            noBookName: false,
         }
     },
     created () {
@@ -157,6 +164,10 @@ export default {
         },
 
         createBook() {
+            if(!this.book.name) {
+                this.noBookName = true;
+                return;
+            }
             this.setBookCreator();
             this.filterCategory();
             
@@ -168,7 +179,10 @@ export default {
 
             axios
                 .post("http://localhost:8000/creator/create/book", formData)
-                .then((response) => this.saveSuccess = true);
+                .then((response) => {
+                    this.saveSuccess = true;
+                    this.noBookName = false;
+                });
         },
 
         updateBook() {

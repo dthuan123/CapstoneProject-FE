@@ -45,7 +45,6 @@ export default {
       ckeditor: CKEditor.component
     },
     mounted() {
-        console.log('comm',this.comments);
     },
     data() {
         return {
@@ -88,7 +87,9 @@ export default {
 
         },
         reply() {
-            console.log(this.bookComment);
+            if (!this.bookComment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/comment", this.bookComment)
                 .then(() => {

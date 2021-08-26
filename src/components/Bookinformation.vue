@@ -1,5 +1,8 @@
 <template>
-<div class="main__container">
+<div v-if="!book.enabled" class="ban-book">
+    Sách bạn lựa chọn hiện đã bị cấm do vi phạm nội dung.
+</div>
+<div v-else class="main__container">
   <div class="c-container">
     <img class="book-img" :src="book.imageLink" />
     <div class="book">
@@ -16,7 +19,7 @@
         </div>
         <div class="cate">
           <span class="book-label">Tình trạng:</span>
-          <span>{{ book.bookStatus.name }}</span>
+          <span>{{ book.bookStatus.name }}</span>  
         </div>
         <div>
             <button
@@ -24,8 +27,8 @@
                 class="btn btn-outline-primary c-btn"
                 v-on:click="like"
             >
-                <font-awesome-icon icon="thumbs-up"></font-awesome-icon>Thích
-                <span class="badge badge-pill badge-primary">{{book.likes}}</span>
+                <font-awesome-icon icon="thumbs-up"></font-awesome-icon> Thích {{book.likes}}
+                <!-- <span class="badge badge-pill badge-primary">{{book.likes}}</span> -->
             </button>
             <button type="button" class="btn btn-outline-primary  c-btn" v-on:click="openReport">
                 Báo cáo
@@ -50,7 +53,10 @@
         
     <div class="chapter-book">
       <h2 class="chapter">Tất cả các chương của truyện</h2>
-      <chapter-in-book-block
+      <div v-if="data.length === 0">
+        Truyện chưa có chương.
+      </div>
+      <chapter-in-book-block v-else 
             v-for="(chapter, index) in data"
             :key="chapter.id"
             v-bind:chapter="chapter"
@@ -59,10 +65,10 @@
       <div class="row-end">
         <ul class="pagination">
           <li @click="setPage(1)" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">First</a>
+            <a class="page-link">Trang đầu</a>
           </li>
           <li @click="toPrevPage" :class="{ disabled: currentPage <= 0, 'page-item': true }">
-            <a class="page-link">Prev</a>
+            <a class="page-link">Trang trước</a>
           </li>
                 <li
                     v-for="page in pages"
@@ -81,10 +87,10 @@
                     @click="toNextPage"
                     class="page-item"
                 >
-                    <a class="page-link">Next</a>
+                    <a class="page-link">Trang tiếp</a>
                 </li>
                 <li @click="setPage(totalPage)" class="page-item">
-                    <a class="page-link">Last</a>
+                    <a class="page-link">Trang cuối</a>
                 </li>
             </ul>
             </div> 
@@ -124,13 +130,13 @@
         ></book-comment>
         <div class="row-end">
             <ul class="pagination">
-                <li @click="setPageComment(1)" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                <li @click="toPrevPageComment" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                <li @click="setPageComment(1)" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">Trang đầu</a></li>
+                <li @click="toPrevPageComment" :class="{'disabled': currentPageComment <= 0, 'page-item': true}"><a class="page-link">Trang trước</a></li>
                 <li v-for="page in pagesComment" :key="page.name" :class="{ 'active': currentPageComment === page.name - 1, 'page-item': true}">
                     <a class="page-link" @click="setPageComment(page.name)">{{ page.name }}</a>
                 </li>
-                <li v-show="currentPageComment !== totalPageComment" @click="toNextPageComment" class="page-item"><a class="page-link">Next</a></li>
-                <li @click="setPageComment(totalPageComment)" class="page-item"><a class="page-link">Last</a></li>
+                <li v-show="currentPageComment !== totalPageComment" @click="toNextPageComment" class="page-item"><a class="page-link">Trang tiếp</a></li>
+                <li @click="setPageComment(totalPageComment)" class="page-item"><a class="page-link">Trang cuối</a></li>
             </ul>
         </div>
     </div>
@@ -318,7 +324,7 @@ export default {
                     headers: {
                         bookId: this.bookId,
                         page: this.currentPage,
-                        pageSize: 5,
+                        pageSize: 10,
                     },
                 })
                 .then((response) => {
@@ -364,7 +370,6 @@ export default {
                     this.reportSuccess = true;
                     this.reportError = false;
                     this.reportContent = null;
-                    console.log('1123', response);
                 })
                 // .catch((error) => {
                 //     this.reportError = true;
@@ -402,6 +407,9 @@ export default {
                 });
         },
         reply() {
+            if (!this.Comment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/comment", this.Comment)
                 .then((response) => {
@@ -613,5 +621,12 @@ export default {
     font-size: 14px;
     font-weight: 800;
     margin-bottom: 20px;
+}
+.ban-book {
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 30px auto;
+    font-size: 20px;
+    font-weight: bold;
 }
 </style>

@@ -1,5 +1,12 @@
 <template>
-    <div class="custom-container">
+<!-- <component-to-re-render :key="chapterId" /> -->
+    <div v-if="!chapter.book.enabled" class="ban-chapter">
+        Chương bạn lựa chọn hiện đã bị cấm do vi phạm nội dung.
+    </div>
+    <!-- <div v-else-if="chapter.id > maxChapter" class="ban-chapter">
+        Chương không hợp lệ.
+    </div> -->
+    <div v-else class="custom-container">
         <div class="chapter-container">
             <div class="chapter-title">
                 <span>{{ chapter.name }}</span>
@@ -10,6 +17,10 @@
             <div class="chapter-content" v-html="chapter.content">
 
             </div>
+            <div class="button-pass-chapter">
+                <input type="button" value="Chương trước" @click.prevent="getPreChapter()">
+                <input type="button" value="Chương tiếp" @click.prevent="getNextChapter()">     
+            </div>      
         </div>
         
         <div class="comment-block">
@@ -25,13 +36,13 @@
             ></comment-block>
             <div class="row-end">
                 <ul class="pagination">
-                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang đầu</a></li>
+                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang trước</a></li>
                     <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
                         <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
                     </li>
-                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Trang tiếp</a></li>
+                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Trang cuối</a></li>
                 </ul>
             </div>
         </div>
@@ -44,6 +55,7 @@ import CommentBlock from './CommentBlock.vue'
 import CKEditor from '@ckeditor/ckeditor5-vue';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import TextToSpeechAudio from './TextToSpeechAudio.vue';
+import Vue from 'vue';
 
 export default {
     name: "ChapterDetail",
@@ -52,7 +64,12 @@ export default {
         return {
             comments: [],
             chapterId: this.$route.query.chapterId,
-            chapter: {},
+            maxChapter: 0,
+            chapter: {
+                book: {
+                    enabled: true
+                }
+            },
             currentPage: 0,
             totalPage: null,
             pageSize: 5,
@@ -121,6 +138,12 @@ export default {
         this.getComments();
         this.getChapter();
     },
+    // watch:{
+    //     $route (to, from){
+    //         this.chapterId = this.$route.query.chapterId,
+    //         this.getChapter();
+    //     }
+    // } ,
     methods: {
         getComments() {
             axios
@@ -148,9 +171,50 @@ export default {
                     this.chapter = response.data;
                     this.chapterComment.chapter.id = this.chapter.id;
                     this.saveHistory();
+                    // console.log(this.chapter);
+                });
+        },
+        getNextChapter(){
+            axios
+                .get("http://localhost:8000/creator/get/next-chapter", {
+                    headers: {
+                        chapterId: this.chapterId
+                    }
+                })
+                .then((response) => {
+                    if(response.data === 0){
+                        alert("Đã hết chương rồi")
+                    }else{
+                    this.chapterId = response.data;
+                    this.getChapter();
+                    this.$forceUpdate();
+                    // this.$router.go(this.$router.currentRoute)
+                    this.$router.push('/chapter?chapterId='+this.chapterId); 
+                    }
+                });
+        },getPreChapter(){
+            axios
+                .get("http://localhost:8000/creator/get/pre-chapter", {
+                    headers: {
+                        chapterId: this.chapterId
+                    }
+                })
+                .then((response) => {
+                    if(response.data === 0){
+                        alert("Đây là chương đầu")
+                    }else{
+                    this.chapterId = response.data;
+                    this.getChapter();
+                    this.$forceUpdate();
+                    // this.$router.go(this.$router.currentRoute)
+                    this.$router.push('/chapter?chapterId='+this.chapterId); 
+                    }
                 });
         },
         reply() {
+            if (!this.chapterComment.content) {
+                return;
+            }
             axios
                 .post("http://localhost:8000/reader/create/comment", this.chapterComment)
                 .then((response) => {
@@ -235,5 +299,16 @@ export default {
 .reply-button {
     display: flex;
     justify-content: flex-end;
+}
+
+.ban-chapter {
+    min-height: 100vh;
+    max-width: 1200px;
+    margin: 30px auto;
+    font-size: 20px;
+    font-weight: bold;
+}
+.button-pass-chapter{
+    display: flex;
 }
 </style>

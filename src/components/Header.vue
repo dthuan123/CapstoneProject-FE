@@ -3,7 +3,7 @@
         <nav class="header-container">
             <ul class="header-left menu-item-container">
                 <li>
-                    <router-link to="/home">Logo</router-link>
+                    <router-link to="/home">Trang chủ</router-link>
                 </li>
                 <li @mouseover="show()" class="dropdown__parent">
                     <div v-show="showDropDown" @mouseleave="showDropDown=false" class="dropdown">
@@ -26,7 +26,7 @@
                     <router-link to="/list-all-book">Danh sách</router-link>
                 </li>
                 <li>
-                    <router-link to="">Hướng dẫn</router-link>
+                    <router-link to="/introduce">Hướng dẫn</router-link>
                 </li>
             </ul>
             <div class="header-right">
@@ -56,19 +56,19 @@
                         <img :src="avatarLink" />
                     </div>
                     <ul v-if="showUserMenu" class="user-menu">
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/accountInfor">Tài khoản</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/history">Lịch sử</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/likes">Kệ sách</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link to="/reader/messages">Tin nhắn</router-link>
                         </li>
-                        <li>
+                        <li @click="() => showUserMenu = !showUserMenu">
                             <router-link v-show="role == 'reader'" to="/reader/apply">Hệ thống</router-link>
                             <router-link v-show="role == 'creator'" to="/creator">Hệ thống</router-link>
                             <router-link v-show="role == 'admin'" to="/admin">Hệ thống</router-link>
@@ -135,7 +135,6 @@ export default {
              axios
                 .get("http://localhost:8000/category-list")
                 .then((response) => {
-                    console.log(response.data);
                     this.categoriesheader = response.data
                 });
         },
@@ -166,6 +165,7 @@ export default {
 
 .menu-item-container {
     display: flex;
+    
     align-items: center;
 }
 
@@ -174,7 +174,7 @@ export default {
 }
 
 .header-right {
-    width: 30%;
+    width: 35%;
     justify-content: space-between;
     display: flex;
 }

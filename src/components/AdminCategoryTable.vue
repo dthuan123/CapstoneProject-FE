@@ -49,13 +49,13 @@
             </table>
             <div class="row-end" v-if="tableData.length > 0">
                 <ul class="pagination">
-                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                    <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang đầu</a></li>
+                    <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang trước</a></li>
                     <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
                         <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
                     </li>
-                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                    <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Trang tiếp</a></li>
+                    <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Trang cuối</a></li>
                 </ul>
             </div>
         </div>
@@ -71,7 +71,7 @@
                     Alias name already exists!
                 </div>
                 <div class="alert alert-success" role="alert" v-show="success">
-                    Success!
+                    Thành công!
                 </div>
 
                 <div class="modal-button">

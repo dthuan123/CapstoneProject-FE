@@ -90,7 +90,6 @@
             axios
               .post("http://localhost:8000/changePassword", formData)
               .then(res =>{
-                console.log(res);
                 alert("doi mat khau thanh cong");
               })
               .catch(err => {

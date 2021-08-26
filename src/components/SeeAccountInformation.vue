@@ -1,5 +1,4 @@
 <template>
-    <body>
             <div class="container">
                 <div class="cover-images">
                     <img :src="coverLink" class="cover-image">
@@ -25,10 +24,6 @@
                 <router-link to="/changePassword">Đổi mật khẩu</router-link>
                 <button v-show="avatarImageFile" class="c-btn btn btn-primary" @click="updateAvatar">Save</button>
             </div>
-           
-               
-      
-    </body>
 </template>
 <script>
 import axios from "axios";
@@ -52,7 +47,6 @@ import axios from "axios";
         methods: {
             getAvatarImage(event){
                 this.avatarImageFile = event.target.files[0];
-                console.log(this.user);
             },
             getUser() {
                 axios
@@ -76,7 +70,6 @@ import axios from "axios";
               axios
                   .post("http://localhost:8000/reader/update/avatar", formData)
                   .then((response) => {
-                    console.log(response)
                     this.saveSuccess = true
                     alert("upload anh thanh cong")
                     // goi req voi user id de lay lai user
@@ -110,7 +103,7 @@ import axios from "axios";
     display: flex;
     position: absolute;
     bottom: 0;
-    padding-bottom: 20px;
+    padding-bottom: 240px;
 }
 .image-avatar img{
     width: 150px;
@@ -154,11 +147,12 @@ import axios from "axios";
 }
 .container{
     text-align: center;
-    margin-top: 30px;
+    /* margin-top: 30px; */
     padding-bottom: 100px;
     background-color: white;
     position: relative;
     width: 80%;
+    min-height: 100vh;
 }
 
 .footer {

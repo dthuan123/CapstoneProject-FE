@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import HomePage from "@/views/Home.vue";
 import CreatorHome from "@/views/CreatorHome.vue";
 import Login from "@/views/Login.vue";
+import LoginError from "@/views/LoginError.vue";
 import ErrorPermission from "@/views/ErrorPermission.vue";
 import CreatorBookList from "@/components/CreatorBookList.vue";
 import CreatorBookEdit from "@/components/CreatorBookEdit.vue";
@@ -30,6 +31,10 @@ import ReaderHistory from "@/components/ReaderHistory.vue";
 import ReaderApply from "@/components/ReaderApply.vue";
 import SeeOtherAccountInformation from "@/components/SeeOtherAccountInformation.vue";
 import AdminCategories from "@/components/AdminCategories.vue";
+import Introduce from "@/components/Introduce.vue";
+import InstructionsForPostingNovels from "@/components/InstructionsForPostingNovels.vue";
+import InstructionsForReportNovels from "@/components/InstructionsForReportNovels.vue"
+import { store } from '../store/index.js'
 
 const routes = [
     {
@@ -41,12 +46,28 @@ const routes = [
         component: HomePage,
     },
     {
+        path: "/intro-reporting",
+        component: InstructionsForReportNovels,
+    },
+    {
+        path: "/introduce",
+        component: Introduce,
+    },
+    {
+        path: "/intro-posting",
+        component: InstructionsForPostingNovels,
+    },
+    {
         path: "/list-all-book",
         component: ListAllBook,
     },
     {
         path: "/login",
         component: Login,
+    },
+    {
+        path: "/login-error",
+        component: LoginError
     },
     {
         path: "/error-permission",
@@ -74,15 +95,18 @@ const routes = [
     },
     {
         path: "/account",
-        component: SeeOtherAccountInformation
+        component: SeeOtherAccountInformation,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/accountInfor",
-        component: SeeAccountInformation
+        component: SeeAccountInformation,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/changePassword",
-        component: ChangePassword
+        component: ChangePassword,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/books",
@@ -91,6 +115,7 @@ const routes = [
     {
         path: "/admin",
         component: AdminHome,
+        meta: { authorize: ['admin'] } ,
         children: [
             {
                 path: "report-list",
@@ -133,38 +158,12 @@ const routes = [
               name: "AdminBookCate",
               component: AdminCategories
           }
-        ]
-
-     
-
-
-
-
-
-
-
-
-
-
-        
+        ]  
     },
 
     ///path cua guess
     {
-        path: "/guest",
-
-     
-
-
-
-
-
-
-
-
-
-
-        
+        path: "/guest",   
     },
     {
         path: "/chapter",
@@ -173,6 +172,7 @@ const routes = [
     {
         path: "/creator",
         component: CreatorHome,
+        meta: { authorize: ['creator'] } ,
         children: [
             {
                 path: "get/books",
@@ -202,19 +202,23 @@ const routes = [
     },
     {
         path: "/reader/messages",
-        component: ReaderListMessage
+        component: ReaderListMessage,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/reader/history",
-        component: ReaderHistory
+        component: ReaderHistory,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/reader/likes",
-        component: ReaderHistory
+        component: ReaderHistory,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
     {
         path: "/reader/apply",
-        component: ReaderApply
+        component: ReaderApply,
+        meta: { authorize: ['admin', 'reader', 'creator'] } ,
     },
   
 ];
@@ -224,20 +228,24 @@ const router = createRouter({
     routes: routes,
 });
 
-// router.beforeEach((to, from, next) => { 
-//     const user = store.state.user
-//     let isRole = true;
-//     if(to.meta.roles) {
-//         if(!to.meta.roles.includes(user.roleName)) {
-//             isRole = false;
-//         }
-//     }
-//     if (isRole) {
-//         next();
-//     } else {
-//         next("error-permission")
-//     }
+router.beforeEach((to, from, next) => { 
+    const user = store.state.user
+    const { authorize } = to.meta;
+
+    if(authorize) {
+        console.log(user, authorize)
+        if(!user) {
+            return next({ path: '/login' })
+        } else {
+            if (authorize.includes(user.role.name)) {
+                return next();
+            } else {
+                return next("error-permission")
+            }
+        }
+    }
+    return next();
      
-// })
+})
 
 export default router;

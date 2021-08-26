@@ -40,7 +40,6 @@
                     })
                     .then((response) => {
                         this.users = response.data;
-                        console.log(this.users)
                     })
             }
         }
@@ -53,6 +52,7 @@
     font-family: "OpenSans";
     display: flex;
     flex-direction: row;
+    min-height: 60vh;
 }
 .container img{
     width: 150px;

@@ -33,7 +33,6 @@ export default {
           },
         })
         .then((response) => (
-          // console.log(response)
           this.data = response.data[0]
           ));
     },

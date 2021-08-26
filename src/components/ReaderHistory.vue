@@ -26,13 +26,13 @@
 
         <div class="row-end">
             <ul class="pagination">
-                <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">First</a></li>
-                <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Prev</a></li>
+                <li @click="setPage(1)" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang đầu</a></li>
+                <li @click="toPrevPage" :class="{'disabled': currentPage <= 0, 'page-item': true}"><a class="page-link">Trang trước</a></li>
                 <li v-for="page in pages" :key="page.name" :class="{ 'active': currentPage === page.name - 1, 'page-item': true}">
                     <a class="page-link" @click="setPage(page.name)">{{ page.name }}</a>
                 </li>
-                <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Next</a></li>
-                <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Last</a></li>
+                <li v-show="currentPage !== totalPage" @click="toNextPage" class="page-item"><a class="page-link">Trang tiếp</a></li>
+                <li @click="setPage(totalPage)" class="page-item"><a class="page-link">Trang cuối</a></li>
             </ul>
         </div>
   </div>
@@ -116,7 +116,6 @@ export default {
                     this.data = response.data.content;
                     this.currentPage = response.data.pageable.pageNumber;
                     this.totalPage = response.data.totalPages;  
-                    console.log('hí',response);
                 });
         },
         getLikeList() {

@@ -90,21 +90,33 @@
                     
                 }
                 if(this.password!= this.repassword){
+                    this.usernameValidate = false;
+                    this.emailValidate = false;
+                    this.passwordValidate = false;
                     this.isError = true;
                     return;
                 }else if(this.username==null || this.username.trim() === ""){
+                    this.emailValidate = false;
+                    this.passwordValidate = false;
+                    this.isError = false;
                     this.usernameValidate = true;
                     return;
-                }else if(this.email==null){
+                }else if(this.email==null || this.email.trim() === ""){
+                    this.usernameValidate = false;
                     this.emailValidate = true;
+                    this.passwordValidate = false;
+                    this.isError = false;
                     return;
                 }else if(this.password==null || this.password.length <= 5 || this.password.length >=19){
+                    this.usernameValidate = false;
+                    this.emailValidate = false;
                     this.passwordValidate = true;
+                    this.isError = false;
                     return;
                 }
                 axios.post("http://localhost:8000/register", body)
             .then(res =>{
-                
+                    alert('Đăng ký thành công!');
                     this.$router.push("/login");
                 })
             .catch(err => {

@@ -46,7 +46,7 @@ export default {
                         searchword: encodeURIComponent(this.searchword),
                     }
                 })
-                .then((response) => {this.resultSearchBooks = response.data; console.log(response.data)});
+                .then((response) => {this.resultSearchBooks = response.data;});
         },
         // getResultSearchUser() {
         //     axios

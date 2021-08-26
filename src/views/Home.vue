@@ -61,7 +61,6 @@ export default {
         this.getTop10Book();
         this.getTop10NewestBook();
         this.getTop10NewestComment();
-        console.log(this.top10NewestComments);
     },
     methods: {
         getTop10Book() {
@@ -77,7 +76,7 @@ export default {
         getTop10NewestComment(){
             axios
                 .get("http://localhost:8000//get-top-newest-comment-book")
-                .then((response) => {this.top10NewestComments = response.data;  console.log(response.data)});
+                .then((response) => {this.top10NewestComments = response.data;});
         }
     },
 };
